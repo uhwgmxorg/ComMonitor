@@ -114,10 +114,22 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// MenuItem_Click_About
+        /// MenuItem_Click_ChangeLog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private void MenuItem_Click_ChangeLog(object sender, RoutedEventArgs e)
+        {
+            string File = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\ChangeLog.txt";
+            ChangeLogUtilityDll.ChangeLogTxtToolWindow ChangeLogTxtToolWindowObj = new ChangeLogUtilityDll.ChangeLogTxtToolWindow(this);
+            ChangeLogTxtToolWindowObj.ShowChangeLogWindow(File);
+        }
+
+        /// <summary>
+        /// MenuItem_Click_About
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>MenuItem_Click_ChangeLog
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
             string Version;

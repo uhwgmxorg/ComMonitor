@@ -27,6 +27,9 @@
                 <MenuItem Header="Close all" Click="MenuItem_Click_CloseAll"/>
             </MenuItem>
             <MenuItem Header="?">
+                <MenuItem Header="Change Log" Click="MenuItem_Click_ChangeLog">
+                </MenuItem>
+                <Separator/>
                 <MenuItem Header="About" Click="MenuItem_Click_About">
                     <MenuItem.Icon>
                         <Image Source="/ComMonitor;component/Resources/About.gif" Stretch="Fill" />
