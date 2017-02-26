@@ -23,6 +23,7 @@ namespace ComMonitor.MDIWindows
         public UserControlTCPMDIChild()
         {
             InitializeComponent();
+            HexEdit.FileName = "ChangeLog.txt";
         }
     }
 }

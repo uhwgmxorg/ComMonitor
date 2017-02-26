@@ -62,6 +62,9 @@
     <Reference Include="WPF.MDI">
       <HintPath>..\lib\WPF.MDI.dll</HintPath>
     </Reference>
+    <Reference Include="WPFHexaEditor">
+      <HintPath>..\lib\WPFHexaEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
