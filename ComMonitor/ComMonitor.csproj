@@ -62,15 +62,21 @@
     <Reference Include="WPF.MDI">
       <HintPath>..\lib\WPF.MDI.dll</HintPath>
     </Reference>
-    <Reference Include="WPFHexaEditor">
-      <HintPath>..\lib\WPFHexaEditor.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\ByteUC.xaml.cs">
+      <DependentUpon>ByteUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HexEUC.xaml.cs">
+      <DependentUpon>HexEUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StringUC.xaml.cs">
+      <DependentUpon>StringUC.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,6 +91,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MDIWindows\UserControlTCPMDIChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ByteUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\HexEUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\StringUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +161,7 @@
   <ItemGroup>
     <Resource Include="Fred.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

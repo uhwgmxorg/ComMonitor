@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ComMonitor.MDIWindows
+namespace ComMonitor.UserControls
 {
     /// <summary>
-    /// Interaktionslogik für UserControlTCPMDIChild.xaml
+    /// Interaktionslogik für HexEUC.xaml
     /// </summary>
-    public partial class UserControlTCPMDIChild : UserControl
+    public partial class HexEUC : UserControl
     {
-        public UserControlTCPMDIChild()
+        public HexEUC()
         {
             InitializeComponent();
         }

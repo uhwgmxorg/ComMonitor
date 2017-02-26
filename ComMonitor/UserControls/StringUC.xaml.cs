@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ComMonitor.MDIWindows
+namespace ComMonitor.UserControls
 {
     /// <summary>
-    /// Interaktionslogik für UserControlTCPMDIChild.xaml
+    /// Interaktionslogik für StringUC.xaml
     /// </summary>
-    public partial class UserControlTCPMDIChild : UserControl
+    public partial class StringUC : UserControl
     {
-        public UserControlTCPMDIChild()
+        public StringUC()
         {
             InitializeComponent();
         }
