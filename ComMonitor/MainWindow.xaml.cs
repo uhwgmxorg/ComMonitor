@@ -1,19 +1,6 @@
 ﻿using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPF.MDI;
 
 namespace ComMonitor
@@ -23,11 +10,15 @@ namespace ComMonitor
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public NLog.Logger _logger;
+
         /// <summary>
         /// Constructor
         /// </summary>
         public MainWindow()
         {
+            _logger = NLog.LogManager.GetCurrentClassLogger();
             InitializeComponent();
         }
 
@@ -132,13 +123,13 @@ namespace ComMonitor
         /// <param name="e"></param>MenuItem_Click_ChangeLog
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
-            string Version;
+            string StrVersion;
 #if DEBUG
-            Version = "Debug Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
+            StrVersion = "Debug Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
 #else
-            Version = "Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
+            StrVersion = "Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
 #endif
-            MessageBox.Show("About ComMonitor "+Version, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("About ComMonitor "+ StrVersion, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -148,6 +139,7 @@ namespace ComMonitor
         /// <param name="e"></param>MenuItem_Click_NewMDIWindow
         private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
         {
+            _logger.Info("Closing ComMonitor");
             Close();
         }
 
@@ -172,15 +164,13 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// Grid_MouseDown
+        /// Window_MouseDown
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            string File = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\ChangeLog.txt";
-            ChangeLogUtilityDll.ChangeLogTxtToolWindow ChangeLogTxtToolWindowObj = new ChangeLogUtilityDll.ChangeLogTxtToolWindow(this);
-            ChangeLogTxtToolWindowObj.ShowChangeLogWindow(File);
+            //MainMdiContainer.Children
         }
 
         #endregion

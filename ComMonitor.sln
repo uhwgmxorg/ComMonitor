@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComMonitor", "ComMonitor\ComMonitor.csproj", "{B6CDE2F8-2A01-4A3F-A003-CABC43D84068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMessageViewerControl", "HexMessageViewerControl\HexMessageViewerControl.csproj", "{3282D490-1F40-4AE6-8BDC-EED7F44E934E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B6CDE2F8-2A01-4A3F-A003-CABC43D84068}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6CDE2F8-2A01-4A3F-A003-CABC43D84068}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6CDE2F8-2A01-4A3F-A003-CABC43D84068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
