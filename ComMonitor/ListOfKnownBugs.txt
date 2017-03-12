@@ -1,0 +1,6 @@
+﻿Program ComMonitor ListOfKnownBugs
+
+
+   25.02.2017 0.0.0.0 Rev 0
+
+   - XXXX 
