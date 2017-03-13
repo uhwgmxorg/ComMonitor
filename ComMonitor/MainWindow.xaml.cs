@@ -1,6 +1,10 @@
 ﻿using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using WPF.MDI;
 
 namespace ComMonitor
@@ -11,7 +15,8 @@ namespace ComMonitor
     public partial class MainWindow : Window
     {
 
-        public NLog.Logger _logger;
+        private NLog.Logger _logger;
+        private Random _random = new Random();
 
         /// <summary>
         /// Constructor
@@ -170,7 +175,15 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //MainMdiContainer.Children
+            // just for develoment
+            foreach(var w in MainMdiContainer.Children)
+            {
+                UserControlTCPMDIChild wmdiuc = w.Content as UserControlTCPMDIChild;
+                byte[] barray = new byte[(int)LTS.RandomDouble(1, 100, 0)];
+                _random.NextBytes(barray);
+                wmdiuc.ProcessMessage(barray, e.ChangedButton == MouseButton.Right ? HexMessageViewerControl.Direction.In: HexMessageViewerControl.Direction.Out);
+                Debug.WriteLine("Send Debug Message");
+            }
         }
 
         #endregion

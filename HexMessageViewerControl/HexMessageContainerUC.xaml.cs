@@ -136,7 +136,6 @@ namespace HexMessageViewerControl
     {
 
         private static HexMessageContainerUCAction instance;
-
         public static HexMessageContainerUCAction Instance
         {
             get
@@ -149,8 +148,8 @@ namespace HexMessageViewerControl
             }
         }
 
-        public delegate void SignalEventHandler(byte[] message,Direction direction);
-        public event SignalEventHandler AddMessageEvent;
+        public delegate void MessageEventHandler(byte[] message,Direction direction);
+        public event MessageEventHandler AddMessageEvent;
 
         /// <summary>
         /// Constructor
