@@ -176,12 +176,10 @@ namespace ComMonitor
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // just for develoment
-            foreach(var w in MainMdiContainer.Children)
+            foreach (var w in MainMdiContainer.Children)
             {
                 UserControlTCPMDIChild wmdiuc = w.Content as UserControlTCPMDIChild;
-                byte[] barray = new byte[(int)LTS.RandomDouble(1, 100, 0)];
-                _random.NextBytes(barray);
-                wmdiuc.ProcessMessage(barray, e.ChangedButton == MouseButton.Right ? HexMessageViewerControl.Direction.In: HexMessageViewerControl.Direction.Out);
+                wmdiuc.ProcessMessage(LST.RandomByteArray(), e.ChangedButton == MouseButton.Right ? HexMessageViewerControl.Direction.In : HexMessageViewerControl.Direction.Out);
                 Debug.WriteLine("Send Debug Message");
             }
         }

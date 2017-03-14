@@ -12,19 +12,6 @@ namespace ComMonitor.MDIWindows
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region INotify Propertie Changed
-        private HexMessageContainerUCAction containerUCAction;
-        public HexMessageContainerUCAction ContainerUCAction
-        {
-            get { return containerUCAction; }
-            set
-            {
-                if (value != ContainerUCAction)
-                {
-                    containerUCAction = value;
-                    OnPropertyChanged("ContainerUCAction");
-                };
-            }
-        }
         #endregion
 
         /// <summary>
@@ -34,7 +21,7 @@ namespace ComMonitor.MDIWindows
         {
             InitializeComponent();
 
-            ContainerUCAction = HexMessageContainerUCAction.Instance;
+            //ContainerUCAction = HexMessageContainerUCAction.Instance;
         }
 
         /// <summary>
@@ -42,7 +29,7 @@ namespace ComMonitor.MDIWindows
         /// </summary>
         public void ProcessMessage(byte[] message,Direction direction)
         {
-            ContainerUCAction.AddMessage(message, direction);
+            hexUC.AddMessage(message, direction);
         }
 
         /// <summary>

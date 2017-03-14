@@ -33,7 +33,7 @@ namespace HexMessageViewerControl
             InitializeComponent();
             DataContext = this;
 
-            MyUserControlActionObj = HexMessageContainerUCAction.Instance;
+            MyUserControlActionObj = new HexMessageContainerUCAction();
 
             MyUserControlActionObj.AddMessageEvent += AddMessageHandler;
         }
@@ -135,26 +135,13 @@ namespace HexMessageViewerControl
     public class HexMessageContainerUCAction
     {
 
-        private static HexMessageContainerUCAction instance;
-        public static HexMessageContainerUCAction Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new HexMessageContainerUCAction();
-                }
-                return instance;
-            }
-        }
-
         public delegate void MessageEventHandler(byte[] message,Direction direction);
         public event MessageEventHandler AddMessageEvent;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        private HexMessageContainerUCAction()
+        public HexMessageContainerUCAction()
         {
         }
 
