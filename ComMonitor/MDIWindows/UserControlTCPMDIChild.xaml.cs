@@ -1,9 +1,11 @@
-﻿using HexMessageViewerControl;
+﻿using ComMonitor.Models;
+using HexMessageViewerControl;
 using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace ComMonitor.MDIWindows
 {
+
     /// <summary>
     /// Interaktionslogik für UserControlTCPMDIChild.xaml
     /// </summary>
@@ -27,14 +29,16 @@ namespace ComMonitor.MDIWindows
         }
         #endregion
 
+        public Connection MyConnection { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public UserControlTCPMDIChild()
+        public UserControlTCPMDIChild(Connection connection)
         {
             InitializeComponent();
 
-            //ContainerUCAction = HexMessageContainerUCAction.Instance;
+            MyConnection = connection;
         }
 
         /// <summary>

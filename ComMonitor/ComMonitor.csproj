@@ -71,6 +71,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\ConfigNewConnection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\EditMessages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +86,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ConfigNewConnection.xaml.cs">
+      <DependentUpon>ConfigNewConnection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditMessages.xaml.cs">
+      <DependentUpon>EditMessages.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalTools\Globals.cs" />
     <Compile Include="LocalTools\LTS.cs" />
@@ -94,6 +108,7 @@
     <Compile Include="MDIWindows\UserControlTCPMDIChild.xaml.cs">
       <DependentUpon>UserControlTCPMDIChild.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Connection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,9 +159,7 @@
   <ItemGroup>
     <Resource Include="Fred.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HexMessageViewerControl\HexMessageViewerControl.csproj">
       <Project>{3282d490-1f40-4ae6-8bdc-eed7f44e934e}</Project>

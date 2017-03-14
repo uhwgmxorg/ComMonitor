@@ -1,7 +1,7 @@
-﻿using ComMonitor.LocalTools;
+﻿using ComMonitor.Dialogs;
+using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
@@ -48,11 +48,17 @@ namespace ComMonitor
             double AcParentWindoHeight = ActualHeight;
             double AcParentWindoWidth = ActualWidth;
 
+            ConfigNewConnection ConfigNewConnectionDlg = new ConfigNewConnection();
+            ConfigNewConnectionDlg.Owner = Window.GetWindow(this);
+            var res = ConfigNewConnectionDlg.ShowDialog();
+            if (!res.Value)
+                return;
+
             MdiChild MdiChild = new MdiChild()
             {
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
-                Content = new UserControlTCPMDIChild()
+                Content = new UserControlTCPMDIChild(new Models.Connection(){ConnectionType = Models.EConnectionType.TCPSocketServer, IPAdress ="N/A", Port = 4711 })
             };
             MainMdiContainer.Children.Add(MdiChild);
         }
