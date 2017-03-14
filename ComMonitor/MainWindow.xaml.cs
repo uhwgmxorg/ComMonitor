@@ -175,6 +175,11 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            SendATestMessagToEachMDIWindow(e);
+        }
+
+        private void SendATestMessagToEachMDIWindow(MouseButtonEventArgs e)
+        {
             // just for develoment
             foreach (var w in MainMdiContainer.Children)
             {

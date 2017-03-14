@@ -12,6 +12,19 @@ namespace ComMonitor.MDIWindows
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region INotify Propertie Changed
+        private HexMessageContainerUCAction containerUCAction;
+        public HexMessageContainerUCAction ContainerUCAction
+        {
+            get { return containerUCAction; }
+            set
+            {
+                if (value != ContainerUCAction)
+                {
+                    containerUCAction = value;
+                    OnPropertyChanged("ContainerUCAction");
+                };
+            }
+        }
         #endregion
 
         /// <summary>

@@ -87,6 +87,14 @@ namespace HexMessageViewerControl
         /******************************/
         #region Other Events
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            HexMessageContainerUCAction userControlActionObj = MyUserControlActionObj;
+            
+            MyUserControlActionObj = null;
+            MyUserControlActionObj = userControlActionObj;
+        }
+
         /// <summary>
         /// AddMessageHandler
         /// </summary>
