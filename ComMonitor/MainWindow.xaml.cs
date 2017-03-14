@@ -177,10 +177,9 @@ namespace ComMonitor
         {
             SendATestMessagToEachMDIWindow(e);
         }
-
         private void SendATestMessagToEachMDIWindow(MouseButtonEventArgs e)
         {
-            // just for develoment
+            // Just for develoment
             foreach (var w in MainMdiContainer.Children)
             {
                 UserControlTCPMDIChild wmdiuc = w.Content as UserControlTCPMDIChild;
