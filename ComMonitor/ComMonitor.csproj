@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Fred.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\TCP-IP32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChangeLogUtilityDll">
@@ -139,9 +139,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Fred.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -151,20 +148,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\About.gif" />
-    <Resource Include="Resources\Exit.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\New.gif" />
+    <Resource Include="Resources\TCP-IP32.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Fred.ico" />
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HexMessageViewerControl\HexMessageViewerControl.csproj">
       <Project>{3282d490-1f40-4ae6-8bdc-eed7f44e934e}</Project>
       <Name>HexMessageViewerControl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Edit2.png" />
+    <Resource Include="Resources\Exit2.png" />
+    <Resource Include="Resources\Message2.png" />
+    <Resource Include="Resources\New2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -128,6 +128,21 @@ namespace ComMonitor
         }
 
         /// <summary>
+        /// MenuItem_Click_Message
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_Message(object sender, RoutedEventArgs e)
+        {
+            MdiChild sw;
+            foreach (var w in MainMdiContainer.Children)
+            {
+                if(w.IsFocused)
+                    sw = w;
+            }
+        }
+
+        /// <summary>
         /// MenuItem_Click_About
         /// </summary>
         /// <param name="sender"></param>
