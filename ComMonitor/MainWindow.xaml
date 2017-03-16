@@ -55,7 +55,7 @@
             </Button>
             <Button Click="MenuItem_Click_About" ToolTip="Aout">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/ComMonitor;component/Resources/About.gif" Stretch="Fill" />
+                    <Image Source="/ComMonitor;component/Resources/information.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
         </ToolBar>
