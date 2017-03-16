@@ -19,6 +19,16 @@
                         <Image Source="/ComMonitor;component/Resources/New2.png" Stretch="Fill" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Load Connections" Click="MenuItem_Click_LoadConnections">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/Load.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save Connections" Click="MenuItem_Click_SaveConnections">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/Save.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="Tideled" Click="MenuItem_Click_Tideled"/>
@@ -46,6 +56,16 @@
             <Button Click="MenuItem_Click_NewConnectionsWindow" ToolTip="New Connections Window">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/New2.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_LoadConnections" ToolTip="Load Connections">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/Load.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_SaveConnections" ToolTip="Save Connections">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/Save.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
             <Button Click="MenuItem_Click_Message" ToolTip="Add Message">

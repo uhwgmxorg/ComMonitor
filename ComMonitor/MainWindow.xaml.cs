@@ -66,25 +66,43 @@ namespace ComMonitor
         }
 
         /// <summary>
+        /// MenuItem_Click_LoadConnections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_LoadConnections(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// MenuItem_Click_SaveConnections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_SaveConnections(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// MenuItem_Click_Tideled
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItem_Click_Tideled(object sender, RoutedEventArgs e)
-        {
-            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
-            double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
-            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
-            double sx = ActualWidth;
-            double anzW = MainMdiContainer.Children.Count;
+                {
+                    double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
+                    double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
+                    double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
+                    double sx = ActualWidth;
+                    double anzW = MainMdiContainer.Children.Count;
 
-            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
-            {
-                MainMdiContainer.Children[i].Width = sx - 4 * wf;
-                MainMdiContainer.Children[i].Height = sy / anzW;
-                MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
-            }
-        }
+                    for (int i = 0; i < MainMdiContainer.Children.Count; i++)
+                    {
+                        MainMdiContainer.Children[i].Width = sx - 4 * wf;
+                        MainMdiContainer.Children[i].Height = sy / anzW;
+                        MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
+                    }
+                }
 
         /// <summary>
         /// MenuItem_Click_Cascade

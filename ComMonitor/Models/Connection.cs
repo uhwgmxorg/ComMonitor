@@ -17,5 +17,7 @@ namespace ComMonitor.Models
         public string IPAdress { get; set; }
         [XmlElement("Port")]
         public int Port { get; set; }
+        [XmlElement("MultipleConnections")]
+        public bool MultipleConnections { get; set; }
     }
 }
