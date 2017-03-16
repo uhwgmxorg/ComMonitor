@@ -2,7 +2,9 @@
 using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using WPF.MDI;
@@ -134,12 +136,22 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_Message(object sender, RoutedEventArgs e)
         {
-            MdiChild sw;
+            MdiChild tw = GetTopMDIWindow();
+            ((UserControlTCPMDIChild)tw.Content).ProcessMessage(LST.RandomByteArray(), HexMessageViewerControl.Direction.Out);
+        }
+        private MdiChild GetTopMDIWindow()
+        {
+            MdiChild tw = null;
+            List<int> iZIndexList = new List<int>();
+
             foreach (var w in MainMdiContainer.Children)
-            {
-                if(w.IsFocused)
-                    sw = w;
-            }
+                iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
+
+            Debug.WriteLine(String.Join("; ", iZIndexList));
+            int max = iZIndexList.Max();
+            tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
+
+            return tw;
         }
 
         /// <summary>
