@@ -137,12 +137,16 @@ namespace ComMonitor
         private void MenuItem_Click_Message(object sender, RoutedEventArgs e)
         {
             MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
             ((UserControlTCPMDIChild)tw.Content).ProcessMessage(LST.RandomByteArray(), HexMessageViewerControl.Direction.Out);
         }
         private MdiChild GetTopMDIWindow()
         {
             MdiChild tw = null;
             List<int> iZIndexList = new List<int>();
+
+            if (MainMdiContainer.Children.Count == 0)
+                return null;
 
             foreach (var w in MainMdiContainer.Children)
                 iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
