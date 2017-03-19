@@ -147,9 +147,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\About.gif" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Icons32\open-diary.png" />
     <Resource Include="Resources\TCP-IP32.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -159,19 +157,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Edit2.png" />
-    <Resource Include="Resources\Exit2.png" />
-    <Resource Include="Resources\Message2.png" />
-    <Resource Include="Resources\New2.png" />
+    <Resource Include="Resources\Icons32\new.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\information.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Load.png" />
-    <Resource Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons16\add-folder-button.png" />
     <Resource Include="Resources\Icons16\blank-left-arrow.png" />
@@ -212,7 +199,6 @@
     <Resource Include="Resources\Icons32\left-arrow.png" />
     <Resource Include="Resources\Icons32\letter-with-stamp.png" />
     <Resource Include="Resources\Icons32\lightning-flash.png" />
-    <Resource Include="Resources\Icons32\open-diary.png" />
     <Resource Include="Resources\Icons32\open-letter-read-email.png" />
     <Resource Include="Resources\Icons32\refresh-arrows.png" />
     <Resource Include="Resources\Icons32\round-delete-button.png" />

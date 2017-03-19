@@ -4,19 +4,19 @@
         Icon="/ComMonitor;component/Resources/TCP-IP32.ico"
         xmlns:mdi="clr-namespace:WPF.MDI;assembly=WPF.MDI"
         Title="ComMonitor" Height="640" Width="1120" Loaded="Window_Loaded" MouseDown="Window_MouseDown">
-    <Grid >
-        <Menu Name="MainMenu" Margin="0" VerticalAlignment="Top" Height="28" Background="#FF858585" >
-            <MenuItem Header="File" Background="#FF858585">
+    <Grid Background="DarkGray" >
+        <Menu Name="MainMenu" Margin="0" VerticalAlignment="Top" Height="28" >
+            <MenuItem Header="File">
                 <MenuItem Header="Exit" Click="MenuItem_Click_Exit">
                     <MenuItem.Icon>
                         <Image Source="/ComMonitor;component/Resources/Icons32/round-delete-button.png" Stretch="Fill" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Connections" Background="#FF858585">
+            <MenuItem Header="Connections">
                 <MenuItem Header="New Connections Window" Click="MenuItem_Click_NewConnectionsWindow">
                     <MenuItem.Icon>
-                        <Image Source="/ComMonitor;component/Resources/Icons32/round-done-button.png" Stretch="Fill" />
+                        <Image Source="/ComMonitor;component/Resources/Icons32/new.png" Stretch="Fill" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Load Connections" Click="MenuItem_Click_LoadConnections">
@@ -30,15 +30,14 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Window" Background="#FF858585">
+            <MenuItem Header="Window">
                 <MenuItem Header="Tideled" Click="MenuItem_Click_Tideled"/>
                 <MenuItem Header="Cascade" Click="MenuItem_Click_Cascade"/>
                 <Separator/>
                 <MenuItem Header="Close all" Click="MenuItem_Click_CloseAll"/>
             </MenuItem>
-            <MenuItem Header="?" Background="#FF858585">
-                <MenuItem Header="Change Log" Click="MenuItem_Click_ChangeLog">
-                </MenuItem>
+            <MenuItem Header="?">
+                <MenuItem Header="Change Log" Click="MenuItem_Click_ChangeLog"/>
                 <Separator/>
                 <MenuItem Header="About" Click="MenuItem_Click_About">
                     <MenuItem.Icon>
@@ -47,7 +46,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <ToolBar Name="MainToolBar" Margin="0,28,0,0" Height="31" VerticalAlignment="Top" Background="#FF858585">
+        <ToolBar Name="MainToolBar" Margin="0,28,0,0" Height="31" VerticalAlignment="Top" Background="#FF99B4D3">
             <Button Click="MenuItem_Click_Exit" ToolTip="Exit">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/Icons32/round-delete-button.png" Stretch="Fill" />
@@ -55,7 +54,7 @@
             </Button>
             <Button Click="MenuItem_Click_NewConnectionsWindow" ToolTip="New Connections Window">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/ComMonitor;component/Resources/Icons32/round-done-button.png" Stretch="Fill" />
+                    <Image Source="/ComMonitor;component/Resources/Icons32/new.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
             <Button Click="MenuItem_Click_LoadConnections" ToolTip="Load Connections">
