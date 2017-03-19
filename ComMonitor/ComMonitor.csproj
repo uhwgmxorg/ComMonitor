@@ -171,6 +171,55 @@
     <Resource Include="Resources\Load.png" />
     <Resource Include="Resources\Save.png" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons16\add-folder-button.png" />
+    <Resource Include="Resources\Icons16\blank-left-arrow.png" />
+    <Resource Include="Resources\Icons16\delete-button.png" />
+    <Resource Include="Resources\Icons16\download-arrow.png" />
+    <Resource Include="Resources\Icons16\earth-globe.png" />
+    <Resource Include="Resources\Icons16\earth-globe2.png" />
+    <Resource Include="Resources\Icons16\edit-button.png" />
+    <Resource Include="Resources\Icons16\email-envelope-button.png" />
+    <Resource Include="Resources\Icons16\extract-button.png" />
+    <Resource Include="Resources\Icons16\file-folder.png" />
+    <Resource Include="Resources\Icons16\floppy-disk-save-button.png" />
+    <Resource Include="Resources\Icons16\keep-in-box.png" />
+    <Resource Include="Resources\Icons16\left-arrow.png" />
+    <Resource Include="Resources\Icons16\letter-with-stamp.png" />
+    <Resource Include="Resources\Icons16\lightning-flash.png" />
+    <Resource Include="Resources\Icons16\open-diary.png" />
+    <Resource Include="Resources\Icons16\open-letter-read-email.png" />
+    <Resource Include="Resources\Icons16\refresh-arrows.png" />
+    <Resource Include="Resources\Icons16\round-delete-button.png" />
+    <Resource Include="Resources\Icons16\round-done-button.png" />
+    <Resource Include="Resources\Icons16\round-help-button.png" />
+    <Resource Include="Resources\Icons16\text-documents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons32\add-folder-button.png" />
+    <Resource Include="Resources\Icons32\blank-left-arrow.png" />
+    <Resource Include="Resources\Icons32\delete-button.png" />
+    <Resource Include="Resources\Icons32\download-arrow.png" />
+    <Resource Include="Resources\Icons32\earth-globe.png" />
+    <Resource Include="Resources\Icons32\earth-globe2.png" />
+    <Resource Include="Resources\Icons32\edit-button.png" />
+    <Resource Include="Resources\Icons32\email-envelope-button.png" />
+    <Resource Include="Resources\Icons32\extract-button.png" />
+    <Resource Include="Resources\Icons32\file-folder.png" />
+    <Resource Include="Resources\Icons32\floppy-disk-save-button.png" />
+    <Resource Include="Resources\Icons32\keep-in-box.png" />
+    <Resource Include="Resources\Icons32\left-arrow.png" />
+    <Resource Include="Resources\Icons32\letter-with-stamp.png" />
+    <Resource Include="Resources\Icons32\lightning-flash.png" />
+    <Resource Include="Resources\Icons32\open-diary.png" />
+    <Resource Include="Resources\Icons32\open-letter-read-email.png" />
+    <Resource Include="Resources\Icons32\refresh-arrows.png" />
+    <Resource Include="Resources\Icons32\round-delete-button.png" />
+    <Resource Include="Resources\Icons32\round-done-button.png" />
+    <Resource Include="Resources\Icons32\round-help-button.png" />
+    <Resource Include="Resources\Icons32\text-documents.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
