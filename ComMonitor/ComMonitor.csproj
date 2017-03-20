@@ -96,6 +96,8 @@
     </Compile>
     <Compile Include="LocalTools\Globals.cs" />
     <Compile Include="LocalTools\LTS.cs" />
+    <Compile Include="LocalTools\MinaTCPClient.cs" />
+    <Compile Include="LocalTools\MinaTCPServer.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

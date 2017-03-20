@@ -59,7 +59,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartServer(Connection myConnection)
         {
-            _logger.Info(String.Format("StartServer Port {0} MultipleConnections {1}",myConnection.Port,myConnection.MultipleConnections));
+            _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartClient(Connection myConnection)
         {
-            _logger.Info(String.Format("StartClient Ip {0} Port {1} MultipleConnections {2}", myConnection.IPAdress, myConnection.Port, myConnection.MultipleConnections));
+            _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
         }
 
         /// <summary>
