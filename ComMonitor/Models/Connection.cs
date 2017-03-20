@@ -1,4 +1,7 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace ComMonitor.Models
 {
@@ -19,5 +22,116 @@ namespace ComMonitor.Models
         public int Port { get; set; }
         [XmlElement("MultipleConnections")]
         public bool MultipleConnections { get; set; }
+
+        [XmlIgnore]
+        static public string FileName { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Connection()
+        {
+            ConnectionType = EConnectionType.TCPSocketServer;
+            SetDefault();
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="fileName"></param>
+        public Connection(string fileName)
+        {
+            ConnectionType = EConnectionType.TCPSocketServer;
+            SetDefault();
+            FileName = fileName;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="fileName"></param>
+        public Connection(int port,string fileName)
+        {
+            ConnectionType = EConnectionType.TCPSocketServer;
+            SetDefault();
+            Port = port;
+            FileName = fileName;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="iPAdress"></param>
+        /// <param name="port"></param>
+        /// <param name="fileName"></param>
+        public Connection(string iPAdress, int port, string fileName)
+        {
+            ConnectionType = EConnectionType.TCPSocketServer;
+            IPAdress = iPAdress;
+            Port = port;
+            FileName = fileName;
+        }
+
+        /// <summary>
+        /// SetDefault
+        /// </summary>
+        public void SetDefault()
+        {
+            ConnectionType = EConnectionType.TCPSocketServer;
+            IPAdress = "127.0.0.1";
+            Port = 4711;
+            MultipleConnections = false;
+            FileName = "Connection01.xml";
+        }
+
+        /// <summary>
+        /// SaveClass
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="file"></param>
+        static public void Save(Connection obj)
+        {
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Connection));
+                using (StreamWriter wr = new StreamWriter(FileName))
+                {
+                    xs.Serialize(wr, obj);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// LoadClass
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        static public Connection Load()
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Connection));
+
+                using (StreamReader rd = new StreamReader(FileName))
+                {
+                    var Obj = serializer.Deserialize(rd);
+                    return (Connection)Obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Connection con = new Connection();
+                con.SetDefault();
+                return con;
+            }
+        }
     }
 }
