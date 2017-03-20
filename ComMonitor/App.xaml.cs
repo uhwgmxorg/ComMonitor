@@ -17,10 +17,11 @@ namespace ComMonitor
         {
             try
             {
-                Dispatcher.UnhandledException += OnDispatcherUnhandledException;
-                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnCurrentDomainUnhandledException);
                 NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("NLog.config");
                 _logger = NLog.LogManager.GetCurrentClassLogger();
+
+                Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnCurrentDomainUnhandledException);
 
                 string StrVersion;
 #if DEBUG
@@ -34,6 +35,13 @@ namespace ComMonitor
             {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
+        }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~App()
+        {
         }
 
         /// <summary>
@@ -70,6 +78,5 @@ namespace ComMonitor
             _logger.Error(e.ExceptionObject.ToString());
             Environment.Exit(0);
         }
-
     }
 }

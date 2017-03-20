@@ -60,7 +60,7 @@ namespace ComMonitor
             {
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
-                Content = new UserControlTCPMDIChild(new Models.Connection(){ConnectionType = Models.EConnectionType.TCPSocketServer, IPAdress ="N/A", Port = 4711 })
+                Content = new UserControlTCPMDIChild(ConfigNewConnectionDlg.ConnectionObj)
             };
             MainMdiContainer.Children.Add(MdiChild);
         }
@@ -156,7 +156,7 @@ namespace ComMonitor
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
-            ((UserControlTCPMDIChild)tw.Content).ProcessMessage(LST.RandomByteArray(), HexMessageViewerControl.Direction.Out);
+                ((UserControlTCPMDIChild)tw.Content).ProcessMessage(LST.RandomByteArray(), HexMessageViewerControl.Direction.Out);
         }
         private MdiChild GetTopMDIWindow()
         {
@@ -200,7 +200,7 @@ namespace ComMonitor
         private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
         {
             _logger.Info("Closing ComMonitor");
-            Close();
+            Environment.Exit(0);
         }
 
         #endregion
@@ -241,6 +241,17 @@ namespace ComMonitor
                 wmdiuc.ProcessMessage(LST.RandomByteArray(), e.ChangedButton == MouseButton.Right ? HexMessageViewerControl.Direction.In : HexMessageViewerControl.Direction.Out);
                 Debug.WriteLine("Send Debug Message");
             }
+        }
+
+        /// <summary>
+        /// Window_Closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _logger.Info("Closing ComMonitor");
+            Environment.Exit(0);
         }
 
         #endregion

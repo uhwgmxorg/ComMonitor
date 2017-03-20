@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Icon="/ComMonitor;component/Resources/TCP-IP32.ico"
         xmlns:mdi="clr-namespace:WPF.MDI;assembly=WPF.MDI"
-        Title="ComMonitor" Height="640" Width="1120" Loaded="Window_Loaded" MouseDown="Window_MouseDown">
+        Title="ComMonitor" Height="640" Width="1120" Loaded="Window_Loaded" MouseDown="Window_MouseDown" Closed="Window_Closed">
     <Grid Background="DarkGray" >
         <Menu Name="MainMenu" Margin="0" VerticalAlignment="Top" Height="28" >
             <MenuItem Header="File">

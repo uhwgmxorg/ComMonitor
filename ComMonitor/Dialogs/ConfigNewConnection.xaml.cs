@@ -129,10 +129,13 @@ namespace ComMonitor.Dialogs
                 case EConnectionType.TCPSocketServer:
                     textBoxIp.IsEnabled = false;
                     textBoxPort.IsEnabled = true;
+                    checkBoxMultipleConnections.IsEnabled = true;
                     break;
                 case EConnectionType.TCPSocketCient:
                     textBoxIp.IsEnabled = true;
                     textBoxPort.IsEnabled = true;
+                    MultipleConnections = false;
+                    checkBoxMultipleConnections.IsEnabled = false;
                     break;
             }
         }

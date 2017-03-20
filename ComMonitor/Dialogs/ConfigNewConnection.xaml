@@ -10,11 +10,11 @@
     <Grid>
         <RadioButton Content="Server" IsChecked="{Binding Server}" Margin="97.333,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="58.667" Foreground="Black" FontWeight="Bold"/>
         <RadioButton Content="Client" IsChecked="{Binding Client}" Margin="97.333,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="15" Width="63.333" Foreground="Black" FontWeight="Bold" d:LayoutOverrides="VerticalAlignment"/>
-        <Label Content="IP" FontFamily="Helvetica Neue LT Pro" FontSize="16" Foreground="Black" Margin="22.333,70,0,70" IsEnabled="False" HorizontalAlignment="Left" Width="104" />
-        <TextBox Name="textBoxIp" Text="{Binding IP}" Margin="97.333,69,0,76" HorizontalAlignment="Left" Width="120" Background="White" FontSize="14.667" FontFamily="Helvetica Neue LT Pro" />
+        <Label Content="IP" FontFamily="Helvetica Neue LT Pro" FontSize="16" Foreground="Black" Margin="22.333,70,0,0" IsEnabled="False" HorizontalAlignment="Left" Width="104" Height="29" VerticalAlignment="Top" />
+        <TextBox Name="textBoxIp" Text="{Binding IP}" Margin="97.333,69,0,0" HorizontalAlignment="Left" Width="120" Background="White" FontSize="14.667" FontFamily="Helvetica Neue LT Pro" Height="24" VerticalAlignment="Top" />
         <Label Content="Port" FontFamily="Helvetica Neue LT Pro" FontSize="16" Foreground="Black" Height="29" Margin="22.333,99,0,0" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Left" Width="104" />
         <TextBox Name="textBoxPort" Text="{Binding Port}" Height="24" Margin="97.333,98,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58" Background="White" FontSize="14.667" FontFamily="Helvetica Neue LT Pro" />
-        <CheckBox Content="MultipleConnections" IsChecked="{Binding MultipleConnections}" HorizontalAlignment="Left" Margin="193,24,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="checkBoxMultipleConnections" Content="MultipleConnections" IsChecked="{Binding MultipleConnections}" HorizontalAlignment="Left" Margin="193,24,0,0" VerticalAlignment="Top"/>
         <Button Content="Ok" IsDefault="True" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Ok"/>
         <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Cancel"/>
     </Grid>
