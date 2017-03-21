@@ -3,6 +3,8 @@ using HexMessageViewerControl;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System;
+using ComMonitor.LocalTools;
+using System.Net;
 
 namespace ComMonitor.MDIWindows
 {
@@ -14,6 +16,9 @@ namespace ComMonitor.MDIWindows
     {
         private NLog.Logger _logger;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private MinaTCPServer _minaTCPServer;
+        private MinaTCPClient _minaTCPClient;
 
         #region INotify Propertie Changed
         private HexMessageContainerUCAction containerUCAction;
@@ -59,6 +64,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartServer(Connection myConnection)
         {
+            _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
             _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
         }
 
@@ -68,6 +74,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartClient(Connection myConnection)
         {
+            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);
             _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
         }
 

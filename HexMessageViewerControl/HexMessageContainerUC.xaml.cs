@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,11 @@ namespace HexMessageViewerControl
     public partial class HexMessageContainerUC : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public delegate void ProcessMessageDelegate(byte[] message, Direction direction);
+        public virtual System.Windows.Threading.Dispatcher DispatcherObjectMessage { get; protected set; }
+
+        private Logger _logger;
 
         #region Dependencie Propertys
         public HexMessageContainerUCAction MyUserControlActionObj
@@ -30,8 +36,11 @@ namespace HexMessageViewerControl
         /// </summary>
         public HexMessageContainerUC()
         {
+            _logger = LogManager.GetCurrentClassLogger();
             InitializeComponent();
             DataContext = this;
+
+            DispatcherObjectMessage = System.Windows.Threading.Dispatcher.CurrentDispatcher;
 
             MyUserControlActionObj = new HexMessageContainerUCAction();
 
@@ -105,6 +114,30 @@ namespace HexMessageViewerControl
             AddMessage(message,direction);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="direction"></param>
+        private void ProcessMessage(byte[] message, Direction direction)
+        {
+            if (DispatcherObjectMessage.Thread != System.Threading.Thread.CurrentThread)
+                DispatcherObjectMessage.Invoke(new ProcessMessageDelegate(ProcessMessage), System.Windows.Threading.DispatcherPriority.ApplicationIdle, message, direction);
+            else
+            {
+                try
+                {
+                    LineStackPanel.Children.Add(new HexMessageUC { HexContentByte = message, MessageDirection = direction });
+                    ScrollViewer1.ScrollToBottom();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Exception in ProcessMessage " + ex.Message);
+                }
+            }
+        }
+
+
         #endregion
         /******************************/
         /*      Other Functions       */
@@ -118,8 +151,7 @@ namespace HexMessageViewerControl
         /// <param name="direction"></param>
         public void AddMessage(byte[] message, Direction direction)
         {
-            LineStackPanel.Children.Add(new HexMessageUC { HexContentByte = message, MessageDirection = direction });
-            ScrollViewer1.ScrollToBottom();
+            ProcessMessage(message, direction);
         }
 
         /// <summary>

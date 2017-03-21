@@ -41,6 +41,15 @@
     <Reference Include="ChangeLogUtilityDll">
       <HintPath>..\lib\ChangeLogUtilityDll.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\lib\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\lib\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Mina.NET">
+      <HintPath>..\lib\Mina.NET.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\lib\NLog.dll</HintPath>
     </Reference>
@@ -98,6 +107,10 @@
     <Compile Include="LocalTools\LTS.cs" />
     <Compile Include="LocalTools\MinaTCPClient.cs" />
     <Compile Include="LocalTools\MinaTCPServer.cs" />
+    <Compile Include="LocalTools\ProtocolCodecFactory.cs" />
+    <Compile Include="LocalTools\TCPClientProtocolManager.cs" />
+    <Compile Include="LocalTools\TCPProtocolManager.cs" />
+    <Compile Include="LocalTools\TCPServerProtocolManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
