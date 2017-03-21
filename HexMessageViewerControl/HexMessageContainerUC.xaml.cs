@@ -115,7 +115,7 @@ namespace HexMessageViewerControl
         }
 
         /// <summary>
-        /// 
+        /// ProcessMessage
         /// </summary>
         /// <param name="message"></param>
         /// <param name="direction"></param>

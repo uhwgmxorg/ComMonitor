@@ -79,9 +79,27 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// SendMessage
+        /// </summary>
+        /// <param name="message"></param>
+        public void SendMessage(byte[] message)
+        {
+            switch (MyConnection.ConnectionType)
+            {
+                case EConnectionType.TCPSocketServer:
+                    _minaTCPServer.Send(message);
+                    break;
+                case EConnectionType.TCPSocketCient:
+                    _minaTCPClient.Send(message);
+                    break;
+            }
+            ProcessMessage(message, Direction.Out);
+        }
+
+        /// <summary>
         /// ProcessMessage
         /// </summary>
-        public void ProcessMessage(byte[] message,Direction direction)
+        private void ProcessMessage(byte[] message,Direction direction)
         {
             hexUC.AddMessage(message, direction);
         }

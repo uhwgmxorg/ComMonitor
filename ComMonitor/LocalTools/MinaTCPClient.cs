@@ -11,11 +11,11 @@ namespace ComMonitor.LocalTools
 
         private Logger _logger;
 
-        public TCPClientProtocolManager Manager { get; set; }
+        private TCPClientProtocolManager Manager { get; set; }
         public Boolean Connected { get; set; }
 
-        public IPAddress ServerIpAddress { get; set; }
-        public int Port { get; set; }
+        private IPAddress _serverIpAddress;
+        private Int32 _port;
         DProcessMessage CallProcessMessage;
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace ComMonitor.LocalTools
             _logger = LogManager.GetCurrentClassLogger();
             Connected = false;
 
-            ServerIpAddress = serverIPAddress;
-            Port = port;
+            _serverIpAddress = serverIPAddress;
+            _port = port;
             CallProcessMessage = callProcessMessage;
 
             Manager = new TCPClientProtocolManager();
@@ -57,9 +57,21 @@ namespace ComMonitor.LocalTools
             Manager.Connector.SessionIdle += HandleIdle;
             Manager.Connector.MessageReceived += HandleReceived;
 
-            Manager.ServerIpAddress = ServerIpAddress;
-            Manager.Port = Port;
+            Manager.ServerIpAddress = _serverIpAddress;
+            Manager.Port = _port;
             Manager.ConnectToServer();
+        }
+
+        /// <summary>
+        /// Send
+        /// </summary>
+        /// <param name="message"></param>
+        public void Send(byte[] message)
+        {
+            Manager.Send(message);
+
+            _logger.Info(String.Format("Send data {0} Bytes", message.Length));
+            _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
         }
 
         /******************************/
@@ -122,7 +134,7 @@ namespace ComMonitor.LocalTools
                 CallProcessMessage(bytes, HexMessageViewerControl.Direction.In);
 
             _logger.Info(String.Format("Received data {0} Bytes", bytes.Length));
-            _logger.Trace(String.Format("Received data => {0} | {1} |", ByteArrayToHexString(bytes), ByteArrayToAsciiString(bytes)));
+            _logger.Trace(String.Format("Received data <= {0} | {1} |", ByteArrayToHexString(bytes), ByteArrayToAsciiString(bytes)));
         }
         private string ByteArrayToHexString(byte[] buf)
         {

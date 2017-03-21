@@ -4,11 +4,7 @@ using Mina.Filter.Codec;
 using Mina.Filter.Logging;
 using Mina.Transport.Socket;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ComMonitor.LocalTools
 {
@@ -23,7 +19,6 @@ namespace ComMonitor.LocalTools
         public TCPClientProtocolManager()
         {
         }
-
 
         /// <summary>
         /// InitializeServer
@@ -65,6 +60,5 @@ namespace ComMonitor.LocalTools
                 Console.WriteLine(String.Format("Exception {0}", ex.Message));
             }
         }
-
     }
 }

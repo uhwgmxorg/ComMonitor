@@ -11,7 +11,13 @@ namespace ComMonitor.LocalTools
     public class TCPServerProtocolManager : TCPProtocolManager
     {
         public IoAcceptor Acceptor { get; set; }
-        public IoSession Session { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public TCPServerProtocolManager()
+        {
+        }
 
         /// <summary>
         /// InitializeServer
@@ -45,13 +51,6 @@ namespace ComMonitor.LocalTools
         public void StartServer()
         {
             Acceptor.Bind(new IPEndPoint(IPAddress.Any, Port));
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public TCPServerProtocolManager()
-        {
         }
     }
 }

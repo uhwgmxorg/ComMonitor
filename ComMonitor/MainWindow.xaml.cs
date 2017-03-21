@@ -156,7 +156,7 @@ namespace ComMonitor
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
-                ((UserControlTCPMDIChild)tw.Content).ProcessMessage(LST.RandomByteArray(), HexMessageViewerControl.Direction.Out);
+                ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
         }
         private MdiChild GetTopMDIWindow()
         {
@@ -221,26 +221,6 @@ namespace ComMonitor
 #else
             this.Title += "    Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
 #endif
-        }
-
-        /// <summary>
-        /// Window_MouseDown
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            SendATestMessagToEachMDIWindow(e);
-        }
-        private void SendATestMessagToEachMDIWindow(MouseButtonEventArgs e)
-        {
-            // Just for develoment
-            foreach (var w in MainMdiContainer.Children)
-            {
-                UserControlTCPMDIChild wmdiuc = w.Content as UserControlTCPMDIChild;
-                wmdiuc.ProcessMessage(LST.RandomByteArray(), e.ChangedButton == MouseButton.Right ? HexMessageViewerControl.Direction.In : HexMessageViewerControl.Direction.Out);
-                Debug.WriteLine("Send Debug Message");
-            }
         }
 
         /// <summary>
