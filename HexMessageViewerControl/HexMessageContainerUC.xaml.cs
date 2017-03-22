@@ -96,6 +96,11 @@ namespace HexMessageViewerControl
         /******************************/
         #region Other Events
 
+        /// <summary>
+        /// UserControl_Loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             HexMessageContainerUCAction userControlActionObj = MyUserControlActionObj;
@@ -136,7 +141,6 @@ namespace HexMessageViewerControl
                 }
             }
         }
-
 
         #endregion
         /******************************/

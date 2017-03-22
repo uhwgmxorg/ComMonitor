@@ -83,6 +83,9 @@ namespace ComMonitor.Dialogs
 
         public Connection ConnectionObj { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ConfigNewConnection()
         {
             InitializeComponent();
@@ -92,20 +95,55 @@ namespace ComMonitor.Dialogs
             SetProperties();
         }
 
+        /******************************/
+        /*       Button Events        */
+        /******************************/
+        #region Button Events
+
+        /// <summary>
+        /// Button_Click_Cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_Cancel(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
 
+        /// <summary>
+        /// Button_Click_Ok
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
             SetConnectionObj();
-            Connection.Save(ConnectionObj);
             Close();
         }
 
+        #endregion
+        /******************************/
+        /*      Menu Events          */
+        /******************************/
+        #region Menu Events
+
+        #endregion
+        /******************************/
+        /*      Other Events          */
+        /******************************/
+        #region Other Events
+
+        #endregion
+        /******************************/
+        /*      Other Functions       */
+        /******************************/
+        #region Other Functions
+
+        /// <summary>
+        /// SetConnectionObj
+        /// </summary>
         private void SetConnectionObj()
         {
             ConnectionObj.ConnectionType = ConnectonType;
@@ -114,6 +152,9 @@ namespace ComMonitor.Dialogs
             ConnectionObj.MultipleConnections = MultipleConnections;
         }
 
+        /// <summary>
+        /// SetProperties
+        /// </summary>
         private void SetProperties()
         {
             ConnectonType = ConnectionObj.ConnectionType;
@@ -122,6 +163,9 @@ namespace ComMonitor.Dialogs
             MultipleConnections = ConnectionObj.MultipleConnections;
         }
 
+        /// <summary>
+        /// EnableDisableControls
+        /// </summary>
         private void EnableDisableControls()
         {
             switch(ConnectonType)
@@ -140,10 +184,15 @@ namespace ComMonitor.Dialogs
             }
         }
 
+        /// <summary>
+        /// OnPropertyChanged
+        /// </summary>
+        /// <param name="p"></param>
         private void OnPropertyChanged(string p)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(p));
         }
+        #endregion
     }
 }
