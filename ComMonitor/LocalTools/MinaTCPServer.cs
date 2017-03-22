@@ -70,6 +70,14 @@ namespace ComMonitor.LocalTools
             _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
         }
 
+        /// <summary>
+        /// Close
+        /// </summary>
+        public void Close()
+        {
+            Manager.Session.Close(true);
+        }
+
         /******************************/
         /*          Events            */
         /******************************/

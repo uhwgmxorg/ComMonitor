@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:hmvc="clr-namespace:HexMessageViewerControl;assembly=HexMessageViewerControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" >
+             d:DesignHeight="300" d:DesignWidth="300" Unloaded="mDIWindow_Unloaded" >
     <Grid>
         <hmvc:HexMessageContainerUC Name="hexUC" MyUserControlActionObj="{Binding DataContext.ContainerUCAction, ElementName=mDIWindow, Mode=TwoWay}" Background="White"/>
     </Grid>

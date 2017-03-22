@@ -76,10 +76,11 @@ namespace ComMonitor
             double AcParentWindoWidth = ActualWidth;
 
             string configFileName = LST.OpenFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
-            Connection newConnection = Connection.Load(configFileName);
-
-            if (newConnection == null)
+            if (String.IsNullOrEmpty(configFileName))
                 return;
+
+            Connection newConnection = Connection.Load(configFileName);
+            _logger.Info(String.Format("Load Connection File {0}", configFileName));
 
             MdiChild MdiChild = new MdiChild()
             {
@@ -97,11 +98,20 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_SaveConnections(object sender, RoutedEventArgs e)
         {
-            string configFileName = LST.SaveFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
-
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
+            if (tw == null)
+            {
+                Console.Beep();
+                _logger.Info("Nothing to save!!");
+                return;
+            }
+
+            string configFileName = LST.SaveFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
+            if (String.IsNullOrEmpty(configFileName))
+                return;
+
             Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
+            _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
 
         /// <summary>

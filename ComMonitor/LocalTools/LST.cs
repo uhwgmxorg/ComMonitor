@@ -58,12 +58,19 @@ namespace ComMonitor.LocalTools
         /// <returns></returns>
         public static string SaveFileDialog(string mask = "Xml Datein (*.xml)|*.xml;|Alle Dateien (*.*)|*.*\"", string initialFileName = "NewConnection")
         {
+            string resultFileName;
             string Location = AppDomain.CurrentDomain.BaseDirectory;
             string Filter = mask;
             var dialog = new Microsoft.Win32.SaveFileDialog { FileName = initialFileName, InitialDirectory = Location, Filter = Filter };
-            dialog.ShowDialog();
+            var result = dialog.ShowDialog();
 
-            return dialog.FileName;
+            resultFileName = dialog.FileName;
+
+            // detect Cancel
+            if (result == false)
+                resultFileName = "";
+
+            return resultFileName;
         }
 
     }

@@ -105,6 +105,24 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// mDIWindow_Unloaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mDIWindow_Unloaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            switch (MyConnection.ConnectionType)
+            {
+                case EConnectionType.TCPSocketServer:
+                    _minaTCPServer.Close();
+                    break;
+                case EConnectionType.TCPSocketCient:
+                    _minaTCPClient.Close();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// OnPropertyChanged
         /// </summary>
         /// <param name="p"></param>
