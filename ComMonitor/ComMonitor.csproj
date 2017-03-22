@@ -104,7 +104,7 @@
       <DependentUpon>EditMessages.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalTools\Globals.cs" />
-    <Compile Include="LocalTools\LTS.cs" />
+    <Compile Include="LocalTools\LST.cs" />
     <Compile Include="LocalTools\MinaTCPClient.cs" />
     <Compile Include="LocalTools\MinaTCPServer.cs" />
     <Compile Include="LocalTools\ProtocolCodecFactory.cs" />

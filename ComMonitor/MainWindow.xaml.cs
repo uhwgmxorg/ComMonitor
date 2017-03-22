@@ -1,6 +1,7 @@
 ﻿using ComMonitor.Dialogs;
 using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
+using ComMonitor.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -71,6 +72,22 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_LoadConnections(object sender, RoutedEventArgs e)
         {
+            double AcParentWindoHeight = ActualHeight;
+            double AcParentWindoWidth = ActualWidth;
+
+            string configFileName = LST.OpenFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
+            Connection newConnection = Connection.Load(configFileName);
+
+            if (newConnection == null)
+                return;
+
+            MdiChild MdiChild = new MdiChild()
+            {
+                Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
+                Width = AcParentWindoWidth * 0.6,
+                Content = new UserControlTCPMDIChild(newConnection)
+            };
+            MainMdiContainer.Children.Add(MdiChild);
         }
 
         /// <summary>
@@ -80,6 +97,11 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_SaveConnections(object sender, RoutedEventArgs e)
         {
+            string configFileName = LST.SaveFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
+
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+            Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
         }
 
         /// <summary>
@@ -88,20 +110,20 @@ namespace ComMonitor
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItem_Click_Tideled(object sender, RoutedEventArgs e)
-                {
-                    double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
-                    double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
-                    double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
-                    double sx = ActualWidth;
-                    double anzW = MainMdiContainer.Children.Count;
+        {
+            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
+            double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
+            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
+            double sx = ActualWidth;
+            double anzW = MainMdiContainer.Children.Count;
 
-                    for (int i = 0; i < MainMdiContainer.Children.Count; i++)
-                    {
-                        MainMdiContainer.Children[i].Width = sx - 4 * wf;
-                        MainMdiContainer.Children[i].Height = sy / anzW;
-                        MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
-                    }
-                }
+            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
+            {
+                MainMdiContainer.Children[i].Width = sx - 4 * wf;
+                MainMdiContainer.Children[i].Height = sy / anzW;
+                MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
+            }
+        }
 
         /// <summary>
         /// MenuItem_Click_Cascade
@@ -155,7 +177,7 @@ namespace ComMonitor
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
-                ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
+            ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
         }
         private MdiChild GetTopMDIWindow()
         {
