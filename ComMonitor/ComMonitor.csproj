@@ -240,6 +240,16 @@
   <ItemGroup>
     <Resource Include="Resources\ToolBar01\Exit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\Cascade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\CloseAll.png" />
+    <Resource Include="Resources\ToolBar01\Tideled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\Logg.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

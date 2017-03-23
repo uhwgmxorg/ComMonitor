@@ -113,6 +113,16 @@ namespace ComMonitor
             Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
             _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
+        
+        /// <summary>
+        /// MenuItem_Click_Send
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_Send(object sender, RoutedEventArgs e)
+        {
+            Console.Beep();
+        }
 
         /// <summary>
         /// MenuItem_Click_Tideled

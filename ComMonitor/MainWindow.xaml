@@ -31,13 +31,29 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Window">
-                <MenuItem Header="Tideled" Click="MenuItem_Click_Tideled"/>
-                <MenuItem Header="Cascade" Click="MenuItem_Click_Cascade"/>
+                <MenuItem Header="Tideled" Click="MenuItem_Click_Tideled">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/Tideled.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Cascade" Click="MenuItem_Click_Cascade">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/Cascade.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Close all" Click="MenuItem_Click_CloseAll"/>
+                <MenuItem Header="Close all" Click="MenuItem_Click_CloseAll">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/CloseAll.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="?">
-                <MenuItem Header="Change Log" Click="MenuItem_Click_ChangeLog"/>
+                <MenuItem Header="Change Log" Click="MenuItem_Click_ChangeLog">
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/Logg.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="About" Click="MenuItem_Click_About">
                     <MenuItem.Icon>
@@ -65,6 +81,11 @@
             <Button Click="MenuItem_Click_SaveConnections" ToolTip="Save Connections">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Save.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_Send" ToolTip="Save Connections">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/Send.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
             <Button Click="MenuItem_Click_Message" ToolTip="Add Message">
