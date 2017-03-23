@@ -222,6 +222,24 @@
     <Resource Include="Resources\Icons32\round-help-button.png" />
     <Resource Include="Resources\Icons32\text-documents.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\About.png" />
+    <Resource Include="Resources\ToolBar01\AddMessage.png" />
+    <Resource Include="Resources\ToolBar01\AddNewMessage.png" />
+    <Resource Include="Resources\ToolBar01\DelteAll.png" />
+    <Resource Include="Resources\ToolBar01\EditAndReplace.png" />
+    <Resource Include="Resources\ToolBar01\EditMessage.png" />
+    <Resource Include="Resources\ToolBar01\New.png" />
+    <Resource Include="Resources\ToolBar01\Open.png" />
+    <Resource Include="Resources\ToolBar01\OpenMessage.png" />
+    <Resource Include="Resources\ToolBar01\Save.png" />
+    <Resource Include="Resources\ToolBar01\SaveAsMessage.png" />
+    <Resource Include="Resources\ToolBar01\SaveMessage.png" />
+    <Resource Include="Resources\ToolBar01\Send.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\Exit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
