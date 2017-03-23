@@ -121,7 +121,9 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_Send(object sender, RoutedEventArgs e)
         {
-            Console.Beep();
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+            ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
         }
 
         /// <summary>
@@ -195,9 +197,18 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_Message(object sender, RoutedEventArgs e)
         {
+        }
+        
+        /// <summary>
+        /// MenuItem_Click_DeleteAll
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_DeleteAll(object sender, RoutedEventArgs e)
+        {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
-            ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
+            ((UserControlTCPMDIChild)tw.Content).DeleteAllMessages();
         }
         private MdiChild GetTopMDIWindow()
         {

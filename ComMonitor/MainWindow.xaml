@@ -93,6 +93,11 @@
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/AddMessage.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
+            <Button Click="MenuItem_Click_DeleteAll" ToolTip="DeleteAll Messages">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/DelteAll.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
             <Button Click="MenuItem_Click_About" ToolTip="Aout">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/About.png" Stretch="Fill" />

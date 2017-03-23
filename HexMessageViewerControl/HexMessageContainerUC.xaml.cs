@@ -159,6 +159,14 @@ namespace HexMessageViewerControl
         }
 
         /// <summary>
+        /// ClearAllMessage
+        /// </summary>
+        public void ClearAllMessage()
+        {
+            LineStackPanel.Children.Clear();
+        }
+
+        /// <summary>
         /// OnPropertyChanged
         /// </summary>
         /// <param name="p"></param>

@@ -97,6 +97,14 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// DeleteAllMessages
+        /// </summary>
+        public void DeleteAllMessages()
+        {
+            hexUC.ClearAllMessage();
+        }
+
+        /// <summary>
         /// ProcessMessage
         /// </summary>
         private void ProcessMessage(byte[] message,Direction direction)
