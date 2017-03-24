@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\TCP-IP32.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\TCP-IP-2-32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChangeLogUtilityDll">
@@ -198,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ToolBar01\Logg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TCP-IP-2-32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
