@@ -195,10 +195,15 @@ namespace ComMonitor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItem_Click_Message(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
         {
+            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessagesDlg.Owner = Window.GetWindow(this);
+            var res = EditMessagesDlg.ShowDialog();
+            if (!res.Value)
+                return;
         }
-        
+
         /// <summary>
         /// MenuItem_Click_DeleteAll
         /// </summary>

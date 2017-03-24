@@ -88,7 +88,7 @@
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Send.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
-            <Button Click="MenuItem_Click_Message" ToolTip="Add Message">
+            <Button Click="MenuItem_Click_AddMessage" ToolTip="Add Message">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/AddMessage.png" Stretch="Fill" />
                 </StackPanel>
