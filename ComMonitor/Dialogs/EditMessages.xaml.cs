@@ -108,9 +108,10 @@ namespace ComMonitor.Dialogs
             TabItem tab = new TabItem();
 
             tab.Header = String.Format("Message {0}", count + 1);
-            tab.Name = String.Format("Message_{0}", count + 1);
-            tab.Content = new HexaEditor();
-            tab.Content.Stream = new System.IO.MemoryStream(v);
+            tab.HexEditor = new HexaEditor();
+            tab.HexEditor.Width = Double.NaN;
+            tab.HexEditor.Height = Double.NaN;
+            tab.HexEditor.Stream = new System.IO.MemoryStream(v);
 
             TabItems.Add(tab);
 
@@ -124,7 +125,6 @@ namespace ComMonitor.Dialogs
     public sealed class TabItem
     {
         public string Header { get; set; }
-        public string Name { get; set; }
-        public HexaEditor Content { get; set; }
+        public HexaEditor HexEditor { get; set; }
     }
 }
