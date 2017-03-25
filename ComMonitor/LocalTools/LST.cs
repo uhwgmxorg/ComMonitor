@@ -73,5 +73,17 @@ namespace ComMonitor.LocalTools
             return resultFileName;
         }
 
+        /// <summary>
+        /// GetCurrentMethod
+        /// </summary>
+        /// <returns></returns>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public static string GetCurrentMethod()
+        {
+            System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
+            System.Diagnostics.StackFrame sf = st.GetFrame(1);
+
+            return sf.GetMethod().Name;
+        }
     }
 }

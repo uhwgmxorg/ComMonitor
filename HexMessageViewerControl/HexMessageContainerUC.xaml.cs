@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -156,6 +157,28 @@ namespace HexMessageViewerControl
         public void AddMessage(byte[] message, Direction direction)
         {
             ProcessMessage(message, direction);
+        }
+
+        /// <summary>
+        /// GetAllSelectetMessages
+        /// </summary>
+        /// <returns></returns>
+        public List<byte[]> GetAllSelectetMessages()
+        {
+            List<byte[]> allSelectetMessages = new List<byte[]>();
+            byte[] messge;
+            byte[] copyOfMessge;
+
+            foreach (var m in LineStackPanel.Children)
+                if (((HexMessageUC)m).IsSecected)
+                {
+                    messge = ((HexMessageUC) m).HexContentByte;
+                    copyOfMessge = new byte[messge.Length];
+                    messge.CopyTo(copyOfMessge, 0);
+                    allSelectetMessages.Add(copyOfMessge);
+                }
+
+            return allSelectetMessages;
         }
 
         /// <summary>

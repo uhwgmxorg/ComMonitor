@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System;
 using ComMonitor.LocalTools;
 using System.Net;
+using System.Collections.Generic;
 
 namespace ComMonitor.MDIWindows
 {
@@ -35,6 +36,8 @@ namespace ComMonitor.MDIWindows
             }
         }
         #endregion
+
+        public List<byte[]> PinnedMessages { get; set; }
 
         public Connection MyConnection { get; set; }
 
@@ -94,6 +97,15 @@ namespace ComMonitor.MDIWindows
                     break;
             }
             ProcessMessage(message, Direction.Out);
+        }
+
+        /// <summary>
+        /// GetAllSelectedMessages
+        /// </summary>
+        /// <returns></returns>
+        public List<byte[]> GetAllSelectetMessages()
+        {
+            return hexUC.GetAllSelectetMessages();
         }
 
         /// <summary>

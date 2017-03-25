@@ -1,4 +1,11 @@
-﻿using System.Windows;
+﻿using ComMonitor.LocalTools;
+using NLog;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
+using WPFHexaEditor.Control;
 
 namespace ComMonitor.Dialogs
 {
@@ -7,12 +14,41 @@ namespace ComMonitor.Dialogs
     /// </summary>
     public partial class EditMessages : Window
     {
+
+        private Logger _logger;
+
+        private ObservableCollection<TabItem> tabItems;
+        public ObservableCollection<TabItem> TabItems { get => tabItems; set => tabItems = value; }
+        private TabItem _tabAdd;
+
+        private List<byte[]> messagesToEdit;
+        public List<byte[]> MessagesToEdit
+        {
+            get
+            {
+                return messagesToEdit;
+            }
+            set
+            {
+                messagesToEdit = value;
+                for (int i = 0; i < messagesToEdit.Count; i++)
+                    _tabAdd = AddTabItem(messagesToEdit[i]);
+            }
+        }
+
+
         /// <summary>
         /// Constructor
         /// </summary>
         public EditMessages()
         {
+            _logger = LogManager.GetCurrentClassLogger();
+
             InitializeComponent();
+
+            tabItems = new ObservableCollection<TabItem>();
+
+            DataContext = this;
         }
 
         /******************************/
@@ -60,6 +96,35 @@ namespace ComMonitor.Dialogs
         /******************************/
         #region Other Functions
 
+        /// <summary>
+        /// AddTabItem
+        /// </summary>
+        /// <param name="v"></param>
+        private TabItem AddTabItem(byte[] v)
+        {
+            int count = TabItems.Count;
+
+            // create new tab item
+            TabItem tab = new TabItem();
+
+            tab.Header = String.Format("Message {0}", count + 1);
+            tab.Name = String.Format("Message_{0}", count + 1);
+            tab.Content = new HexaEditor();
+            tab.Content.Stream = new System.IO.MemoryStream(v);
+
+            TabItems.Add(tab);
+
+            _logger.Trace(String.Format("AddTabItem in {0}", LST.GetCurrentMethod()));
+
+            return tab;
+        }
+
         #endregion
+    }
+    public sealed class TabItem
+    {
+        public string Header { get; set; }
+        public string Name { get; set; }
+        public HexaEditor Content { get; set; }
     }
 }

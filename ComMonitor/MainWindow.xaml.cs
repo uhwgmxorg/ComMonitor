@@ -197,7 +197,13 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
         {
+
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+            List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
+
             EditMessages EditMessagesDlg = new EditMessages();
+            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)

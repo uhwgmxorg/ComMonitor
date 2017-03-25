@@ -45,21 +45,27 @@ namespace ComMonitor.LocalTools
         {
             if (Connected)
                 return;
+            try
+            {
+                Manager.InitializeClient();
 
-            Manager.InitializeClient();
+                if (Manager.Connector == null)
+                    throw new Exception("This should not happen!");
 
-            if (Manager.Connector == null)
-                throw new Exception("This should not happen!");
+                Manager.Connector.ExceptionCaught += HandleException;
+                Manager.Connector.SessionOpened += HandeleSessionOpened;
+                Manager.Connector.SessionClosed += HandeleSessionClosed;
+                Manager.Connector.SessionIdle += HandleIdle;
+                Manager.Connector.MessageReceived += HandleReceived;
 
-            Manager.Connector.ExceptionCaught += HandleException;
-            Manager.Connector.SessionOpened += HandeleSessionOpened;
-            Manager.Connector.SessionClosed += HandeleSessionClosed;
-            Manager.Connector.SessionIdle += HandleIdle;
-            Manager.Connector.MessageReceived += HandleReceived;
-
-            Manager.ServerIpAddress = _serverIpAddress;
-            Manager.Port = _port;
-            Manager.ConnectToServer();
+                Manager.ServerIpAddress = _serverIpAddress;
+                Manager.Port = _port;
+                Manager.ConnectToServer();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
         }
 
         /// <summary>
@@ -68,10 +74,17 @@ namespace ComMonitor.LocalTools
         /// <param name="message"></param>
         public void Send(byte[] message)
         {
-            Manager.Send(message);
+            try
+            {
+                Manager.Send(message);
 
-            _logger.Info(String.Format("Send data {0} Bytes", message.Length));
-            _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                _logger.Info(String.Format("Send data {0} Bytes", message.Length));
+                _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
         }
 
         /// <summary>
@@ -79,7 +92,14 @@ namespace ComMonitor.LocalTools
         /// </summary>
         public void Close()
         {
-            Manager.Session.Close(true);
+            try
+            {
+                Manager.Session.Close(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
         }
 
         /******************************/
