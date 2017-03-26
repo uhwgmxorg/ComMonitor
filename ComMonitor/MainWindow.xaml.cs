@@ -128,14 +128,17 @@ namespace ComMonitor
 
         private void MenuItem_Click_OpenMessageFile(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         private void MenuItem_Click_SaveMessageFile(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         private void MenuItem_Click_SaveMessageFileAs(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         private void MenuItem_Click_AddNewMessage(object sender, RoutedEventArgs e)
@@ -155,14 +158,17 @@ namespace ComMonitor
 
         private void MenuItem_Click_EditMessage(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         private void MenuItem_Click_EditAndReplaceMessage(object sender, RoutedEventArgs e)
         {
+            Console.Beep();
         }
 
         /// <summary>
@@ -288,6 +294,7 @@ namespace ComMonitor
 #else
             this.Title += "    Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
 #endif
+            EnableDisableContols();
         }
 
         /// <summary>
@@ -327,6 +334,25 @@ namespace ComMonitor
             tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
 
             return tw;
+        }
+
+        /// <summary>
+        /// EnableDisableContols
+        /// </summary>
+        private void EnableDisableContols()
+        {
+            tb_MenuItem_NewConnectionsWindow.IsEnabled = true;
+            tb_MenuItem_Click_LoadConnections.IsEnabled = true;
+            tb_MenuItem_SaveConnections.IsEnabled = true;
+            tb_MenuItem_OpenMessageFile.IsEnabled = true;
+            tb_MenuItem_SaveMessageFile.IsEnabled = true;
+            tb_MenuItem_SaveMessageFileAs.IsEnabled = true;
+            tb_MenuItem_AddNewMessage.IsEnabled = true;
+            tb_MenuItem_EditMessage.IsEnabled = true;
+            tb_MenuItem_AddMessage.IsEnabled = true;
+            tb_MenuItem_EditAndReplaceMessage.IsEnabled = true;
+            tb_MenuItem_Send.IsEnabled = true;
+            tb_MenuItem_DeleteAll.IsEnabled = true;
         }
 
         #endregion

@@ -15,7 +15,7 @@
         <Label Content="Port" FontFamily="Helvetica Neue LT Pro" FontSize="16" Foreground="Black" Height="29" Margin="22.333,99,0,0" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Left" Width="104" />
         <TextBox Name="textBoxPort" Text="{Binding Port}" Height="24" Margin="97.333,98,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58" Background="White" FontSize="14.667" FontFamily="Helvetica Neue LT Pro" />
         <CheckBox Name="checkBoxMultipleConnections" Content="MultipleConnections" IsChecked="{Binding MultipleConnections}" HorizontalAlignment="Left" Margin="193,24,0,0" VerticalAlignment="Top"/>
-        <Button Content="Ok" IsDefault="True" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Ok"/>
-        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Cancel"/>
+        <Button Name="button_Ok" Content="Ok" IsDefault="True" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Ok"/>
+        <Button Name="button_Cancel" Content="Cancel" IsCancel="True" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="Button_Click_Cancel"/>
     </Grid>
 </Window>
