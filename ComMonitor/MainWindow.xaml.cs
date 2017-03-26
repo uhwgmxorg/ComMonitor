@@ -20,6 +20,8 @@ namespace ComMonitor
         private NLog.Logger _logger;
         private Random _random = new Random();
 
+        public byte[] FocusMessage { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -27,6 +29,8 @@ namespace ComMonitor
         {
             _logger = NLog.LogManager.GetCurrentClassLogger();
             InitializeComponent();
+
+            FocusMessage = null;
         }
 
         /******************************/
@@ -141,11 +145,39 @@ namespace ComMonitor
             Console.Beep();
         }
 
+        /// <summary>
+        /// MenuItem_Click_AddNewMessage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Click_AddNewMessage(object sender, RoutedEventArgs e)
         {
-
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
+            if (tw == null) { Console.Beep(); return; }
+
+            CreateNewMessage CreateNewMessageDlg = new CreateNewMessage();
+            CreateNewMessageDlg.Owner = Window.GetWindow(this);
+            var res = CreateNewMessageDlg.ShowDialog();
+            if (!res.Value)
+                return;
+
+            FocusMessage = CreateNewMessageDlg.FocusMessage;
+        }
+
+        private void MenuItem_Click_EditMessage(object sender, RoutedEventArgs e)
+        {
+            Console.Beep();
+        }
+
+        /// <summary>
+        /// MenuItem_Click_AddMessage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
+        {
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) { Console.Beep(); return; }
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
 
             EditMessages EditMessagesDlg = new EditMessages();
@@ -154,16 +186,6 @@ namespace ComMonitor
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
                 return;
-        }
-
-        private void MenuItem_Click_EditMessage(object sender, RoutedEventArgs e)
-        {
-            Console.Beep();
-        }
-
-        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
-        {
-            Console.Beep();
         }
 
         private void MenuItem_Click_EditAndReplaceMessage(object sender, RoutedEventArgs e)
@@ -179,8 +201,11 @@ namespace ComMonitor
         private void MenuItem_Click_Send(object sender, RoutedEventArgs e)
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
-            ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
+
+            if (tw == null) { Console.Beep(); return; }
+
+            ((UserControlTCPMDIChild)tw.Content).FocusMessage = FocusMessage;
+            ((UserControlTCPMDIChild)tw.Content).SendMessage(((UserControlTCPMDIChild)tw.Content).FocusMessage);
         }
 
         /// <summary>
@@ -191,7 +216,7 @@ namespace ComMonitor
         private void MenuItem_Click_DeleteAll(object sender, RoutedEventArgs e)
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
+            if (tw == null) { Console.Beep(); return; }
             ((UserControlTCPMDIChild)tw.Content).DeleteAllMessages();
         }
 

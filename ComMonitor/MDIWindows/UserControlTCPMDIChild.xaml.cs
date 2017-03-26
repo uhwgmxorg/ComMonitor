@@ -37,9 +37,9 @@ namespace ComMonitor.MDIWindows
         }
         #endregion
 
-        public List<byte[]> PinnedMessages { get; set; }
-
         public Connection MyConnection { get; set; }
+
+        public byte[] FocusMessage { get; set; }
 
         /// <summary>
         /// Constructor
@@ -59,28 +59,52 @@ namespace ComMonitor.MDIWindows
                     StartClient(MyConnection);
                     break;
             }
+
+            FocusMessage = null;
         }
+
+        /******************************/
+        /*       Button Events        */
+        /******************************/
+        #region Button Events
+
+        #endregion
+        /******************************/
+        /*      Menu Events          */
+        /******************************/
+        #region Menu Events
+
+        #endregion
+        /******************************/
+        /*      Other Events          */
+        /******************************/
+        #region Other Events
 
         /// <summary>
-        /// StartServer
+        /// mDIWindow_Unloaded
         /// </summary>
-        /// <param name="myConnection"></param>
-        private void StartServer(Connection myConnection)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mDIWindow_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
-            _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
+            switch (MyConnection.ConnectionType)
+            {
+                case EConnectionType.TCPSocketServer:
+                    _minaTCPServer.Close();
+                    break;
+                case EConnectionType.TCPSocketCient:
+                    _minaTCPClient.Close();
+                    break;
+            }
         }
 
-        /// <summary>
-        /// StartClient
-        /// </summary>
-        /// <param name="myConnection"></param>
-        private void StartClient(Connection myConnection)
-        {
-            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);
-            _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
-        }
+        #endregion
+        /******************************/
+        /*      Other Functions       */
+        /******************************/
+        #region Other Functions
 
+        #region Public Functions
         /// <summary>
         /// SendMessage
         /// </summary>
@@ -115,6 +139,27 @@ namespace ComMonitor.MDIWindows
         {
             hexUC.ClearAllMessage();
         }
+        #endregion
+
+        /// <summary>
+        /// StartServer
+        /// </summary>
+        /// <param name="myConnection"></param>
+        private void StartServer(Connection myConnection)
+        {
+            _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
+            _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
+        }
+
+        /// <summary>
+        /// StartClient
+        /// </summary>
+        /// <param name="myConnection"></param>
+        private void StartClient(Connection myConnection)
+        {
+            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);
+            _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
+        }
 
         /// <summary>
         /// ProcessMessage
@@ -122,24 +167,6 @@ namespace ComMonitor.MDIWindows
         private void ProcessMessage(byte[] message,Direction direction)
         {
             hexUC.AddMessage(message, direction);
-        }
-
-        /// <summary>
-        /// mDIWindow_Unloaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mDIWindow_Unloaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            switch (MyConnection.ConnectionType)
-            {
-                case EConnectionType.TCPSocketServer:
-                    _minaTCPServer.Close();
-                    break;
-                case EConnectionType.TCPSocketCient:
-                    _minaTCPClient.Close();
-                    break;
-            }
         }
 
         /// <summary>
@@ -151,5 +178,7 @@ namespace ComMonitor.MDIWindows
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(p));
         }
+
+        #endregion
     }
 }

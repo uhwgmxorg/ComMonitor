@@ -4,15 +4,27 @@ using Mina.Core.Service;
 using Mina.Core.Session;
 using Mina.Filter.Codec;
 using Mina.Filter.Codec.Demux;
+using NLog;
 
 namespace ComMonitor.LocalTools
 {
     public class TCPProtocolManager : IMessageDecoder, IMessageEncoder<byte[]>
     {
+
+        private Logger _logger;
+
         public IoConnector Connector { get; set; }
         public IoSession Session { get; set; }
 
         public int Port { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public TCPProtocolManager()
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+        }
 
         /// <summary>
         /// Send
@@ -44,13 +56,20 @@ namespace ComMonitor.LocalTools
 
         public void Encode(IoSession session, byte[] message, IProtocolEncoderOutput output)
         {
-            var data = (byte[])message;
-            IoBuffer buf = IoBuffer.Allocate(data.Length);
-            buf.AutoExpand = true; // Enable auto-expand for easier encoding
+            try
+            {
+                var data = (byte[])message;
+                IoBuffer buf = IoBuffer.Allocate(data.Length);
+                buf.AutoExpand = true; // Enable auto-expand for easier encoding
 
-            buf.Put(data);
-            buf.Flip();
-            output.Write(buf);
+                buf.Put(data);
+                buf.Flip();
+                output.Write(buf);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.Error(System.String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
         }
 
         public MessageDecoderResult Decodable(IoSession session, IoBuffer input)

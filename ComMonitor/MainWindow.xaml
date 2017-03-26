@@ -273,7 +273,7 @@
             <StackPanel Orientation="Horizontal">
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
             </StackPanel>
-            <Button Name="tb_MenuItem_About" Click="MenuItem_Click_About" ToolTip="Aout">
+            <Button Name="tb_MenuItem_About" Click="MenuItem_Click_About" ToolTip="About">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/About.png" Stretch="Fill" >
                         <Image.Style>

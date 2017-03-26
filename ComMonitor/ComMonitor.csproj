@@ -85,6 +85,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\CreateNewMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\EditMessages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +103,9 @@
     </Compile>
     <Compile Include="Dialogs\ConfigNewConnection.xaml.cs">
       <DependentUpon>ConfigNewConnection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CreateNewMessage.xaml.cs">
+      <DependentUpon>CreateNewMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditMessages.xaml.cs">
       <DependentUpon>EditMessages.xaml</DependentUpon>
