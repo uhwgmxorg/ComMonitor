@@ -41,6 +41,18 @@ namespace ComMonitor
         #region Menu Events
 
         /// <summary>
+        /// MenuItem_Click_Exit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>MenuItem_Click_NewMDIWindow
+        private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Closing ComMonitor");
+            Environment.Exit(0);
+        }
+
+        #region ToolBar
+        /// <summary>
         /// MenuItem_Click_NewMDIWindow
         /// </summary>
         /// <param name="sender"></param>
@@ -113,7 +125,46 @@ namespace ComMonitor
             Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
             _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
-        
+
+        private void MenuItem_Click_OpenMessageFile(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MenuItem_Click_SaveMessageFile(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MenuItem_Click_SaveMessageFileAs(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MenuItem_Click_AddNewMessage(object sender, RoutedEventArgs e)
+        {
+
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+            List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
+
+            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
+            EditMessagesDlg.Owner = Window.GetWindow(this);
+            var res = EditMessagesDlg.ShowDialog();
+            if (!res.Value)
+                return;
+        }
+
+        private void MenuItem_Click_EditMessage(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MenuItem_Click_EditAndReplaceMessage(object sender, RoutedEventArgs e)
+        {
+        }
+
         /// <summary>
         /// MenuItem_Click_Send
         /// </summary>
@@ -125,6 +176,35 @@ namespace ComMonitor
             if (tw == null) return;
             ((UserControlTCPMDIChild)tw.Content).SendMessage(LST.RandomByteArray());
         }
+
+        /// <summary>
+        /// MenuItem_Click_DeleteAll
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click_DeleteAll(object sender, RoutedEventArgs e)
+        {
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+            ((UserControlTCPMDIChild)tw.Content).DeleteAllMessages();
+        }
+
+        /// <summary>
+        /// MenuItem_Click_About
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>MenuItem_Click_ChangeLog
+        private void MenuItem_Click_About(object sender, RoutedEventArgs e)
+        {
+            string StrVersion;
+#if DEBUG
+            StrVersion = "Debug Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
+#else
+            StrVersion = "Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
+#endif
+            MessageBox.Show("About ComMonitor " + StrVersion, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
 
         /// <summary>
         /// MenuItem_Click_Tideled
@@ -190,82 +270,6 @@ namespace ComMonitor
             ChangeLogTxtToolWindowObj.ShowChangeLogWindow(File);
         }
 
-        /// <summary>
-        /// MenuItem_Click_Message
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
-        {
-
-            MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
-            List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
-
-            EditMessages EditMessagesDlg = new EditMessages();
-            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
-            EditMessagesDlg.Owner = Window.GetWindow(this);
-            var res = EditMessagesDlg.ShowDialog();
-            if (!res.Value)
-                return;
-        }
-
-        /// <summary>
-        /// MenuItem_Click_DeleteAll
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_DeleteAll(object sender, RoutedEventArgs e)
-        {
-            MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return;
-            ((UserControlTCPMDIChild)tw.Content).DeleteAllMessages();
-        }
-        private MdiChild GetTopMDIWindow()
-        {
-            MdiChild tw = null;
-            List<int> iZIndexList = new List<int>();
-
-            if (MainMdiContainer.Children.Count == 0)
-                return null;
-
-            foreach (var w in MainMdiContainer.Children)
-                iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
-
-            Debug.WriteLine(String.Join("; ", iZIndexList));
-            int max = iZIndexList.Max();
-            tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
-
-            return tw;
-        }
-
-        /// <summary>
-        /// MenuItem_Click_About
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>MenuItem_Click_ChangeLog
-        private void MenuItem_Click_About(object sender, RoutedEventArgs e)
-        {
-            string StrVersion;
-#if DEBUG
-            StrVersion = "Debug Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
-#else
-            StrVersion = "Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
-#endif
-            MessageBox.Show("About ComMonitor "+ StrVersion, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        /// <summary>
-        /// MenuItem_Click_Exit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>MenuItem_Click_NewMDIWindow
-        private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
-        {
-            _logger.Info("Closing ComMonitor");
-            Environment.Exit(0);
-        }
-
         #endregion
         /******************************/
         /*      Other Events          */
@@ -302,6 +306,28 @@ namespace ComMonitor
         /*      Other Functions       */
         /******************************/
         #region Other Functions
+        
+        /// <summary>
+        /// GetTopMDIWindow
+        /// </summary>
+        /// <returns></returns>
+        private MdiChild GetTopMDIWindow()
+        {
+            MdiChild tw = null;
+            List<int> iZIndexList = new List<int>();
+
+            if (MainMdiContainer.Children.Count == 0)
+                return null;
+
+            foreach (var w in MainMdiContainer.Children)
+                iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
+
+            Debug.WriteLine(String.Join("; ", iZIndexList));
+            int max = iZIndexList.Max();
+            tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
+
+            return tw;
+        }
 
         #endregion
     }

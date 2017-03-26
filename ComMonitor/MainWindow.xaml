@@ -68,6 +68,9 @@
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Exit.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
+            <StackPanel Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
+            </StackPanel>
             <Button Click="MenuItem_Click_NewConnectionsWindow" ToolTip="New Connections Window">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/New.png" Stretch="Fill" />
@@ -83,21 +86,63 @@
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Save.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
-            <Button Click="MenuItem_Click_Send" ToolTip="Save Connections">
+            <StackPanel Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
+            </StackPanel>
+            <Button Click="MenuItem_Click_OpenMessageFile" ToolTip="Open Message File">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/ComMonitor;component/Resources/ToolBar01/Send.png" Stretch="Fill" />
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/OpenMessage.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
-            <Button Click="MenuItem_Click_AddMessage" ToolTip="Add Message">
+            <Button Click="MenuItem_Click_SaveMessageFile" ToolTip="Save Message File">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/SaveMessage.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_SaveMessageFileAs" ToolTip="Save Message File as">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/SaveAsMessage.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
+            </StackPanel>
+            <Button Click="MenuItem_Click_AddNewMessage" ToolTip="Add New Message">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/AddNewMessage.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_EditMessage" ToolTip="Edit Message">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/EditMessage.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_AddMessage" ToolTip="Add Selected Message and Edit">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/AddMessage.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
-            <Button Click="MenuItem_Click_DeleteAll" ToolTip="DeleteAll Messages">
+            <Button Click="MenuItem_Click_EditAndReplaceMessage" ToolTip="Edit And Replace Message">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/EditAndReplace.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
+            </StackPanel>
+            <Button Click="MenuItem_Click_Send" ToolTip="Send Focus Message">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/Send.png" Stretch="Fill" />
+                </StackPanel>
+            </Button>
+            <Button Click="MenuItem_Click_DeleteAll" ToolTip="Delete All Messages">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/DelteAll.png" Stretch="Fill" />
                 </StackPanel>
             </Button>
+            <StackPanel Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
+            </StackPanel>
             <Button Click="MenuItem_Click_About" ToolTip="Aout">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/About.png" Stretch="Fill" />
