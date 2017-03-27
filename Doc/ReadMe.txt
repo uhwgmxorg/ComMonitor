@@ -23,6 +23,13 @@ ToolBar:
 10 Send Selected Message
 11 Delete All Messages
 
+-------------------------------------
+
+MenuItem_Click_Tideled
+MenuItem_Click_Cascade
+MenuItem_Click_CloseAll
+MenuItem_Click_ChangeLog
+
 MenuItem_Click_Exit
 MenuItem_Click_NewConnectionsWindow
 MenuItem_Click_LoadConnections
@@ -37,6 +44,8 @@ MenuItem_Click_EditAndReplaceMessage
 MenuItem_Click_Send
 MenuItem_Click_DeleteAll
 MenuItem_Click_About
+
+-------------------------------------
 
 tb_MenuItem_NewConnectionsWindow
 tb_MenuItem_Click_LoadConnections

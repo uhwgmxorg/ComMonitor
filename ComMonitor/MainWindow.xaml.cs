@@ -2,8 +2,10 @@
 using ComMonitor.LocalTools;
 using ComMonitor.MDIWindows;
 using ComMonitor.Models;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -14,13 +16,37 @@ namespace ComMonitor
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private NLog.Logger _logger;
         private Random _random = new Random();
 
         public byte[] FocusMessage { get; set; }
+
+
+        public RelayCommand TideledCommand { get; private set; }
+        public RelayCommand CascadeCommand { get; private set; }
+        public RelayCommand CloseAllCommand { get; private set; }
+        public RelayCommand ChangeLogCommand { get; private set; }
+
+
+        public RelayCommand ExitCommand { get; private set; }
+        public RelayCommand NewConnectionsWindowCommand { get; private set; }
+        public RelayCommand LoadConnectionsCommand { get; private set; }
+        public RelayCommand SaveConnectionsCommand { get; private set; }
+        public RelayCommand OpenMessageFileCommand { get; private set; }
+        public RelayCommand SaveMessageFileCommand { get; private set; }
+        public RelayCommand SaveMessageFileAsCommand { get; private set; }
+        public RelayCommand AddNewMessageCommand { get; private set; }
+        public RelayCommand EditMessageCommand { get; private set; }
+        public RelayCommand AddMessageCommand { get; private set; }
+        public RelayCommand EditAndReplaceMessageCommand { get; private set; }
+        public RelayCommand SendCommand { get; private set; }
+        public RelayCommand DeleteAllCommand { get; private set; }
+        public RelayCommand AboutCommand { get; private set; }
+
 
         /// <summary>
         /// Constructor
@@ -29,10 +55,173 @@ namespace ComMonitor
         {
             _logger = NLog.LogManager.GetCurrentClassLogger();
             InitializeComponent();
+            DataContext = this;
+
+            ExitCommand = new RelayCommand(ExitCommandCF, CanExitCommand);
 
             FocusMessage = null;
         }
 
+        /******************************/
+        /*     Command Functions      */
+        /******************************/
+        #region Command Functions
+
+        private void TideledCommandCF()
+        {
+        }
+        private bool CanTideledCommand()
+        {
+            return false;
+        }
+
+        private void CascadeCommandCF()
+        {
+        }
+        private bool CanCascadeCommand()
+        {
+            return false;
+        }
+
+        private void CloseAllCommandCF()
+        {
+        }
+        private bool CanCloseAllCommand()
+        {
+            return false;
+        }
+
+        private void ChangeLogCommandCF()
+        {
+        }
+        private bool CanChangeLogCommand()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// ExitCommandCF
+        /// </summary>
+        private void ExitCommandCF()
+        {
+            _logger.Info("Closing ComMonitor");
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// CanWelcomeCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanExitCommand()
+        {
+            return false;
+        }
+
+        private void NewConnectionsWindowCommandCF()
+        {
+        }
+        private bool CanNewConnectionsWindowCommand()
+        {
+            return false;
+        }
+
+        private void LoadConnectionsCommandCF()
+        {
+        }
+        private bool CanLoadConnectionsCommand()
+        {
+            return false;
+        }
+
+        private void SaveConnectionsCommandCF()
+        {
+        }
+        private bool CanSaveConnectionsCommand()
+        {
+            return false;
+        }
+
+        private void OpenMessageFileCommandCF()
+        {
+        }
+        private bool CanOpenMessageFileCommand()
+        {
+            return false;
+        }
+
+        private void SaveMessageFileCommandCF()
+        {
+        }
+        private bool CanSaveMessageFileCommand()
+        {
+            return false;
+        }
+
+        private void SaveMessageFileAsCommandCF()
+        {
+        }
+        private bool CanSaveMessageFileAsCommand()
+        {
+            return false;
+        }
+
+        private void AddNewMessageCommandCF()
+        {
+        }
+        private bool CanAddNewMessageCommand()
+        {
+            return false;
+        }
+
+        private void EditMessageCommandCF()
+        {
+        }
+        private bool CanEditMessageCommand()
+        {
+            return false;
+        }
+
+        private void AddMessageCommandCF()
+        {
+        }
+        private bool CanAddMessageCommand()
+        {
+            return false;
+        }
+
+        private void EditAndReplaceMessageCommandCF()
+        {
+        }
+        private bool CanEditAndReplaceMessageCommand()
+        {
+            return false;
+        }
+
+        private void SendCommandCF()
+        {
+        }
+        private bool CanSendCommand()
+        {
+            return false;
+        }
+
+        private void DeleteAllCommandCF()
+        {
+        }
+        private bool CanDeleteAllCommand()
+        {
+            return false;
+        }
+
+        private void AboutCommandCF()
+        {
+        }
+        private bool CanAboutCommand()
+        {
+            return false;
+        }
+
+        #endregion
         /******************************/
         /*       Button Events        */
         /******************************/
@@ -43,17 +232,6 @@ namespace ComMonitor
         /*      Menu Events          */
         /******************************/
         #region Menu Events
-
-        /// <summary>
-        /// MenuItem_Click_Exit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>MenuItem_Click_NewMDIWindow
-        private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
-        {
-            _logger.Info("Closing ComMonitor");
-            Environment.Exit(0);
-        }
 
         #region ToolBar
         /// <summary>
@@ -338,7 +516,7 @@ namespace ComMonitor
         /*      Other Functions       */
         /******************************/
         #region Other Functions
-        
+
         /// <summary>
         /// GetTopMDIWindow
         /// </summary>
@@ -378,6 +556,16 @@ namespace ComMonitor
             tb_MenuItem_EditAndReplaceMessage.IsEnabled = true;
             tb_MenuItem_Send.IsEnabled = true;
             tb_MenuItem_DeleteAll.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// OnPropertyChanged
+        /// </summary>
+        /// <param name="p"></param>
+        private void OnPropertyChanged(string p)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(p));
         }
 
         #endregion
