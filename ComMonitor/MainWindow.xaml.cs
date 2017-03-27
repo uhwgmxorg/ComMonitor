@@ -47,7 +47,6 @@ namespace ComMonitor
         public RelayCommand DeleteAllCommand { get; private set; }
         public RelayCommand AboutCommand { get; private set; }
 
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -58,6 +57,24 @@ namespace ComMonitor
             DataContext = this;
 
             ExitCommand = new RelayCommand(ExitCommandCF, CanExitCommand);
+            TideledCommand = new RelayCommand(TideledCommandCF, CanTideledCommand);
+            CascadeCommand = new RelayCommand(CascadeCommandCF, CanCascadeCommand);
+            CloseAllCommand = new RelayCommand(CloseAllCommandCF, CanCloseAllCommand);
+            ChangeLogCommand = new RelayCommand(ChangeLogCommandCF, CanChangeLogCommand);
+            ExitCommand = new RelayCommand(ExitCommandCF, CanExitCommand);
+            NewConnectionsWindowCommand = new RelayCommand(NewConnectionsWindowCommandCF, CanNewConnectionsWindowCommand);
+            LoadConnectionsCommand = new RelayCommand(LoadConnectionsCommandCF, CanLoadConnectionsCommand);
+            SaveConnectionsCommand = new RelayCommand(SaveConnectionsCommandCF, CanSaveConnectionsCommand);
+            OpenMessageFileCommand = new RelayCommand(OpenMessageFileCommandCF, CanOpenMessageFileCommand);
+            SaveMessageFileCommand = new RelayCommand(SaveMessageFileCommandCF, CanSaveMessageFileCommand);
+            SaveMessageFileAsCommand = new RelayCommand(SaveMessageFileAsCommandCF, CanSaveMessageFileAsCommand);
+            AddNewMessageCommand = new RelayCommand(AddNewMessageCommandCF, CanAddNewMessageCommand);
+            EditMessageCommand = new RelayCommand(EditMessageCommandCF, CanEditMessageCommand);
+            AddMessageCommand = new RelayCommand(AddMessageCommandCF, CanAddMessageCommand);
+            EditAndReplaceMessageCommand = new RelayCommand(EditAndReplaceMessageCommandCF, CanEditAndReplaceMessageCommand);
+            SendCommand = new RelayCommand(SendCommandCF, CanSendCommand);
+            DeleteAllCommand = new RelayCommand(DeleteAllCommandCF, CanDeleteAllCommand);
+            AboutCommand = new RelayCommand(AboutCommandCF, CanAboutCommand);
 
             FocusMessage = null;
         }
@@ -67,36 +84,97 @@ namespace ComMonitor
         /******************************/
         #region Command Functions
 
+        #region MenueBar
+        /// <summary>
+        /// TideledCommandCF
+        /// </summary>
         private void TideledCommandCF()
         {
+            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
+            double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
+            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
+            double sx = ActualWidth;
+            double anzW = MainMdiContainer.Children.Count;
+
+            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
+            {
+                MainMdiContainer.Children[i].Width = sx - 4 * wf;
+                MainMdiContainer.Children[i].Height = sy / anzW;
+                MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
+            }
         }
+
+        /// <summary>
+        /// CanTideledCommand
+        /// </summary>
+        /// <returns></returns>
         private bool CanTideledCommand()
         {
-            return false;
+            return true;
         }
 
+        /// <summary>
+        /// CascadeCommandCF
+        /// </summary>
         private void CascadeCommandCF()
         {
+            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
+            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight;
+            double sx = ActualWidth;
+            int anzW = MainMdiContainer.Children.Count;
+
+            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
+            {
+                MainMdiContainer.Children[i].Width = sx * 0.6;
+                MainMdiContainer.Children[i].Height = sy * 0.6;
+                MainMdiContainer.Children[i].Position = new Point(whh * i, whh * i);
+            }
         }
+
+        /// <summary>
+        /// CanCascadeCommand
+        /// </summary>
+        /// <returns></returns>
         private bool CanCascadeCommand()
         {
-            return false;
+            return true;
         }
 
+        /// <summary>
+        /// CloseAllCommandCF
+        /// </summary>
         private void CloseAllCommandCF()
         {
-        }
-        private bool CanCloseAllCommand()
-        {
-            return false;
+            for (int i = MainMdiContainer.Children.Count - 1; i >= 0; i--)
+                MainMdiContainer.Children[i].Close();
         }
 
+        /// <summary>
+        /// CanCloseAllCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanCloseAllCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// ChangeLogCommandCF
+        /// </summary>
         private void ChangeLogCommandCF()
         {
+            string File = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\ChangeLog.txt";
+            ChangeLogUtilityDll.ChangeLogTxtToolWindow ChangeLogTxtToolWindowObj = new ChangeLogUtilityDll.ChangeLogTxtToolWindow(this);
+            ChangeLogTxtToolWindowObj.ShowChangeLogWindow(File);
         }
+
+        /// <summary>
+        /// CanChangeLogCommand
+        /// </summary>
+        /// <returns></returns>
         private bool CanChangeLogCommand()
         {
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -114,132 +192,15 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanExitCommand()
         {
-            return false;
+            return true;
         }
-
-        private void NewConnectionsWindowCommandCF()
-        {
-        }
-        private bool CanNewConnectionsWindowCommand()
-        {
-            return false;
-        }
-
-        private void LoadConnectionsCommandCF()
-        {
-        }
-        private bool CanLoadConnectionsCommand()
-        {
-            return false;
-        }
-
-        private void SaveConnectionsCommandCF()
-        {
-        }
-        private bool CanSaveConnectionsCommand()
-        {
-            return false;
-        }
-
-        private void OpenMessageFileCommandCF()
-        {
-        }
-        private bool CanOpenMessageFileCommand()
-        {
-            return false;
-        }
-
-        private void SaveMessageFileCommandCF()
-        {
-        }
-        private bool CanSaveMessageFileCommand()
-        {
-            return false;
-        }
-
-        private void SaveMessageFileAsCommandCF()
-        {
-        }
-        private bool CanSaveMessageFileAsCommand()
-        {
-            return false;
-        }
-
-        private void AddNewMessageCommandCF()
-        {
-        }
-        private bool CanAddNewMessageCommand()
-        {
-            return false;
-        }
-
-        private void EditMessageCommandCF()
-        {
-        }
-        private bool CanEditMessageCommand()
-        {
-            return false;
-        }
-
-        private void AddMessageCommandCF()
-        {
-        }
-        private bool CanAddMessageCommand()
-        {
-            return false;
-        }
-
-        private void EditAndReplaceMessageCommandCF()
-        {
-        }
-        private bool CanEditAndReplaceMessageCommand()
-        {
-            return false;
-        }
-
-        private void SendCommandCF()
-        {
-        }
-        private bool CanSendCommand()
-        {
-            return false;
-        }
-
-        private void DeleteAllCommandCF()
-        {
-        }
-        private bool CanDeleteAllCommand()
-        {
-            return false;
-        }
-
-        private void AboutCommandCF()
-        {
-        }
-        private bool CanAboutCommand()
-        {
-            return false;
-        }
-
         #endregion
-        /******************************/
-        /*       Button Events        */
-        /******************************/
-        #region Button Events
-
-        #endregion
-        /******************************/
-        /*      Menu Events          */
-        /******************************/
-        #region Menu Events
 
         #region ToolBar
         /// <summary>
-        /// MenuItem_Click_NewMDIWindow
+        /// NewConnectionsWindowCommandCF
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_NewConnectionsWindow(object sender, RoutedEventArgs e)
+        private void NewConnectionsWindowCommandCF()
         {
             double AcParentWindoHeight = ActualHeight;
             double AcParentWindoWidth = ActualWidth;
@@ -260,11 +221,18 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// MenuItem_Click_LoadConnections
+        /// CanNewConnectionsWindowCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_LoadConnections(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanNewConnectionsWindowCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// LoadConnectionsCommandCF
+        /// </summary>
+        private void LoadConnectionsCommandCF()
         {
             double AcParentWindoHeight = ActualHeight;
             double AcParentWindoWidth = ActualWidth;
@@ -286,11 +254,18 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// MenuItem_Click_SaveConnections
+        /// CanLoadConnectionsCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_SaveConnections(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanLoadConnectionsCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// SaveConnectionsCommandCF
+        /// </summary>
+        private void SaveConnectionsCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null)
@@ -308,27 +283,70 @@ namespace ComMonitor
             _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
 
-        private void MenuItem_Click_OpenMessageFile(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// CanSaveConnectionsCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanSaveConnectionsCommand()
         {
-            Console.Beep();
+            return true;
         }
 
-        private void MenuItem_Click_SaveMessageFile(object sender, RoutedEventArgs e)
-        {
-            Console.Beep();
-        }
-
-        private void MenuItem_Click_SaveMessageFileAs(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// OpenMessageFileCommandCF
+        /// </summary>
+        private void OpenMessageFileCommandCF()
         {
             Console.Beep();
         }
 
         /// <summary>
-        /// MenuItem_Click_AddNewMessage
+        /// CanOpenMessageFileCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_AddNewMessage(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanOpenMessageFileCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// SaveMessageFileCommandCF
+        /// </summary>
+        private void SaveMessageFileCommandCF()
+        {
+            Console.Beep();
+        }
+
+        /// <summary>
+        /// CanSaveMessageFileCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanSaveMessageFileCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// SaveMessageFileAsCommandCF
+        /// </summary>
+        private void SaveMessageFileAsCommandCF()
+        {
+            Console.Beep();
+        }
+
+        /// <summary>
+        /// CanSaveMessageFileAsCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanSaveMessageFileAsCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// AddNewMessageCommandCF
+        /// </summary>
+        private void AddNewMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
@@ -342,17 +360,36 @@ namespace ComMonitor
             FocusMessage = CreateNewMessageDlg.FocusMessage;
         }
 
-        private void MenuItem_Click_EditMessage(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// CanAddNewMessageCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanAddNewMessageCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// EditMessageCommandCF
+        /// </summary>
+        private void EditMessageCommandCF()
         {
             Console.Beep();
         }
 
         /// <summary>
-        /// MenuItem_Click_AddMessage
+        /// CanEditMessageCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_AddMessage(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanEditMessageCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// AddMessageCommandCF
+        /// </summary>
+        private void AddMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
@@ -366,17 +403,36 @@ namespace ComMonitor
                 return;
         }
 
-        private void MenuItem_Click_EditAndReplaceMessage(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// CanAddMessageCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanAddMessageCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// EditAndReplaceMessageCommandCF
+        /// </summary>
+        private void EditAndReplaceMessageCommandCF()
         {
             Console.Beep();
         }
 
         /// <summary>
-        /// MenuItem_Click_Send
+        /// CanEditAndReplaceMessageCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_Send(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanEditAndReplaceMessageCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// SendCommandCF
+        /// </summary>
+        private void SendCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
 
@@ -387,11 +443,18 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// MenuItem_Click_DeleteAll
+        /// CanSendCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_DeleteAll(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanSendCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// DeleteAllCommandCF
+        /// </summary>
+        private void DeleteAllCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
@@ -399,11 +462,18 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// MenuItem_Click_About
+        /// CanDeleteAllCommand
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>MenuItem_Click_ChangeLog
-        private void MenuItem_Click_About(object sender, RoutedEventArgs e)
+        /// <returns></returns>
+        private bool CanDeleteAllCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// AboutCommandCF
+        /// </summary>
+        private void AboutCommandCF()
         {
             string StrVersion;
 #if DEBUG
@@ -413,71 +483,22 @@ namespace ComMonitor
 #endif
             MessageBox.Show("About ComMonitor " + StrVersion, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        /// <summary>
+        /// CanAboutCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanAboutCommand()
+        {
+            return true;
+        }
         #endregion
 
-        /// <summary>
-        /// MenuItem_Click_Tideled
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_Tideled(object sender, RoutedEventArgs e)
-        {
-            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
-            double wf = SystemParameters.ResizeFrameVerticalBorderWidth;
-            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight - 2 * MainStatusBar.Height;
-            double sx = ActualWidth;
-            double anzW = MainMdiContainer.Children.Count;
-
-            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
-            {
-                MainMdiContainer.Children[i].Width = sx - 4 * wf;
-                MainMdiContainer.Children[i].Height = sy / anzW;
-                MainMdiContainer.Children[i].Position = new Point(0, sy / anzW * i);
-            }
-        }
-
-        /// <summary>
-        /// MenuItem_Click_Cascade
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>MenuItem_Click_CloseAll
-        private void MenuItem_Click_Cascade(object sender, RoutedEventArgs e)
-        {
-            double whh = SystemParameters.WindowCaptionHeight + SystemParameters.ResizeFrameHorizontalBorderHeight;
-            double sy = ActualHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight;
-            double sx = ActualWidth;
-            int anzW = MainMdiContainer.Children.Count;
-
-            for (int i = 0; i < MainMdiContainer.Children.Count; i++)
-            {
-                MainMdiContainer.Children[i].Width = sx * 0.6;
-                MainMdiContainer.Children[i].Height = sy * 0.6;
-                MainMdiContainer.Children[i].Position = new Point(whh * i, whh * i);
-            }
-        }
-
-        /// <summary>
-        /// MenuItem_Click_CloseAll
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_CloseAll(object sender, RoutedEventArgs e)
-        {
-            for (int i = MainMdiContainer.Children.Count - 1; i >= 0; i--)
-                MainMdiContainer.Children[i].Close();
-        }
-
-        /// <summary>
-        /// MenuItem_Click_ChangeLog
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItem_Click_ChangeLog(object sender, RoutedEventArgs e)
-        {
-            string File = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\ChangeLog.txt";
-            ChangeLogUtilityDll.ChangeLogTxtToolWindow ChangeLogTxtToolWindowObj = new ChangeLogUtilityDll.ChangeLogTxtToolWindow(this);
-            ChangeLogTxtToolWindowObj.ShowChangeLogWindow(File);
-        }
+        #endregion
+        /******************************/
+        /*       Button Events        */
+        /******************************/
+        #region Button Events
 
         #endregion
         /******************************/
@@ -497,7 +518,6 @@ namespace ComMonitor
 #else
             this.Title += "    Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
 #endif
-            EnableDisableContols();
         }
 
         /// <summary>
@@ -537,25 +557,6 @@ namespace ComMonitor
             tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
 
             return tw;
-        }
-
-        /// <summary>
-        /// EnableDisableContols
-        /// </summary>
-        private void EnableDisableContols()
-        {
-            tb_MenuItem_NewConnectionsWindow.IsEnabled = true;
-            tb_MenuItem_Click_LoadConnections.IsEnabled = true;
-            tb_MenuItem_SaveConnections.IsEnabled = true;
-            tb_MenuItem_OpenMessageFile.IsEnabled = true;
-            tb_MenuItem_SaveMessageFile.IsEnabled = true;
-            tb_MenuItem_SaveMessageFileAs.IsEnabled = true;
-            tb_MenuItem_AddNewMessage.IsEnabled = true;
-            tb_MenuItem_EditMessage.IsEnabled = true;
-            tb_MenuItem_AddMessage.IsEnabled = true;
-            tb_MenuItem_EditAndReplaceMessage.IsEnabled = true;
-            tb_MenuItem_Send.IsEnabled = true;
-            tb_MenuItem_DeleteAll.IsEnabled = true;
         }
 
         /// <summary>
