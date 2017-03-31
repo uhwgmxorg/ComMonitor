@@ -10,8 +10,11 @@ namespace ComMonitor.LocalTools
     public class MinaTCPServer
     {
         public delegate void DProcessMessage(byte[] message, HexMessageViewerControl.Direction direction);
+        public delegate void DEventHandlerConnectionStateChaneged(bool conState);
 
         private Logger _logger;
+
+        public event DEventHandlerConnectionStateChaneged ConnectionStateChaneged;
 
         private TCPServerProtocolManager Manager { get; set; }
         public Boolean Connected { get; set; }
@@ -122,6 +125,8 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionOpened(Object sender, IoSessionEventArgs e)
         {
             Connected = true;
+            if (ConnectionStateChaneged != null)
+                ConnectionStateChaneged(Connected);
             _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
         }
 
@@ -133,6 +138,8 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionClosed(Object sender, IoSessionEventArgs e)
         {
             Connected = false;
+            if (ConnectionStateChaneged != null)
+                ConnectionStateChaneged(Connected);
             _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
         }
 

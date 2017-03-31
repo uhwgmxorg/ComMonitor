@@ -37,6 +37,7 @@ namespace ComMonitor.MDIWindows
         }
         #endregion
 
+        public bool IsConnected { get; set; }
         public Connection MyConnection { get; set; }
 
         public byte[] FocusMessage { get; set; }
@@ -61,6 +62,7 @@ namespace ComMonitor.MDIWindows
             }
 
             FocusMessage = null;
+            IsConnected = false;
         }
 
         /******************************/
@@ -81,6 +83,16 @@ namespace ComMonitor.MDIWindows
         #region Other Events
 
         /// <summary>
+        /// ConStateChaneged
+        /// </summary>
+        /// <param name="conState"></param>
+        private void ConStateChaneged(bool conState)
+        {
+            IsConnected = conState;
+            _logger.Debug(String.Format("ConStateChaneged IsConnected={0} hashcode={1}",IsConnected, GetHashCode()));
+        }
+
+        /// <summary>
         /// mDIWindow_Unloaded
         /// </summary>
         /// <param name="sender"></param>
@@ -91,9 +103,11 @@ namespace ComMonitor.MDIWindows
             {
                 case EConnectionType.TCPSocketServer:
                     _minaTCPServer.Close();
+                    _minaTCPServer.ConnectionStateChaneged -= ConStateChaneged;
                     break;
                 case EConnectionType.TCPSocketCient:
                     _minaTCPClient.Close();
+                    _minaTCPClient.ConnectionStateChaneged -= ConStateChaneged;
                     break;
             }
         }
@@ -148,6 +162,7 @@ namespace ComMonitor.MDIWindows
         private void StartServer(Connection myConnection)
         {
             _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
+            _minaTCPServer.ConnectionStateChaneged += ConStateChaneged;
             _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
         }
 
@@ -157,7 +172,9 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartClient(Connection myConnection)
         {
-            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);
+            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);        
+            _minaTCPClient.ConnectionStateChaneged += ConStateChaneged;
+            _minaTCPClient.OpenMinaSocket();
             _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
         }
 

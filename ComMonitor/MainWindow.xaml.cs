@@ -110,7 +110,7 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanTideledCommand()
         {
-            return true;
+            return MainMdiContainer.Children.Count > 0;
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanCascadeCommand()
         {
-            return true;
+            return MainMdiContainer.Children.Count > 0;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanCloseAllCommand()
         {
-            return true;
+            return MainMdiContainer.Children.Count > 0;
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanSaveConnectionsCommand()
         {
-            return true;
+            return MainMdiContainer.Children.Count > 0;
         }
 
         /// <summary>
@@ -306,7 +306,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanOpenMessageFileCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -323,7 +326,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanSaveMessageFileCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -340,7 +346,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanSaveMessageFileAsCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -366,7 +375,11 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanAddNewMessageCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            _logger.Debug(String.Format("Enter CanAddNewMessageCommand ConnectonType={0} IsConnected={1} hashcode={2}", uctmc.MyConnection.ConnectionType,uctmc.IsConnected, uctmc.GetHashCode()));
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -383,7 +396,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanEditMessageCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -409,7 +425,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanAddMessageCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -426,7 +445,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanEditAndReplaceMessageCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -448,7 +470,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanSendCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected;
         }
 
         /// <summary>

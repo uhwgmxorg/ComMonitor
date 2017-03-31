@@ -8,8 +8,11 @@ namespace ComMonitor.LocalTools
     public class MinaTCPClient
     {
         public delegate void DProcessMessage(byte[] message, HexMessageViewerControl.Direction direction);
+        public delegate void DEventHandlerConnectionStateChaneged(bool conState);
 
         private Logger _logger;
+
+        public event DEventHandlerConnectionStateChaneged ConnectionStateChaneged;
 
         private TCPClientProtocolManager Manager { get; set; }
         public Boolean Connected { get; set; }
@@ -34,8 +37,6 @@ namespace ComMonitor.LocalTools
             CallProcessMessage = callProcessMessage;
 
             Manager = new TCPClientProtocolManager();
-            if (autoConnect)
-                OpenMinaSocket();
         }
 
         /// <summary>
@@ -125,7 +126,14 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionOpened(Object sender, IoSessionEventArgs e)
         {
             Connected = true;
-            _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
+            if (ConnectionStateChaneged != null)
+            {
+                ConnectionStateChaneged(Connected);
+                _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
+            }
+            else
+                _logger.Info(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+
         }
 
         /// <summary>
@@ -136,6 +144,8 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionClosed(Object sender, IoSessionEventArgs e)
         {
             Connected = false;
+            if (ConnectionStateChaneged != null)
+                ConnectionStateChaneged(Connected);
             _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
         }
 
