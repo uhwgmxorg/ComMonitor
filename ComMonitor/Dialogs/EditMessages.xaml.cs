@@ -18,7 +18,17 @@ namespace ComMonitor.Dialogs
         private Logger _logger;
 
         private ObservableCollection<TabItem> tabItems;
-        public ObservableCollection<TabItem> TabItems { get => tabItems; set => tabItems = value; }
+        public ObservableCollection<TabItem> TabItems
+        {
+            get
+            {
+                return tabItems;
+            }
+            set
+            {
+                tabItems = value;
+            }
+        }
         private TabItem _tabAdd;
 
         private List<byte[]> messagesToEdit;
