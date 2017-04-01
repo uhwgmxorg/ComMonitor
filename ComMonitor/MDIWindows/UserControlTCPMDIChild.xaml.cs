@@ -190,6 +190,15 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// SetNewConnectionName
+        /// </summary>
+        /// <param name="newName"></param>
+        public void SetNewConnectionName(string newName)
+        {
+            MyConnection.ConnectionName = newName;
+        }
+
+        /// <summary>
         /// StartClient
         /// </summary>
         /// <param name="myConnection"></param>
