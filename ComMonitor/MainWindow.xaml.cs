@@ -284,7 +284,12 @@ namespace ComMonitor
             if (String.IsNullOrEmpty(configFileName))
                 return;
 
-            ((UserControlTCPMDIChild)tw.Content).MyConnection.ConnectionName = Path.GetFileName(configFileName);
+            ((UserControlTCPMDIChild)tw.Content).SetNewConnectionName(Path.GetFileName(configFileName));
+            tw.Title = Path.GetFileName(configFileName);
+            if(((UserControlTCPMDIChild)tw.Content).IsConnected)
+                tw.Title += " (!)";
+            else
+                tw.Title += " ( )";
             Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
             _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
