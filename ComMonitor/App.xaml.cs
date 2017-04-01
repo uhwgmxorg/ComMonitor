@@ -75,7 +75,16 @@ namespace ComMonitor
             string ErrorMessage = string.Format("An unhandled exception occurred in OnAppDomainUnhandledException in a working thread : {0}", e.ToString());
             System.Diagnostics.Debug.WriteLine(ErrorMessage);
             _logger.Error(ErrorMessage);
-            _logger.Error(e.ExceptionObject.ToString());
+            Exception ex = e.ExceptionObject as Exception;
+            ErrorMessage = string.Format("StackTrace: {0}", ex.StackTrace);
+            _logger.Error(ErrorMessage);
+            if (ex.InnerException as Exception != null)
+            {
+                ErrorMessage = string.Format("InnerException: {0}", ex.InnerException.Message);
+                _logger.Error(ErrorMessage);
+                ErrorMessage = string.Format("StackTrace: {0}", ex.InnerException.StackTrace);
+                _logger.Error(ErrorMessage);
+            }
             Environment.Exit(0);
         }
     }

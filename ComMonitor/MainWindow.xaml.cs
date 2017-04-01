@@ -579,7 +579,14 @@ namespace ComMonitor
         /// </summary>
         public void UpdateWindow()
         {
-            try { Activate(); } catch (Exception){}
+            var tw = GetTopMDIWindow();
+            if (tw != null)
+            {
+                UserControlTCPMDIChild uctmc = tw.Content as UserControlTCPMDIChild;
+                if(uctmc != null)
+                    if (uctmc.FocusMessage != null)
+                        try { Activate(); } catch (Exception) { }
+            }
         }
 
         /// <summary>
