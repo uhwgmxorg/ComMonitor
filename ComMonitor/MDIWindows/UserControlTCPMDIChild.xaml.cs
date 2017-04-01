@@ -108,7 +108,7 @@ namespace ComMonitor.MDIWindows
                         TheMdiChild.Title = String.Format("{0} (!)", MyConnection.ConnectionName);
                     else
                         TheMdiChild.Title = String.Format("{0} ( )", MyConnection.ConnectionName);
-                    _mainWindow.MainToolBar.Refresh();
+                    _mainWindow.UpdateWindow();
                     _logger.Debug(String.Format("#2 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
                 }));
         }
@@ -229,17 +229,5 @@ namespace ComMonitor.MDIWindows
         }
 
         #endregion
-    }
-
-    public static class ExtensionMethods
-    {
-        private static Action EmptyDelegate = delegate () { };
-
-        public static void Refresh(this System.Windows.UIElement uiElement)
-        {
-            NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-            _logger.Debug(String.Format("Render {0} ThreadId={1}", uiElement.ToString(), System.Threading.Thread.CurrentThread.ManagedThreadId));
-            uiElement.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, EmptyDelegate);
-        }
     }
 }

@@ -572,6 +572,15 @@ namespace ComMonitor
         /*      Other Functions       */
         /******************************/
         #region Other Functions
+        
+        /// <summary>
+        /// CallCanFuncions
+        /// No better idea to update the ToolBar and Window-State yet
+        /// </summary>
+        public void UpdateWindow()
+        {
+            try { Activate(); } catch (Exception){}
+        }
 
         /// <summary>
         /// GetTopMDIWindow
