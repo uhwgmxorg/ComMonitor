@@ -6,6 +6,7 @@ using System;
 using ComMonitor.LocalTools;
 using System.Net;
 using System.Collections.Generic;
+using WPF.MDI;
 
 namespace ComMonitor.MDIWindows
 {
@@ -41,6 +42,7 @@ namespace ComMonitor.MDIWindows
 
         public bool IsConnected { get; set; }
         public Connection MyConnection { get; set; }
+        public MdiChild TheMdiChild { get; set; }
 
         public byte[] FocusMessage { get; set; }
 
@@ -58,6 +60,7 @@ namespace ComMonitor.MDIWindows
 
             MyConnection = connection;
             _mainWindow = mainWindow;
+            var w = System.Windows.Window.GetWindow(this);
             switch (MyConnection.ConnectionType)
             {
                 case EConnectionType.TCPSocketServer:
@@ -101,6 +104,10 @@ namespace ComMonitor.MDIWindows
                 () =>
                 {
                     IsConnected = conState;
+                    if(IsConnected)
+                        TheMdiChild.Title = String.Format("{0} (!)", MyConnection.ConnectionName);
+                    else
+                        TheMdiChild.Title = String.Format("{0} ( )", MyConnection.ConnectionName);
                     _mainWindow.MainToolBar.Refresh();
                     _logger.Debug(String.Format("#2 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
                 }));

@@ -14,6 +14,8 @@ namespace ComMonitor.Models
 
     public class Connection
     {
+        [XmlElement("ConnectionName")]
+        public string ConnectionName { get; set; }
         [XmlElement("ConnectionType")]
         public EConnectionType ConnectionType { get; set; }
         [XmlElement("IPAdress")]
@@ -26,14 +28,13 @@ namespace ComMonitor.Models
         public bool AutoConnections { get; set; }
 
         [XmlIgnore]
-        static public string FileName { get; set; }
+        public string FileName { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
         public Connection()
         {
-            ConnectionType = EConnectionType.TCPSocketServer;
             SetDefault();
         }
 
@@ -43,6 +44,7 @@ namespace ComMonitor.Models
         /// <param name="fileName"></param>
         public Connection(string fileName)
         {
+            ConnectionName = Path.GetFileName(fileName);
             ConnectionType = EConnectionType.TCPSocketServer;
             SetDefault();
             FileName = fileName;
@@ -55,6 +57,7 @@ namespace ComMonitor.Models
         /// <param name="fileName"></param>
         public Connection(int port,string fileName)
         {
+            ConnectionName = Path.GetFileName(fileName);
             ConnectionType = EConnectionType.TCPSocketServer;
             SetDefault();
             Port = port;
@@ -69,6 +72,7 @@ namespace ComMonitor.Models
         /// <param name="fileName"></param>
         public Connection(string iPAdress, int port, string fileName)
         {
+            ConnectionName = Path.GetFileName(fileName);
             ConnectionType = EConnectionType.TCPSocketServer;
             IPAdress = iPAdress;
             Port = port;
@@ -80,12 +84,13 @@ namespace ComMonitor.Models
         /// </summary>
         public void SetDefault()
         {
+            FileName = "New Connection.cmc";
+            ConnectionName = Path.GetFileName(FileName);
             ConnectionType = EConnectionType.TCPSocketServer;
             IPAdress = "127.0.0.1";
             Port = 4711;
             MultipleConnections = false;
             AutoConnections = true;
-            FileName = "Connection01.cmc";
         }
 
         /// <summary>

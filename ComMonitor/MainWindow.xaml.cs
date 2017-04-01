@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using WPF.MDI;
@@ -213,10 +214,12 @@ namespace ComMonitor
 
             MdiChild MdiChild = new MdiChild()
             {
+                Title = String.Format("New Connection ( )"),
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
                 Content = new UserControlTCPMDIChild(ConfigNewConnectionDlg.ConnectionObj,this)
             };
+            ((UserControlTCPMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
             MainMdiContainer.Children.Add(MdiChild);
         }
 
@@ -246,10 +249,12 @@ namespace ComMonitor
 
             MdiChild MdiChild = new MdiChild()
             {
+                Title = String.Format("{0} ( )", Path.GetFileName(configFileName)),
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
                 Content = new UserControlTCPMDIChild(newConnection,this)
             };
+            ((UserControlTCPMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
             MainMdiContainer.Children.Add(MdiChild);
         }
 
@@ -279,6 +284,7 @@ namespace ComMonitor
             if (String.IsNullOrEmpty(configFileName))
                 return;
 
+            ((UserControlTCPMDIChild)tw.Content).MyConnection.ConnectionName = Path.GetFileName(configFileName);
             Connection.Save(((UserControlTCPMDIChild)tw.Content).MyConnection, configFileName);
             _logger.Info(String.Format("Save Connection File {0}", configFileName));
         }
