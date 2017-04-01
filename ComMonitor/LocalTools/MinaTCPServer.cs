@@ -124,9 +124,9 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionOpened(Object sender, IoSessionEventArgs e)
         {
             Connected = true;
+            _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
             if (ConnectionStateChaneged != null)
                 ConnectionStateChaneged(Connected);
-            _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionClosed(Object sender, IoSessionEventArgs e)
         {
             Connected = false;
+            _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
             if (ConnectionStateChaneged != null)
                 ConnectionStateChaneged(Connected);
-            _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
         }
 
         /// <summary>
