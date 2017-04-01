@@ -18,6 +18,8 @@ namespace ComMonitor.MDIWindows
         private NLog.Logger _logger;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private MainWindow _mainWindow;
+
         private MinaTCPServer _minaTCPServer;
         private MinaTCPClient _minaTCPClient;
 
@@ -42,15 +44,20 @@ namespace ComMonitor.MDIWindows
 
         public byte[] FocusMessage { get; set; }
 
+        public virtual System.Windows.Threading.Dispatcher DispatcherObjectForTaskDispatcher { get; protected set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public UserControlTCPMDIChild(Connection connection)
+        public UserControlTCPMDIChild(Connection connection,MainWindow mainWindow)
         {
             _logger = NLog.LogManager.GetCurrentClassLogger();
             InitializeComponent();
 
+            DispatcherObjectForTaskDispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+
             MyConnection = connection;
+            _mainWindow = mainWindow;
             switch (MyConnection.ConnectionType)
             {
                 case EConnectionType.TCPSocketServer:
@@ -88,8 +95,15 @@ namespace ComMonitor.MDIWindows
         /// <param name="conState"></param>
         private void ConStateChaneged(bool conState)
         {
-            IsConnected = conState;
-            _logger.Debug(String.Format("ConStateChaneged IsConnected={0} hashcode={1}",IsConnected, GetHashCode()));
+            // Unlink the threads between TCP thread and UI thread:
+            // http://stackoverflow.com/questions/2403972/c-sharp-events-between-threads-executed-in-their-own-thread-how-to
+            DispatcherObjectForTaskDispatcher.BeginInvoke(new Action(
+                () =>
+                {
+                    IsConnected = conState;
+                    _mainWindow.MainToolBar.Refresh();
+                    _logger.Debug(String.Format("#2 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                }));
         }
 
         /// <summary>
@@ -110,6 +124,7 @@ namespace ComMonitor.MDIWindows
                     _minaTCPClient.ConnectionStateChaneged -= ConStateChaneged;
                     break;
             }
+            _logger.Debug(String.Format("{0} ------------------------------- IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
         }
 
         #endregion
@@ -198,5 +213,17 @@ namespace ComMonitor.MDIWindows
         }
 
         #endregion
+    }
+
+    public static class ExtensionMethods
+    {
+        private static Action EmptyDelegate = delegate () { };
+
+        public static void Refresh(this System.Windows.UIElement uiElement)
+        {
+            NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+            _logger.Debug(String.Format("Render {0} ThreadId={1}", uiElement.ToString(), System.Threading.Thread.CurrentThread.ManagedThreadId));
+            uiElement.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, EmptyDelegate);
+        }
     }
 }

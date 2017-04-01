@@ -215,7 +215,7 @@ namespace ComMonitor
             {
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
-                Content = new UserControlTCPMDIChild(ConfigNewConnectionDlg.ConnectionObj)
+                Content = new UserControlTCPMDIChild(ConfigNewConnectionDlg.ConnectionObj,this)
             };
             MainMdiContainer.Children.Add(MdiChild);
         }
@@ -248,7 +248,7 @@ namespace ComMonitor
             {
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
-                Content = new UserControlTCPMDIChild(newConnection)
+                Content = new UserControlTCPMDIChild(newConnection,this)
             };
             MainMdiContainer.Children.Add(MdiChild);
         }
@@ -378,7 +378,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            _logger.Debug(String.Format("Enter CanAddNewMessageCommand ConnectonType={0} IsConnected={1} hashcode={2}", uctmc.MyConnection.ConnectionType,uctmc.IsConnected, uctmc.GetHashCode()));
+            _logger.Debug(String.Format("#3 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), uctmc.IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, uctmc.GetHashCode()));
             return uctmc.IsConnected;
         }
 
