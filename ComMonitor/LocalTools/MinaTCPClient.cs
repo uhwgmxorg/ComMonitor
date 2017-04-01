@@ -96,6 +96,7 @@ namespace ComMonitor.LocalTools
             try
             {
                 Manager.Session.Close(true);
+                Manager.Connector.Dispose();
             }
             catch (Exception ex)
             {
