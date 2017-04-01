@@ -163,6 +163,7 @@ namespace ComMonitor.MDIWindows
         {
             _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
             _minaTCPServer.ConnectionStateChaneged += ConStateChaneged;
+            _minaTCPServer.StartMinaListener();
             _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
         }
 

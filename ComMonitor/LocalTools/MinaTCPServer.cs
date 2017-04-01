@@ -36,14 +36,13 @@ namespace ComMonitor.LocalTools
             CallProcessMessage = callProcessMessage;
 
             Manager = new TCPServerProtocolManager();
-            StartMinaListener();
         }
 
         /// <summary>
         /// StartMinaListener
         /// </summary>
         /// <param name="port"></param>
-        private void StartMinaListener()
+        public void StartMinaListener()
         {
             try
             {
