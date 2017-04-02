@@ -34,6 +34,7 @@ namespace ComMonitor
 
 
         public RelayCommand ExitCommand { get; private set; }
+        public RelayCommand DeleteListCommand { get; private set; }
         public RelayCommand NewConnectionsWindowCommand { get; private set; }
         public RelayCommand LoadConnectionsCommand { get; private set; }
         public RelayCommand SaveConnectionsCommand { get; private set; }
@@ -48,6 +49,27 @@ namespace ComMonitor
         public RelayCommand DeleteAllCommand { get; private set; }
         public RelayCommand AboutCommand { get; private set; }
 
+        #region RecentFileList Properties and Vars
+        const string NoFile = "No file";
+        const string NewFile = "New nameless file";
+
+        public static DependencyProperty FilepathProperty =
+            DependencyProperty.Register(
+            "Filepath",
+            typeof(string),
+            typeof(MainWindow),
+            new PropertyMetadata(NoFile));
+        public string Filepath
+        {
+            get { return (string)GetValue(FilepathProperty); }
+            set { SetValue(FilepathProperty, value); }
+        }
+
+        bool _IsFileNamed = false;
+        bool _IsFileLoaded = false;
+        MemoryStream _MemoryStream = new MemoryStream();
+        #endregion
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -58,6 +80,7 @@ namespace ComMonitor
             DataContext = this;
 
             ExitCommand = new RelayCommand(ExitCommandCF, CanExitCommand);
+            DeleteListCommand = new RelayCommand(DeleteListCommandCF, CanDeleteListCommand);
             TideledCommand = new RelayCommand(TideledCommandCF, CanTideledCommand);
             CascadeCommand = new RelayCommand(CascadeCommandCF, CanCascadeCommand);
             CloseAllCommand = new RelayCommand(CloseAllCommandCF, CanCloseAllCommand);
@@ -77,6 +100,9 @@ namespace ComMonitor
             DeleteAllCommand = new RelayCommand(DeleteAllCommandCF, CanDeleteAllCommand);
             AboutCommand = new RelayCommand(AboutCommandCF, CanAboutCommand);
 
+            RecentFileList.MenuClick += (s, e) => LoadRecentFile(e.Filepath);
+            RecentFileList.MaxNumberOfFiles = 6;
+
             FocusMessage = null;
         }
 
@@ -85,7 +111,7 @@ namespace ComMonitor
         /******************************/
         #region Command Functions
 
-        #region MenueBar
+        #region MenueBar Only
         /// <summary>
         /// TideledCommandCF
         /// </summary>
@@ -189,13 +215,33 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// CanWelcomeCommand
+        /// CanExitCommand
         /// </summary>
         /// <returns></returns>
         private bool CanExitCommand()
         {
             return true;
         }
+
+
+        /// <summary>
+        /// DeleteListCommandCF
+        /// </summary>
+        private void DeleteListCommandCF()
+        {
+            foreach (var v in RecentFileList.RecentFiles)
+                RecentFileList.RemoveFile(v);
+        }
+
+        /// <summary>
+        /// CanDeleteListCommand 
+        /// </summary>
+        /// <returns></returns>
+        private bool CanDeleteListCommand()
+        {
+            return true;
+        }
+
         #endregion
 
         #region ToolBar
@@ -244,6 +290,11 @@ namespace ComMonitor
             string configFileName = LST.OpenFileDialog("Cmc Datein (*.cmc)|*.cmc;|Alle Dateien (*.*)|*.*\"");
             if (String.IsNullOrEmpty(configFileName))
                 return;
+
+            RecentFileList.InsertFile(configFileName);
+            Filepath = configFileName;
+            _IsFileLoaded = true;
+            _IsFileNamed = true;
 
             Connection newConnection = Connection.Load(configFileName);
             _logger.Info(String.Format("Load Connection File {0}", configFileName));
@@ -580,6 +631,29 @@ namespace ComMonitor
         public void UpdateWindow()
         {
             System.Windows.Input.CommandManager.InvalidateRequerySuggested();
+        }
+
+        /// <summary>
+        /// LoadResentFile
+        /// </summary>
+        /// <param name="configFileName"></param>
+        private void LoadRecentFile(string configFileName)
+        {
+            double AcParentWindoHeight = ActualHeight;
+            double AcParentWindoWidth = ActualWidth;
+
+            Connection newConnection = Connection.Load(configFileName);
+            _logger.Info(String.Format("Load Connection File {0}", configFileName));
+
+            MdiChild MdiChild = new MdiChild()
+            {
+                Title = String.Format("{0} ( )", Path.GetFileName(configFileName)),
+                Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
+                Width = AcParentWindoWidth * 0.6,
+                Content = new UserControlTCPMDIChild(newConnection, this)
+            };
+            ((UserControlTCPMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
+            MainMdiContainer.Children.Add(MdiChild);
         }
 
         /// <summary>

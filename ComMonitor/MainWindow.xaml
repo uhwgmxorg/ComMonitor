@@ -4,6 +4,7 @@
         Icon="/ComMonitor;component/Resources/TCP-IP-2-32.ico"
         xmlns:mdi="clr-namespace:WPF.MDI;assembly=WPF.MDI"
         xmlns:localtools="clr-namespace:ComMonitor.LocalTools"
+        xmlns:common="clr-namespace:Common;assembly=RecentFileListLib"
         localtools:WindowsSettings.Save="True"  
         Title="ComMonitor" Height="640" Width="1120" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Background="DarkGray" >
@@ -14,6 +15,10 @@
                         <Image Source="/ComMonitor;component/Resources/ToolBar01/Exit.png" Stretch="Fill" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Open" Command="{Binding LoadConnectionsCommand}" />
+                <MenuItem Header="Save" Command="{Binding SaveConnectionsCommand}"  />
+                <common:RecentFileList x:Name="RecentFileList" />
+                <MenuItem Header="Delete List" Command="{Binding DeleteListCommand}"  />
             </MenuItem>
             <MenuItem Header="Connections">
                 <MenuItem Command="{Binding NewConnectionsWindowCommand}" Header="New Connections Window" >
