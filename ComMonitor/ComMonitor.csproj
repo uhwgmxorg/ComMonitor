@@ -141,6 +141,7 @@
     <Compile Include="LocalTools\TCPClientProtocolManager.cs" />
     <Compile Include="LocalTools\TCPProtocolManager.cs" />
     <Compile Include="LocalTools\TCPServerProtocolManager.cs" />
+    <Compile Include="LocalTools\WindowsSettings.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

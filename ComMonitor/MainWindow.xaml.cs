@@ -184,6 +184,7 @@ namespace ComMonitor
         private void ExitCommandCF()
         {
             _logger.Info("Closing ComMonitor");
+            Close();
             Environment.Exit(0);
         }
 
@@ -564,7 +565,6 @@ namespace ComMonitor
         private void Window_Closed(object sender, EventArgs e)
         {
             _logger.Info("Closing ComMonitor");
-            Environment.Exit(0);
         }
 
         #endregion
