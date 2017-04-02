@@ -336,6 +336,11 @@ namespace ComMonitor
             if (String.IsNullOrEmpty(configFileName))
                 return;
 
+            RecentFileList.InsertFile(configFileName);
+            Filepath = configFileName;
+            _IsFileLoaded = true;
+            _IsFileNamed = true;
+
             ((UserControlTCPMDIChild)tw.Content).SetNewConnectionName(Path.GetFileName(configFileName));
             tw.Title = Path.GetFileName(configFileName);
             if(((UserControlTCPMDIChild)tw.Content).IsConnected)
