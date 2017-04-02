@@ -44,7 +44,9 @@ namespace ComMonitor.MDIWindows
         public Connection MyConnection { get; set; }
         public MdiChild TheMdiChild { get; set; }
 
-        public byte[] FocusMessage { get; set; }
+        public Message FocusMessage { get; set; }
+        public List<Message> MessageList { get; set; }
+        public string MessageFileName { get; set; }
 
         public virtual System.Windows.Threading.Dispatcher DispatcherObjectForTaskDispatcher { get; protected set; }
 
@@ -73,6 +75,9 @@ namespace ComMonitor.MDIWindows
 
             FocusMessage = null;
             IsConnected = false;
+
+            FocusMessage = null;
+            MessageList = new List<Message>();
         }
 
         /******************************/

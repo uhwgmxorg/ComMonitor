@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace ComMonitor.LocalTools
 {
@@ -90,6 +93,100 @@ namespace ComMonitor.LocalTools
                 resultFileName = "";
 
             return resultFileName;
+        }
+
+        /// <summary>
+        /// LoadList
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        static public List<T> LoadList<T>(string file)
+        {
+            List<T> list = null;
+
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+                using (StreamReader rd = new StreamReader(file))
+                {
+                    list = xs.Deserialize(rd) as List<T>;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                list = new List<T>();
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// SaveList
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        static public void SaveList<T>(List<T> list, string file)
+        {
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+                using (StreamWriter wr = new StreamWriter(file))
+                {
+                    xs.Serialize(wr, list);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// SaveClass
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="file"></param>
+        static public void SaveClass<T>(T obj, string file)
+        {
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(T));
+                using (StreamWriter wr = new StreamWriter(file))
+                {
+                    xs.Serialize(wr, obj);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// LoadClass
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        static public bool LoadClass<T>(ref T obj, string file)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+                using (StreamReader rd = new StreamReader(file))
+                {
+                    var Obj = serializer.Deserialize(rd);
+                    obj = (T)Obj;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace ComMonitor
         private NLog.Logger _logger;
         private Random _random = new Random();
 
-        public byte[] FocusMessage { get; set; }
+        public Message FocusMessage { get; set; }
 
 
         public RelayCommand TideledCommand { get; private set; }
@@ -223,7 +223,6 @@ namespace ComMonitor
             return true;
         }
 
-
         /// <summary>
         /// DeleteListCommandCF
         /// </summary>
@@ -385,7 +384,22 @@ namespace ComMonitor
         /// </summary>
         private void SaveMessageFileCommandCF()
         {
-            Console.Beep();
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null)
+            {
+                Console.Beep();
+                _logger.Info("Nothing to save!!");
+                return;
+            }
+
+            if(String.IsNullOrEmpty(((UserControlTCPMDIChild)tw.Content).MessageFileName) || ((UserControlTCPMDIChild)tw.Content).MessageFileName.Contains("New MessageFile"))
+            {
+                SaveMessageFileAsCommandCF();
+                return;
+            }
+
+            LST.SaveList<Message>(((UserControlTCPMDIChild)tw.Content).MessageList, ((UserControlTCPMDIChild)tw.Content).MessageFileName);
+            _logger.Info(String.Format("Save MessageFile File {0}", (((UserControlTCPMDIChild)tw.Content).MessageFileName)));
         }
 
         /// <summary>
@@ -397,7 +411,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.MessageList.Count > 0 && uctmc.IsConnected;
         }
 
         /// <summary>
@@ -405,7 +419,20 @@ namespace ComMonitor
         /// </summary>
         private void SaveMessageFileAsCommandCF()
         {
-            Console.Beep();
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null)
+            {
+                Console.Beep();
+                _logger.Info("Nothing to save!!");
+                return;
+            }
+
+            string messageFileName = LST.SaveFileDialog("Cmm Datein (*.cmm)|*.cmm;|Alle Dateien (*.*)|*.*\"");
+            if (String.IsNullOrEmpty(messageFileName))
+                return;
+
+            LST.SaveList<Message>(((UserControlTCPMDIChild)tw.Content).MessageList, messageFileName);
+            _logger.Info(String.Format("Save MessageFile File As {0}", messageFileName));
         }
 
         /// <summary>
@@ -417,7 +444,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.MessageList.Count > 0 && uctmc.IsConnected;
         }
 
         /// <summary>
@@ -434,7 +461,7 @@ namespace ComMonitor
             if (!res.Value)
                 return;
 
-            FocusMessage = CreateNewMessageDlg.FocusMessage;
+            FocusMessage.Content = CreateNewMessageDlg.FocusMessage;
         }
 
         /// <summary>
@@ -525,11 +552,9 @@ namespace ComMonitor
         private void SendCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-
             if (tw == null) { Console.Beep(); return; }
-
             ((UserControlTCPMDIChild)tw.Content).FocusMessage = FocusMessage;
-            ((UserControlTCPMDIChild)tw.Content).SendMessage(((UserControlTCPMDIChild)tw.Content).FocusMessage);
+            ((UserControlTCPMDIChild)tw.Content).SendMessage(((UserControlTCPMDIChild)tw.Content).FocusMessage.Content);
         }
 
         /// <summary>
@@ -541,7 +566,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.IsConnected && uctmc.FocusMessage != null;
         }
 
         /// <summary>
