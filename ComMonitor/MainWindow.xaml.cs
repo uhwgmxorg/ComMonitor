@@ -579,6 +579,7 @@ namespace ComMonitor
         /// </summary>
         public void UpdateWindow()
         {
+            System.Windows.Input.CommandManager.InvalidateRequerySuggested();
         }
 
         /// <summary>
