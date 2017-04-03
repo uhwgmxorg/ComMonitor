@@ -85,6 +85,7 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
         {
+            FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex];
             DialogResult = true;
             Close();
         }
@@ -133,6 +134,7 @@ namespace ComMonitor.Dialogs
 
         #endregion
     }
+
     public sealed class TabItem
     {
         public string Header { get; set; }

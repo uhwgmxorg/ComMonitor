@@ -182,6 +182,27 @@ namespace HexMessageViewerControl
         }
 
         /// <summary>
+        /// GetAllMessages
+        /// </summary>
+        /// <returns></returns>
+        public List<byte[]> GetAllMessages()
+        {
+            List<byte[]> allMessages = new List<byte[]>();
+            byte[] messge;
+            byte[] copyOfMessge;
+
+            foreach (var m in LineStackPanel.Children)
+            {
+                messge = ((HexMessageUC)m).HexContentByte;
+                copyOfMessge = new byte[messge.Length];
+                messge.CopyTo(copyOfMessge, 0);
+                allMessages.Add(copyOfMessge);
+            }
+
+            return allMessages;
+        }
+
+        /// <summary>
         /// ClearAllMessage
         /// </summary>
         public void ClearAllMessage()

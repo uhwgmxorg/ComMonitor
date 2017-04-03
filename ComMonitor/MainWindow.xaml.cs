@@ -24,9 +24,6 @@ namespace ComMonitor
         private NLog.Logger _logger;
         private Random _random = new Random();
 
-        public Message FocusMessage { get; set; }
-
-
         public RelayCommand TideledCommand { get; private set; }
         public RelayCommand CascadeCommand { get; private set; }
         public RelayCommand CloseAllCommand { get; private set; }
@@ -94,16 +91,13 @@ namespace ComMonitor
             SaveMessageFileAsCommand = new RelayCommand(SaveMessageFileAsCommandCF, CanSaveMessageFileAsCommand);
             AddNewMessageCommand = new RelayCommand(AddNewMessageCommandCF, CanAddNewMessageCommand);
             EditMessageCommand = new RelayCommand(EditMessageCommandCF, CanEditMessageCommand);
-            AddMessageCommand = new RelayCommand(AddMessageCommandCF, CanAddMessageCommand);
+            AddMessageCommand = new RelayCommand(AddSelectedMessageCommandCF, CanAddSelectedMessageCommand);
             EditAndReplaceMessageCommand = new RelayCommand(EditAndReplaceMessageCommandCF, CanEditAndReplaceMessageCommand);
             SendCommand = new RelayCommand(SendCommandCF, CanSendCommand);
             DeleteAllCommand = new RelayCommand(DeleteAllCommandCF, CanDeleteAllCommand);
             AboutCommand = new RelayCommand(AboutCommandCF, CanAboutCommand);
 
             RecentFileList.MenuClick += (s, e) => LoadRecentFile(e.Filepath);
-            RecentFileList.MaxNumberOfFiles = 6;
-
-            FocusMessage = null;
         }
 
         /******************************/
@@ -411,7 +405,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.MessageList.Count > 0 && uctmc.IsConnected;
+            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -444,7 +438,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.MessageList.Count > 0 && uctmc.IsConnected;
+            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -454,6 +448,7 @@ namespace ComMonitor
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
             CreateNewMessage CreateNewMessageDlg = new CreateNewMessage();
             CreateNewMessageDlg.Owner = Window.GetWindow(this);
@@ -461,7 +456,8 @@ namespace ComMonitor
             if (!res.Value)
                 return;
 
-            FocusMessage.Content = CreateNewMessageDlg.FocusMessage;
+            uctmc.FocusMessage = new Message { Content = CreateNewMessageDlg.FocusMessage };
+            uctmc.MessageList.Add( uctmc.FocusMessage);
         }
 
         /// <summary>
@@ -482,7 +478,24 @@ namespace ComMonitor
         /// </summary>
         private void EditMessageCommandCF()
         {
-            Console.Beep();
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) { Console.Beep(); return; }
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+
+            List<byte[]> allMessages = new List<byte[]>();
+            foreach (var m in ((UserControlTCPMDIChild)tw.Content).MessageList)
+                allMessages.Add(m.Content);
+
+            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessagesDlg.MessagesToEdit = allMessages;
+            EditMessagesDlg.Owner = Window.GetWindow(this);
+            var res = EditMessagesDlg.ShowDialog();
+            if (!res.Value)
+                return;
+
+            uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
+            foreach (var m in EditMessagesDlg.MessagesToEdit)
+                uctmc.MessageList.Add(new Message { Content = m });
         }
 
         /// <summary>
@@ -492,18 +505,19 @@ namespace ComMonitor
         private bool CanEditMessageCommand()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) return false;
+            if (tw == null) { Console.Beep(); return false; }
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.FocusMessage != null;
         }
 
         /// <summary>
         /// AddMessageCommandCF
         /// </summary>
-        private void AddMessageCommandCF()
+        private void AddSelectedMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
 
             EditMessages EditMessagesDlg = new EditMessages();
@@ -512,18 +526,22 @@ namespace ComMonitor
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
                 return;
+
+            uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
+            foreach(var m in EditMessagesDlg.MessagesToEdit)
+                uctmc.MessageList.Add(new Message { Content = m });
         }
 
         /// <summary>
         /// CanAddMessageCommand
         /// </summary>
         /// <returns></returns>
-        private bool CanAddMessageCommand()
+        private bool CanAddSelectedMessageCommand()
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
         }
 
         /// <summary>
@@ -531,7 +549,22 @@ namespace ComMonitor
         /// </summary>
         private void EditAndReplaceMessageCommandCF()
         {
-            Console.Beep();
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) { Console.Beep(); return; }
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
+            uctmc.MessageList.Clear();
+
+            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
+            EditMessagesDlg.Owner = Window.GetWindow(this);
+            var res = EditMessagesDlg.ShowDialog();
+            if (!res.Value)
+                return;
+
+            uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
+            foreach (var m in EditMessagesDlg.MessagesToEdit)
+                uctmc.MessageList.Add(new Message { Content = m });
         }
 
         /// <summary>
@@ -543,7 +576,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
         }
 
         /// <summary>
@@ -553,7 +586,6 @@ namespace ComMonitor
         {
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) { Console.Beep(); return; }
-            ((UserControlTCPMDIChild)tw.Content).FocusMessage = FocusMessage;
             ((UserControlTCPMDIChild)tw.Content).SendMessage(((UserControlTCPMDIChild)tw.Content).FocusMessage.Content);
         }
 
@@ -585,7 +617,10 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanDeleteAllCommand()
         {
-            return true;
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return false;
+            UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
+            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0;
         }
 
         /// <summary>

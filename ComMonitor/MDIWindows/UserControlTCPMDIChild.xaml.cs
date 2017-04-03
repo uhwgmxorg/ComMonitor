@@ -174,6 +174,15 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// GetAllMessages
+        /// </summary>
+        /// <returns></returns>
+        public List<byte[]> GetAllMessages()
+        {
+            return hexUC.GetAllMessages();
+        }
+
+        /// <summary>
         /// DeleteAllMessages
         /// </summary>
         public void DeleteAllMessages()
