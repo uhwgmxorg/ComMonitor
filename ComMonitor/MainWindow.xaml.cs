@@ -320,7 +320,6 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null)
             {
-                Console.Beep();
                 _logger.Info("Nothing to save!!");
                 return;
             }
@@ -358,7 +357,6 @@ namespace ComMonitor
         /// </summary>
         private void OpenMessageFileCommandCF()
         {
-            Console.Beep();
         }
 
         /// <summary>
@@ -381,7 +379,6 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null)
             {
-                Console.Beep();
                 _logger.Info("Nothing to save!!");
                 return;
             }
@@ -416,7 +413,6 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null)
             {
-                Console.Beep();
                 _logger.Info("Nothing to save!!");
                 return;
             }
@@ -447,7 +443,7 @@ namespace ComMonitor
         private void AddNewMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
             CreateNewMessage CreateNewMessageDlg = new CreateNewMessage();
@@ -479,7 +475,7 @@ namespace ComMonitor
         private void EditMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
             List<byte[]> allMessages = new List<byte[]>();
@@ -494,6 +490,7 @@ namespace ComMonitor
                 return;
 
             uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
+            uctmc.MessageList.Clear();
             foreach (var m in EditMessagesDlg.MessagesToEdit)
                 uctmc.MessageList.Add(new Message { Content = m });
         }
@@ -505,7 +502,7 @@ namespace ComMonitor
         private bool CanEditMessageCommand()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return false; }
+            if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             return uctmc.FocusMessage != null;
         }
@@ -516,7 +513,7 @@ namespace ComMonitor
         private void AddSelectedMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
 
@@ -550,7 +547,7 @@ namespace ComMonitor
         private void EditAndReplaceMessageCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
             uctmc.MessageList.Clear();
@@ -585,7 +582,7 @@ namespace ComMonitor
         private void SendCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             ((UserControlTCPMDIChild)tw.Content).SendMessage(((UserControlTCPMDIChild)tw.Content).FocusMessage.Content);
         }
 
@@ -607,7 +604,7 @@ namespace ComMonitor
         private void DeleteAllCommandCF()
         {
             MdiChild tw = GetTopMDIWindow();
-            if (tw == null) { Console.Beep(); return; }
+            if (tw == null) return;
             ((UserControlTCPMDIChild)tw.Content).DeleteAllMessages();
         }
 

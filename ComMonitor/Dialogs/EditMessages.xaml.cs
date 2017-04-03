@@ -85,8 +85,23 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
         {
-            FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex];
+            int i = 0;
             DialogResult = true;
+
+            try
+            {
+                foreach (var t in TabItems)
+                {
+                    t.HexEditor.SubmitChanges();
+                    MessagesToEdit[i++] = t.HexEditor.Stream.ToArray();
+                }
+                FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex];
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
+
             Close();
         }
 
