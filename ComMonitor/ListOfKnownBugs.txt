@@ -3,4 +3,6 @@
 
    25.02.2017 0.0.0.0 Rev 0
 
-   - XXXX 
+   - The HexaEditor Control in the Tab Control has not 
+     the correct height, so the vertical scrollbar 
+	 did not work as expected.

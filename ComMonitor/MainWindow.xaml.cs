@@ -744,9 +744,10 @@ namespace ComMonitor
             foreach (var w in MainMdiContainer.Children)
                 iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
 
-            Debug.WriteLine("MDI-Windows ZIndexList:");
-            Debug.Write(String.Join("; ", iZIndexList));
-            Debug.WriteLine("");
+            //Debug.WriteLine("MDI-Windows ZIndexList:");
+            //Debug.Write(String.Join("; ", iZIndexList));
+            //Debug.WriteLine("");
+
             int max = iZIndexList.Max();
             tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
 
