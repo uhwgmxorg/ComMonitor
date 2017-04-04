@@ -364,6 +364,8 @@ namespace ComMonitor
                 return;
 
             ((UserControlTCPMDIChild)tw.Content).MessageList = LST.LoadList<Message>(configFileName);
+            if(((UserControlTCPMDIChild)tw.Content).MessageList.Count > 0)
+                ((UserControlTCPMDIChild)tw.Content).FocusMessage = ((UserControlTCPMDIChild)tw.Content).MessageList[0];
             _logger.Info(String.Format("Lode MessageFile File {0}", configFileName));
         }
 
@@ -606,7 +608,7 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.FocusMessage != null;
+            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>

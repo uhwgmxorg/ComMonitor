@@ -1,7 +1,7 @@
 ﻿Program ComMonitor ListOfKnownBugs
 
 
-   25.02.2017 0.0.0.0 Rev 0
+   04.04.2017 0.1.0.* Rev 0
 
    - The HexaEditor Control in the Tab Control has not 
      the correct height, so the vertical scrollbar 

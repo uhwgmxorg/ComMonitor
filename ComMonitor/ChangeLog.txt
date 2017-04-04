@@ -1,6 +1,16 @@
 Program ComMonitor ChangeLog
 
 
+   04.04.2016 0.1.0.* Rev 0
+
+   - First usable version
+   - Create connections as TCP server or client
+   - Save and load configured connections
+   - Send and receive messages
+   - Add and edit messages
+   - Save and load message files
+
+
    25.03.2016 0.0.0.0 Rev 0
 
    - Start Version 0.0.0.0  
