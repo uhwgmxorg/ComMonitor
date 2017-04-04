@@ -82,7 +82,6 @@ namespace ComMonitor
             CascadeCommand = new RelayCommand(CascadeCommandCF, CanCascadeCommand);
             CloseAllCommand = new RelayCommand(CloseAllCommandCF, CanCloseAllCommand);
             ChangeLogCommand = new RelayCommand(ChangeLogCommandCF, CanChangeLogCommand);
-            ExitCommand = new RelayCommand(ExitCommandCF, CanExitCommand);
             NewConnectionsWindowCommand = new RelayCommand(NewConnectionsWindowCommandCF, CanNewConnectionsWindowCommand);
             LoadConnectionsCommand = new RelayCommand(LoadConnectionsCommandCF, CanLoadConnectionsCommand);
             SaveConnectionsCommand = new RelayCommand(SaveConnectionsCommandCF, CanSaveConnectionsCommand);
@@ -203,7 +202,6 @@ namespace ComMonitor
         /// </summary>
         private void ExitCommandCF()
         {
-            _logger.Info("Closing ComMonitor");
             Properties.Settings.Default.Save();
             Close();
             Environment.Exit(0);
@@ -358,6 +356,15 @@ namespace ComMonitor
         /// </summary>
         private void OpenMessageFileCommandCF()
         {
+            MdiChild tw = GetTopMDIWindow();
+            if (tw == null) return;
+
+            string configFileName = LST.OpenFileDialog("Cmm Datein (*.cmm)|*.cmm;|Alle Dateien (*.*)|*.*\"");
+            if (String.IsNullOrEmpty(configFileName))
+                return;
+
+            ((UserControlTCPMDIChild)tw.Content).MessageList = LST.LoadList<Message>(configFileName);
+            _logger.Info(String.Format("Lode MessageFile File {0}", configFileName));
         }
 
         /// <summary>
@@ -507,7 +514,8 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.FocusMessage != null;
+            if (uctmc.MessageList == null) return false;
+            return uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -736,7 +744,9 @@ namespace ComMonitor
             foreach (var w in MainMdiContainer.Children)
                 iZIndexList.Add(System.Windows.Controls.Panel.GetZIndex(w));
 
-            Debug.WriteLine(String.Join("; ", iZIndexList));
+            Debug.WriteLine("MDI-Windows ZIndexList:");
+            Debug.Write(String.Join("; ", iZIndexList));
+            Debug.WriteLine("");
             int max = iZIndexList.Max();
             tw = MainMdiContainer.Children[iZIndexList.IndexOf(max)];
 

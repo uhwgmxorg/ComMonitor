@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using ComMonitor.LocalTools;
+using System.Xml.Serialization;
 
 namespace ComMonitor.Models
 {
@@ -6,7 +7,19 @@ namespace ComMonitor.Models
     {
         [XmlElement("MessageName")]
         public string MessageName { get; set; }
-        [XmlElement("Content")]
-        public byte[] Content { get; set; }
+        [XmlElement("ProxyContent")]
+        public string ProxyContent { get; set; }
+        [XmlIgnore]
+        public byte[] Content
+        {
+            get
+            {
+                return LST.HexStringToByteArray(ProxyContent);
+            }
+            set
+            {
+                ProxyContent = LST.ByteArrayToHexString(value);
+            }
+        }
     }
 }
