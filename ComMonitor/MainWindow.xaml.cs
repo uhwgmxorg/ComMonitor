@@ -204,6 +204,7 @@ namespace ComMonitor
         private void ExitCommandCF()
         {
             _logger.Info("Closing ComMonitor");
+            Properties.Settings.Default.Save();
             Close();
             Environment.Exit(0);
         }
@@ -483,6 +484,8 @@ namespace ComMonitor
                 allMessages.Add(m.Content);
 
             EditMessages EditMessagesDlg = new EditMessages();
+            if(uctmc.FocusMessage != null &&  uctmc.FocusMessage.Content != null)
+                EditMessagesDlg.FocusMessage = uctmc.FocusMessage.Content;
             EditMessagesDlg.MessagesToEdit = allMessages;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();

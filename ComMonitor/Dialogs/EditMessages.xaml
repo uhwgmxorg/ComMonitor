@@ -10,7 +10,7 @@
         Title="Edit Messages" Width="850" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
         <Grid Margin="10,10,10,35">
-            <TabControl Name="tabHexaEditors" ItemsSource="{Binding TabItems}">
+            <TabControl Name="tabHexaEditors" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabItemsIndex}">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Header}" />

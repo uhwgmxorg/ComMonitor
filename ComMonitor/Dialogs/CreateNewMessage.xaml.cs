@@ -34,7 +34,8 @@ namespace ComMonitor.Dialogs
             _logger = LogManager.GetCurrentClassLogger();
             InitializeComponent();
 
-            textBox_MessageSize.Text = "32";
+            var p = Properties.Settings.Default;
+            textBox_MessageSize.Text = p.DefaultMessageSize.ToString();
         }
 
         /******************************/
@@ -49,11 +50,13 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Button_Click_Create(object sender, RoutedEventArgs e)
         {
+            var p = Properties.Settings.Default;
             int size = 0;
 
             try
             {
                 size = Int32.Parse(textBox_MessageSize.Text);
+                p.DefaultMessageSize = size;
             }
             catch (Exception)
             {

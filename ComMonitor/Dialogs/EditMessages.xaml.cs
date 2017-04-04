@@ -17,6 +17,7 @@ namespace ComMonitor.Dialogs
 
         private Logger _logger;
 
+        public int SelectedTabItemsIndex { get; set; }
         private ObservableCollection<TabItem> tabItems;
         public ObservableCollection<TabItem> TabItems
         {
@@ -43,6 +44,7 @@ namespace ComMonitor.Dialogs
                 messagesToEdit = value;
                 for (int i = 0; i < messagesToEdit.Count; i++)
                     _tabAdd = AddTabItem(messagesToEdit[i]);
+                SelectedTabItemsIndex = messagesToEdit.FindIndex(b => b == FocusMessage);
             }
         }
 
@@ -58,6 +60,7 @@ namespace ComMonitor.Dialogs
             InitializeComponent();
 
             tabItems = new ObservableCollection<TabItem>();
+            SelectedTabItemsIndex = 0;
 
             DataContext = this;
         }
