@@ -8,19 +8,54 @@
         x:Class="ComMonitor.Dialogs.EditMessages"
         mc:Ignorable="d"
         Title="Edit Messages" Width="850" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <Window.Resources>
+        <Style x:Key="EditableTabHeaderControl" TargetType="{x:Type local:EditableTabHeaderControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:EditableTabHeaderControl}">
+                        <Grid>
+
+                            <TextBox x:Name="PART_TabHeader" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=TwoWay}" Visibility="Collapsed"/>
+                            <TextBlock x:Name="PART_TextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=TwoWay}"/>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsInEditMode" Value="True">
+                                <Trigger.Setters>
+                                    <Setter TargetName="PART_TabHeader" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="PART_TextBlock" Property="Visibility" Value="Collapsed"/>
+                                </Trigger.Setters>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ItemContainerStyle" TargetType="TabItem">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <local:EditableTabHeaderControl Style="{StaticResource EditableTabHeaderControl}">
+                            <local:EditableTabHeaderControl.Content>
+                                <Binding Path="Header" Mode="TwoWay"/>
+                            </local:EditableTabHeaderControl.Content>
+                        </local:EditableTabHeaderControl>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="ContentTemplate">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Text="{Binding Header}"/>
+                <Control:HexaEditor HorizontalAlignment="Center" Content="{Binding HexEditor}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid Margin="10,10,10,35">
-            <TabControl Name="tabHexaEditors" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabItemsIndex}">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Header}" />
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding HexEditor}"/>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
+            <TabControl Name="tabHexaEditors" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabItemsIndex}" ItemContainerStyle="{StaticResource ItemContainerStyle}" ContentTemplate="{StaticResource ContentTemplate}">
             </TabControl>
         </Grid>
 
