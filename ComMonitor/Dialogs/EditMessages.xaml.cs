@@ -140,6 +140,8 @@ namespace ComMonitor.Dialogs
             int count = TabItems.Count;
 
             TabItem tab = new TabItem();
+            if (String.IsNullOrEmpty(m.MessageName))
+                m.MessageName = String.Format("Message {0}", count + 1);
             tab.Header = m.MessageName;
             tab.HexEditor = new HexaEditor();
             tab.HexEditor.Width = Double.NaN;
