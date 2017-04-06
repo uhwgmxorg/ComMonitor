@@ -161,16 +161,10 @@ namespace ComMonitor.Dialogs
     [TemplatePart(Name = "PART_TabHeader", Type = typeof(TextBox))]
     public class EditableTabHeaderControl : ContentControl
     {
-        /// <summary>
-        /// Dependency property to bind EditMode with XAML Trigger
-        /// </summary>
-        private static readonly DependencyProperty IsInEditModeProperty = DependencyProperty.Register("IsInEditMode", typeof(bool), typeof(EditableTabHeaderControl));
-        private TextBox textBox;
-        private string oldText;
-        private DispatcherTimer timer;
         private delegate void FocusTextBox();
 
         /// <summary>
+        /// Dependency property to bind EditMode with XAML Trigger
         /// Gets or sets a value indicating whether this instance is in edit mode.
         /// </summary>
         public bool IsInEditMode
@@ -181,15 +175,21 @@ namespace ComMonitor.Dialogs
             }
             set
             {
-                if (string.IsNullOrEmpty(this.textBox.Text))
+                if (string.IsNullOrEmpty(this._textBox.Text))
                 {
-                    this.textBox.Text = this.oldText;
+                    this._textBox.Text = this._oldText;
                 }
 
-                this.oldText = this.textBox.Text;
+                this._oldText = this._textBox.Text;
                 this.SetValue(IsInEditModeProperty, value);
             }
         }
+        private static readonly DependencyProperty IsInEditModeProperty = DependencyProperty.Register("IsInEditMode", typeof(bool), typeof(EditableTabHeaderControl));
+
+        private TextBox _textBox;
+        private string _oldText;
+        private DispatcherTimer _timer;
+
 
         /// <summary>
         /// When overridden in a derived class, is invoked whenever application code or internal processes call <see cref="M:System.Windows.FrameworkElement.ApplyTemplate"/>.
@@ -197,14 +197,14 @@ namespace ComMonitor.Dialogs
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            this.textBox = this.Template.FindName("PART_TabHeader", this) as TextBox;
-            if (this.textBox != null)
+            this._textBox = this.Template.FindName("PART_TabHeader", this) as TextBox;
+            if (this._textBox != null)
             {
-                this.timer = new DispatcherTimer();
-                this.timer.Tick += TimerTick;
-                this.timer.Interval = TimeSpan.FromMilliseconds(1);
+                this._timer = new DispatcherTimer();
+                this._timer.Tick += TimerTick;
+                this._timer.Interval = TimeSpan.FromMilliseconds(1);
                 this.LostFocus += TextBoxLostFocus;
-                this.textBox.KeyDown += TextBoxKeyDown;
+                this._textBox.KeyDown += TextBoxKeyDown;
                 this.MouseDoubleClick += EditableTabHeaderControlMouseDoubleClick;
             }
         }
@@ -216,28 +216,28 @@ namespace ComMonitor.Dialogs
         public void SetEditMode(bool value)
         {
             this.IsInEditMode = value;
-            this.timer.Start();
+            this._timer.Start();
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            this.timer.Stop();
+            this._timer.Stop();
             this.MoveTextBoxInFocus();
         }
 
         private void MoveTextBoxInFocus()
         {
-            if (this.textBox.CheckAccess())
+            if (this._textBox.CheckAccess())
             {
-                if (!string.IsNullOrEmpty(this.textBox.Text))
+                if (!string.IsNullOrEmpty(this._textBox.Text))
                 {
-                    this.textBox.CaretIndex = 0;
-                    this.textBox.Focus();
+                    this._textBox.CaretIndex = 0;
+                    this._textBox.Focus();
                 }
             }
             else
             {
-                this.textBox.Dispatcher.BeginInvoke(DispatcherPriority.Render, new FocusTextBox(this.MoveTextBoxInFocus));
+                this._textBox.Dispatcher.BeginInvoke(DispatcherPriority.Render, new FocusTextBox(this.MoveTextBoxInFocus));
             }
         }
 
@@ -245,7 +245,7 @@ namespace ComMonitor.Dialogs
         {
             if (e.Key == Key.Escape)
             {
-                this.textBox.Text = oldText;
+                this._textBox.Text = _oldText;
                 this.IsInEditMode = false;
             }
             else if (e.Key == Key.Enter)
