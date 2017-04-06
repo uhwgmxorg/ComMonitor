@@ -374,6 +374,10 @@
         <DockPanel Margin="0,59,0,38">
             <mdi:MdiContainer Theme="Aero" x:Name="MainMdiContainer"/>
         </DockPanel>
-        <StatusBar Name="MainStatusBar" VerticalAlignment="Bottom" Height="38"/>
+        <StatusBar Name="MainStatusBar" VerticalAlignment="Bottom" Height="38">
+             <StatusBarItem HorizontalAlignment="Stretch">
+                <TextBlock x:Name="XTBStatus" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

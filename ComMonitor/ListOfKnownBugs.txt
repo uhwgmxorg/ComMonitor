@@ -1,8 +1,9 @@
 ﻿Program ComMonitor ListOfKnownBugs
 
 
-   04.04.2017 0.1.0.* Rev 0
+    06.04.2017 0.1.0.* Rev 0
 
-   - The HexaEditor Control in the Tab Control has not 
-     the correct height, so the vertical scrollbar 
-     did not work as expected.
+    - The HexaEditor Control in the Tab Control has not 
+      the correct height, so the vertical scrollbar 
+      did not work as expected.
+    - Some Binding errors to solve

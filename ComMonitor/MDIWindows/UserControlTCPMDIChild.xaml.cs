@@ -119,6 +119,17 @@ namespace ComMonitor.MDIWindows
         }
 
         /// <summary>
+        /// mDIWindow_MouseMove
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mDIWindow_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if(_mainWindow != null)
+                _mainWindow.StatusPannelOut(String.Format("{0} {1} {2}", MyConnection.ConnectionType, MyConnection.IPAdress, MyConnection.Port));
+        }
+
+        /// <summary>
         /// mDIWindow_Unloaded
         /// </summary>
         /// <param name="sender"></param>

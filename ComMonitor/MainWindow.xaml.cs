@@ -728,6 +728,15 @@ namespace ComMonitor
         }
 
         /// <summary>
+        /// StatusPannelOut
+        /// </summary>
+        /// <param name="text"></param>
+        public void StatusPannelOut(string text)
+        {
+            XTBStatus.Text = text;
+        }
+
+        /// <summary>
         /// LoadResentFile
         /// </summary>
         /// <param name="configFileName"></param>
