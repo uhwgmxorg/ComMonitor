@@ -1,4 +1,5 @@
 ﻿using ComMonitor.LocalTools;
+using ComMonitor.Models;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,8 @@ namespace ComMonitor.Dialogs
         }
         private TabItem _tabAdd;
 
-        private List<byte[]> messagesToEdit;
-        public List<byte[]> MessagesToEdit
+        private List<Message> messagesToEdit;
+        public List<Message> MessagesToEdit
         {
             get
             {
@@ -46,7 +47,7 @@ namespace ComMonitor.Dialogs
                 messagesToEdit = value;
                 for (int i = 0; i < messagesToEdit.Count; i++)
                     _tabAdd = AddTabItem(messagesToEdit[i]);
-                SelectedTabItemsIndex = messagesToEdit.FindIndex(b => b == FocusMessage);
+                SelectedTabItemsIndex = messagesToEdit.FindIndex(b => b.Content == FocusMessage);
             }
         }
 
@@ -97,10 +98,12 @@ namespace ComMonitor.Dialogs
             {
                 foreach (var t in TabItems)
                 {
-                    //t.HexEditor.SubmitChanges();
-                    //MessagesToEdit[i++] = t.HexEditor.Stream.ToArray();
+                    t.HexEditor.SubmitChanges();
+                    MessagesToEdit[i].MessageName = t.Header;
+                    MessagesToEdit[i].Content = t.HexEditor.Stream.ToArray();
+                    i++;
                 }
-                FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex];
+                FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex].Content;
             }
             catch (Exception ex)
             {
@@ -132,16 +135,16 @@ namespace ComMonitor.Dialogs
         /// AddTabItem
         /// </summary>
         /// <param name="v"></param>
-        private TabItem AddTabItem(byte[] v)
+        private TabItem AddTabItem(Message m)
         {
             int count = TabItems.Count;
 
             TabItem tab = new TabItem();
-            tab.Header = String.Format("Message {0}", count + 1);
+            tab.Header = m.MessageName;
             tab.HexEditor = new HexaEditor();
             tab.HexEditor.Width = Double.NaN;
             tab.HexEditor.Height = Double.NaN;
-            tab.HexEditor.Stream = new System.IO.MemoryStream(v);
+            tab.HexEditor.Stream = new System.IO.MemoryStream(m.Content);
             TabItems.Add(tab);
 
             _logger.Trace(String.Format("AddTabItem in {0}", LST.GetCurrentMethod()));

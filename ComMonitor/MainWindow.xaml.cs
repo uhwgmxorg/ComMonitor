@@ -359,14 +359,15 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
 
-            string configFileName = LST.OpenFileDialog("Cmm Datein (*.cmm)|*.cmm;|Alle Dateien (*.*)|*.*\"");
-            if (String.IsNullOrEmpty(configFileName))
+            string messageFileName = LST.OpenFileDialog("Cmm Datein (*.cmm)|*.cmm;|Alle Dateien (*.*)|*.*\"");
+            if (String.IsNullOrEmpty(messageFileName))
                 return;
 
-            ((UserControlTCPMDIChild)tw.Content).MessageList = LST.LoadList<Message>(configFileName);
-            if(((UserControlTCPMDIChild)tw.Content).MessageList.Count > 0)
+            ((UserControlTCPMDIChild)tw.Content).MessageList = LST.LoadList<Message>(messageFileName);
+            ((UserControlTCPMDIChild)tw.Content).MessageFileName = messageFileName;
+            if (((UserControlTCPMDIChild)tw.Content).MessageList.Count > 0)
                 ((UserControlTCPMDIChild)tw.Content).FocusMessage = ((UserControlTCPMDIChild)tw.Content).MessageList[0];
-            _logger.Info(String.Format("Lode MessageFile File {0}", configFileName));
+            _logger.Info(String.Format("Lode MessageFile File {0}", messageFileName));
         }
 
         /// <summary>
@@ -431,6 +432,7 @@ namespace ComMonitor
             if (String.IsNullOrEmpty(messageFileName))
                 return;
 
+            ((UserControlTCPMDIChild)tw.Content).MessageFileName = messageFileName;
             LST.SaveList<Message>(((UserControlTCPMDIChild)tw.Content).MessageList, messageFileName);
             _logger.Info(String.Format("Save MessageFile File As {0}", messageFileName));
         }
@@ -488,23 +490,16 @@ namespace ComMonitor
             if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
-            List<byte[]> allMessages = new List<byte[]>();
-            foreach (var m in ((UserControlTCPMDIChild)tw.Content).MessageList)
-                allMessages.Add(m.Content);
-
             EditMessages EditMessagesDlg = new EditMessages();
             if(uctmc.FocusMessage != null &&  uctmc.FocusMessage.Content != null)
                 EditMessagesDlg.FocusMessage = uctmc.FocusMessage.Content;
-            EditMessagesDlg.MessagesToEdit = allMessages;
+            EditMessagesDlg.MessagesToEdit = ((UserControlTCPMDIChild)tw.Content).MessageList;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
                 return;
 
             uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
-            uctmc.MessageList.Clear();
-            foreach (var m in EditMessagesDlg.MessagesToEdit)
-                uctmc.MessageList.Add(new Message { Content = m });
         }
 
         /// <summary>
@@ -525,13 +520,17 @@ namespace ComMonitor
         /// </summary>
         private void AddSelectedMessageCommandCF()
         {
+            int count = 0;
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
+            List<Message> allSelectetMessagesWithDefaultName = new List<Message>();
+            foreach (var b in allSelectetMessages)
+                allSelectetMessagesWithDefaultName.Add(new Message { MessageName = String.Format("New Seleced Message {0}", ++count), Content = b });
 
             EditMessages EditMessagesDlg = new EditMessages();
-            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
+            EditMessagesDlg.MessagesToEdit = allSelectetMessagesWithDefaultName;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
@@ -539,7 +538,7 @@ namespace ComMonitor
 
             uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
             foreach(var m in EditMessagesDlg.MessagesToEdit)
-                uctmc.MessageList.Add(new Message { Content = m });
+                uctmc.MessageList.Add(new Message { MessageName = m.MessageName, Content = m.Content });
         }
 
         /// <summary>
@@ -559,14 +558,18 @@ namespace ComMonitor
         /// </summary>
         private void EditAndReplaceMessageCommandCF()
         {
+            int count = 0;
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
             List<byte[]> allSelectetMessages = ((UserControlTCPMDIChild)tw.Content).GetAllSelectetMessages();
             uctmc.MessageList.Clear();
+            List<Message> allSelectetMessagesWithDefaultName = new List<Message>();
+            foreach (var b in allSelectetMessages)
+                allSelectetMessagesWithDefaultName.Add(new Message { MessageName = String.Format("New Seleced Message {0}", ++count), Content = b });
 
             EditMessages EditMessagesDlg = new EditMessages();
-            EditMessagesDlg.MessagesToEdit = allSelectetMessages;
+            EditMessagesDlg.MessagesToEdit = allSelectetMessagesWithDefaultName;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
@@ -574,7 +577,7 @@ namespace ComMonitor
 
             uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
             foreach (var m in EditMessagesDlg.MessagesToEdit)
-                uctmc.MessageList.Add(new Message { Content = m });
+                uctmc.MessageList.Add(new Message { MessageName = m.MessageName, Content = m.Content });
         }
 
         /// <summary>
