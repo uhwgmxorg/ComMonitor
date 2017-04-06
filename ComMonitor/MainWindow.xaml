@@ -121,6 +121,11 @@
                         <Image Source="/ComMonitor;component/Resources/ToolBar01/Logg.png" Stretch="Fill" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Command="{Binding ListOfKnownBugsCommand}" Header="List Of Known Bugs" >
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/RLogg.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Command="{Binding AboutCommand}" Header="About" >
                     <MenuItem.Icon>

@@ -5,4 +5,4 @@
 
    - The HexaEditor Control in the Tab Control has not 
      the correct height, so the vertical scrollbar 
-	 did not work as expected.
+     did not work as expected.

@@ -28,6 +28,7 @@ namespace ComMonitor
         public RelayCommand CascadeCommand { get; private set; }
         public RelayCommand CloseAllCommand { get; private set; }
         public RelayCommand ChangeLogCommand { get; private set; }
+        public RelayCommand ListOfKnownBugsCommand { get; private set; }
 
 
         public RelayCommand ExitCommand { get; private set; }
@@ -82,6 +83,7 @@ namespace ComMonitor
             CascadeCommand = new RelayCommand(CascadeCommandCF, CanCascadeCommand);
             CloseAllCommand = new RelayCommand(CloseAllCommandCF, CanCloseAllCommand);
             ChangeLogCommand = new RelayCommand(ChangeLogCommandCF, CanChangeLogCommand);
+            ListOfKnownBugsCommand = new RelayCommand(ListOfKnownBugsCommandCF, CanListOfKnownBugsCommand);
             NewConnectionsWindowCommand = new RelayCommand(NewConnectionsWindowCommandCF, CanNewConnectionsWindowCommand);
             LoadConnectionsCommand = new RelayCommand(LoadConnectionsCommandCF, CanLoadConnectionsCommand);
             SaveConnectionsCommand = new RelayCommand(SaveConnectionsCommandCF, CanSaveConnectionsCommand);
@@ -193,6 +195,26 @@ namespace ComMonitor
         /// </summary>
         /// <returns></returns>
         private bool CanChangeLogCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ListOfKnownBugsCommandCF()
+        {
+            string File = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\ListOfKnownBugs.txt";
+            ChangeLogUtilityDll.ChangeLogTxtToolWindow ListOfKnownBugsTxtToolWindowObj = new ChangeLogUtilityDll.ChangeLogTxtToolWindow(this);
+            ListOfKnownBugsTxtToolWindowObj.BackgroundDisplayText = "L.O.K. Bugs";
+            ListOfKnownBugsTxtToolWindowObj.ShowChangeLogWindow(File);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool CanListOfKnownBugsCommand()
         {
             return true;
         }
