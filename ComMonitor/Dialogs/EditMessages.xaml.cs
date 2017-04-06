@@ -139,7 +139,11 @@ namespace ComMonitor.Dialogs
             TabItem tab = new TabItem();
             tab.Header = String.Format("Message {0}", count + 1);
             tab.HexEditor = new HexaEditor();
+            tab.HexEditor.Width = Double.NaN;
+            tab.HexEditor.Height = Double.NaN;
+            tab.HexEditor.Stream = new System.IO.MemoryStream(v);
             TabItems.Add(tab);
+
             _logger.Trace(String.Format("AddTabItem in {0}", LST.GetCurrentMethod()));
 
             return tab;

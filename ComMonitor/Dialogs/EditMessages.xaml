@@ -48,8 +48,7 @@
         </Style>
         <DataTemplate x:Key="ContentTemplate">
             <Grid>
-                <TextBlock HorizontalAlignment="Left" Text="{Binding Header}"/>
-                <Control:HexaEditor HorizontalAlignment="Center" Content="{Binding HexEditor}"/>
+                <ContentPresenter Content="{Binding HexEditor}"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
