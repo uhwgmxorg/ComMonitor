@@ -662,12 +662,6 @@ namespace ComMonitor
 
         #endregion
         /******************************/
-        /*       Button Events        */
-        /******************************/
-        #region Button Events
-
-        #endregion
-        /******************************/
         /*      Other Events          */
         /******************************/
         #region Other Events
