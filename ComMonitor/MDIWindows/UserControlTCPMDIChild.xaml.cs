@@ -126,7 +126,10 @@ namespace ComMonitor.MDIWindows
         private void mDIWindow_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if(_mainWindow != null)
-                _mainWindow.StatusPannelOut(String.Format("{0} {1} {2}", MyConnection.ConnectionType, MyConnection.IPAdress, MyConnection.Port));
+                if(MyConnection.ConnectionType == EConnectionType.TCPSocketCient)
+                    _mainWindow.StatusPannelOut(String.Format("{0} {1} {2}", MyConnection.ConnectionType, MyConnection.IPAdress, MyConnection.Port));
+                else
+                    _mainWindow.StatusPannelOut(String.Format("{0} {1}", MyConnection.ConnectionType, MyConnection.Port));
         }
 
         /// <summary>
