@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -17,6 +18,15 @@ namespace ComMonitor.Dialogs
             InitializeComponent();
 
             SVersion.Content = version;
+
+            try
+            {
+                ScrollText.Text = File.ReadAllText("LICENSE"); ;
+            }
+            catch (Exception)
+            {
+                ScrollText.Text = "The\n MIT License-File\n is missing";
+            }
         }
         /******************************/
         /*       Button Events        */

@@ -7,3 +7,5 @@
       the correct height, so the vertical scrollbar 
       did not work as expected.
     - Some Binding errors to solve
+    - Problems scrolling in HexMesageViewer under certain 
+      circumstances

@@ -22,14 +22,14 @@
             <Grid>
                 <Rectangle Stroke="Black"/>
                 <Label Content="This Software uses third party Libraries and User Controls:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,12,0,0"/>
-                <TextBlock Margin="34,84.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="MVVM Light Toolkit"/></Hyperlink></TextBlock>
-                <TextBlock Margin="34,63.92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="https://github.com/abbaye/WPFHexEditorControl" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WPFHexEditorControl from abbaye"/></Hyperlink></TextBlock>
-                <TextBlock Margin="34,105.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="NLog"/></Hyperlink></TextBlock>
                 <TextBlock Margin="34,42.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
                     <Hyperlink NavigateUri="https://github.com/longshine/Mina.NET" RequestNavigate="Hyperlink_RequestNavigate">
                         Mina.NET from longshine
                     </Hyperlink>
                 </TextBlock>
+                <TextBlock Margin="34,63.92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="https://github.com/abbaye/WPFHexEditorControl" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WPFHexEditorControl from abbaye"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,84.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="MVVM Light Toolkit"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,105.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="NLog"/></Hyperlink></TextBlock>
             </Grid>
         </Border>
         <Label Content="ComMonitor" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand"/>
@@ -41,23 +41,13 @@
                     <EventTrigger RoutedEvent="Viewport3D.Loaded">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation
-              Storyboard.TargetName="Translation"
-              Storyboard.TargetProperty="OffsetY"
-              To="10"
-              Duration="0:1:0" />
+                                <DoubleAnimation Storyboard.TargetName="Translation" Storyboard.TargetProperty="OffsetY" To="10" Duration="0:1:0" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </Viewport3D.Triggers>
                 <Viewport3D.Camera>
-                    <PerspectiveCamera
-        FarPlaneDistance="100"
-        NearPlaneDistance="1"
-        FieldOfView="30"
-        LookDirection="0,25,-13"
-        UpDirection="0,1,0"
-        Position="0,2,1.5" />
+                    <PerspectiveCamera FarPlaneDistance="100" NearPlaneDistance="1" FieldOfView="30" LookDirection="0,25,-13" UpDirection="0,1,0" Position="0,2,1.5" />
                 </Viewport3D.Camera>
                 <ModelVisual3D>
                     <ModelVisual3D.Content>
@@ -66,55 +56,17 @@
                                 <AmbientLight Color="#FF808080" />
                                 <GeometryModel3D>
                                     <GeometryModel3D.Transform>
-                                        <TranslateTransform3D
-                  x:Name="Translation"
-                  OffsetY="3" />
+                                        <TranslateTransform3D x:Name="Translation" OffsetY="3" />
                                     </GeometryModel3D.Transform>
                                     <GeometryModel3D.Geometry>
-                                        <MeshGeometry3D
-                Positions="-1,-2,0 1,-2,0 1,1,0 -1,1,0"
-                TriangleIndices="0 1 2  0 2 3"
-                TextureCoordinates="0,1 1,1 1,0 0,0"
-                Normals="0,0,1 0,0,1" />
+                                        <MeshGeometry3D Positions="-1,-2,0 1,-2,0 1,1,0 -1,1,0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0,1 1,1 1,0 0,0" Normals="0,0,1 0,0,1" />
                                     </GeometryModel3D.Geometry>
                                     <GeometryModel3D.Material>
                                         <DiffuseMaterial>
                                             <DiffuseMaterial.Brush>
                                                 <VisualBrush>
                                                     <VisualBrush.Visual>
-                                                        <TextBlock
-                        Foreground="Yellow"
-                        FontFamily="Consolas"
-                        TextAlignment="Center">
-                          Lorem ipsum dolor sit amet,<LineBreak/>
-                          consectetur adipiscing elit.<LineBreak/>
-                          Integer malesuada, massa<LineBreak/>
-                          vitae suscipit dictum, purus<LineBreak/>
-                          dolor volutpat arcu, ac<LineBreak/>
-                          tincidunt erat mauris sed nisi.<LineBreak/>
-                          Sed ac eros ac augue<LineBreak/>
-                          ullamcorper sodales sed id leo.<LineBreak/><LineBreak/>
-                          Suspendisse nibh enim,<LineBreak/>
-                          hendrerit vitae pretium et,<LineBreak/>
-                          gravida in tortor. Lorem ipsum<LineBreak/>
-                          dolor sit amet, consectetur<LineBreak/>
-                          adipiscing elit. Maecenas<LineBreak/>
-                          condimentum enim eu tellus<LineBreak/>
-                          feugiat mollis ac ut arcu.<LineBreak/>
-                          Ut fringilla tempus volutpat.<LineBreak/>
-                          Duis elementum convallis<LineBreak/>
-                          tincidunt.<LineBreak/><LineBreak/>
-
-                          Mauris lacus tortor,<LineBreak/>
-                          tristique nec congue at,<LineBreak/>
-                          adipiscing sed eros.<LineBreak/><LineBreak/>
-
-                          In volutpat eros id nunc<LineBreak/>
-                          hendrerit eget aliquet nisi<LineBreak/>
-                          lacinia.<LineBreak/><LineBreak/>
-
-                          Suspendisse et lorem augue, non eleifend est.
-                                                        </TextBlock>
+                                                        <TextBlock Name="ScrollText" Foreground="Yellow" FontFamily="Consolas" TextAlignment="Center" />
                                                     </VisualBrush.Visual>
                                                 </VisualBrush>
                                             </DiffuseMaterial.Brush>

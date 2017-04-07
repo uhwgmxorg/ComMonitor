@@ -1,6 +1,10 @@
 Program ComMonitor ChangeLog
 
 
+   08.04.2016 1.0.0.* Rev 0
+
+   - Add new AboutBox
+
    07.04.2016 0.1.1.* Rev 0
 
    - Return SelectedTabItemsIndex 
