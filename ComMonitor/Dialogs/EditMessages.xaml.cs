@@ -47,7 +47,6 @@ namespace ComMonitor.Dialogs
                 messagesToEdit = value;
                 for (int i = 0; i < messagesToEdit.Count; i++)
                     _tabAdd = AddTabItem(messagesToEdit[i]);
-                SelectedTabItemsIndex = messagesToEdit.FindIndex(b => b.Content == FocusMessage);
             }
         }
 

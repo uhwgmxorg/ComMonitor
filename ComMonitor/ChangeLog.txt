@@ -1,6 +1,12 @@
 Program ComMonitor ChangeLog
 
 
+   07.04.2016 0.1.1.* Rev 0
+
+   - Return SelectedTabItemsIndex 
+     correct from EditMessages
+
+
    04.04.2016 0.1.0.* Rev 0
 
    - First usable version

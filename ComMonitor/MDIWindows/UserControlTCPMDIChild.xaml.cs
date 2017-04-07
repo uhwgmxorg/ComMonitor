@@ -44,6 +44,7 @@ namespace ComMonitor.MDIWindows
         public Connection MyConnection { get; set; }
         public MdiChild TheMdiChild { get; set; }
 
+        public int FocusMessageIndex { get; set; }
         public Message FocusMessage { get; set; }
         public List<Message> MessageList { get; set; }
         public string MessageFileName { get; set; }

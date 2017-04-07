@@ -388,7 +388,10 @@ namespace ComMonitor
             ((UserControlTCPMDIChild)tw.Content).MessageList = LST.LoadList<Message>(messageFileName);
             ((UserControlTCPMDIChild)tw.Content).MessageFileName = messageFileName;
             if (((UserControlTCPMDIChild)tw.Content).MessageList.Count > 0)
+            {
+                ((UserControlTCPMDIChild)tw.Content).FocusMessageIndex = 0;
                 ((UserControlTCPMDIChild)tw.Content).FocusMessage = ((UserControlTCPMDIChild)tw.Content).MessageList[0];
+            }
             _logger.Info(String.Format("Lode MessageFile File {0}", messageFileName));
         }
 
@@ -513,15 +516,15 @@ namespace ComMonitor
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
             EditMessages EditMessagesDlg = new EditMessages();
-            if(uctmc.FocusMessage != null &&  uctmc.FocusMessage.Content != null)
-                EditMessagesDlg.FocusMessage = uctmc.FocusMessage.Content;
+            EditMessagesDlg.SelectedTabItemsIndex = uctmc.FocusMessageIndex;
             EditMessagesDlg.MessagesToEdit = ((UserControlTCPMDIChild)tw.Content).MessageList;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
             if (!res.Value)
                 return;
 
-            uctmc.FocusMessage = new Message { Content = EditMessagesDlg.FocusMessage };
+            uctmc.FocusMessageIndex = EditMessagesDlg.SelectedTabItemsIndex;
+            uctmc.FocusMessage = EditMessagesDlg.MessagesToEdit[EditMessagesDlg.SelectedTabItemsIndex];
         }
 
         /// <summary>
