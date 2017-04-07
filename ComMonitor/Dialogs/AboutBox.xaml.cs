@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace ComMonitor.Dialogs
@@ -41,6 +44,15 @@ namespace ComMonitor.Dialogs
         /*      Other Events          */
         /******************************/
         #region Other Events
+
+        /// <summary>
+        /// Window_Loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
 
         /// <summary>
         /// Label_MouseDown

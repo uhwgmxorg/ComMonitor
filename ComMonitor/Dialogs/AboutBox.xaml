@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComMonitor.Dialogs"
         mc:Ignorable="d"
-        Title="About ComMonitor" Height="270" Width="590" MinHeight="270" MinWidth="590">
+        Title="About ComMonitor" Height="288" Width="590" MinHeight="288" MinWidth="590" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="51*"/>
-            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="394"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -18,7 +18,7 @@
                 <GradientStop Color="DarkGray" Offset="0.552"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="376.5" Margin="10,55.657,0,0" Grid.ColumnSpan="2" Height="150.68" VerticalAlignment="Top">
+        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="376.5" Margin="10,55.657,0,0" Height="150.68" VerticalAlignment="Top">
             <Grid>
                 <Rectangle Stroke="Black"/>
                 <Label Content="This Software uses third party Libraries and User Controls:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,12,0,0"/>
@@ -33,7 +33,102 @@
             </Grid>
         </Border>
         <Label Content="ComMonitor" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand"/>
-        <Label Name="SVersion" Content="Version" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Margin="5.5,19,0,0" HorizontalAlignment="Left" Width="228" Grid.Column="1" Height="26.723"/>
+        <Label Name="SVersion" Content="Version" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Margin="149,19,0,0" HorizontalAlignment="Left" Width="228" Height="26.723"/>
+
+        <Grid Margin="11,59,15,46" Grid.Column="1" Background="Black">
+            <Viewport3D ClipToBounds="True" Width="Auto" Height="Auto">
+                <Viewport3D.Triggers>
+                    <EventTrigger RoutedEvent="Viewport3D.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+              Storyboard.TargetName="Translation"
+              Storyboard.TargetProperty="OffsetY"
+              To="10"
+              Duration="0:1:0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Viewport3D.Triggers>
+                <Viewport3D.Camera>
+                    <PerspectiveCamera
+        FarPlaneDistance="100"
+        NearPlaneDistance="1"
+        FieldOfView="30"
+        LookDirection="0,25,-13"
+        UpDirection="0,1,0"
+        Position="0,2,1.5" />
+                </Viewport3D.Camera>
+                <ModelVisual3D>
+                    <ModelVisual3D.Content>
+                        <Model3DGroup>
+                            <Model3DGroup.Children>
+                                <AmbientLight Color="#FF808080" />
+                                <GeometryModel3D>
+                                    <GeometryModel3D.Transform>
+                                        <TranslateTransform3D
+                  x:Name="Translation"
+                  OffsetY="3" />
+                                    </GeometryModel3D.Transform>
+                                    <GeometryModel3D.Geometry>
+                                        <MeshGeometry3D
+                Positions="-1,-2,0 1,-2,0 1,1,0 -1,1,0"
+                TriangleIndices="0 1 2  0 2 3"
+                TextureCoordinates="0,1 1,1 1,0 0,0"
+                Normals="0,0,1 0,0,1" />
+                                    </GeometryModel3D.Geometry>
+                                    <GeometryModel3D.Material>
+                                        <DiffuseMaterial>
+                                            <DiffuseMaterial.Brush>
+                                                <VisualBrush>
+                                                    <VisualBrush.Visual>
+                                                        <TextBlock
+                        Foreground="Yellow"
+                        FontFamily="Consolas"
+                        TextAlignment="Center">
+                          Lorem ipsum dolor sit amet,<LineBreak/>
+                          consectetur adipiscing elit.<LineBreak/>
+                          Integer malesuada, massa<LineBreak/>
+                          vitae suscipit dictum, purus<LineBreak/>
+                          dolor volutpat arcu, ac<LineBreak/>
+                          tincidunt erat mauris sed nisi.<LineBreak/>
+                          Sed ac eros ac augue<LineBreak/>
+                          ullamcorper sodales sed id leo.<LineBreak/><LineBreak/>
+                          Suspendisse nibh enim,<LineBreak/>
+                          hendrerit vitae pretium et,<LineBreak/>
+                          gravida in tortor. Lorem ipsum<LineBreak/>
+                          dolor sit amet, consectetur<LineBreak/>
+                          adipiscing elit. Maecenas<LineBreak/>
+                          condimentum enim eu tellus<LineBreak/>
+                          feugiat mollis ac ut arcu.<LineBreak/>
+                          Ut fringilla tempus volutpat.<LineBreak/>
+                          Duis elementum convallis<LineBreak/>
+                          tincidunt.<LineBreak/><LineBreak/>
+
+                          Mauris lacus tortor,<LineBreak/>
+                          tristique nec congue at,<LineBreak/>
+                          adipiscing sed eros.<LineBreak/><LineBreak/>
+
+                          In volutpat eros id nunc<LineBreak/>
+                          hendrerit eget aliquet nisi<LineBreak/>
+                          lacinia.<LineBreak/><LineBreak/>
+
+                          Suspendisse et lorem augue, non eleifend est.
+                                                        </TextBlock>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </DiffuseMaterial.Brush>
+                                        </DiffuseMaterial>
+                                    </GeometryModel3D.Material>
+                                </GeometryModel3D>
+                            </Model3DGroup.Children>
+                        </Model3DGroup>
+                    </ModelVisual3D.Content>
+                </ModelVisual3D>
+            </Viewport3D>
+        </Grid>
+
+
         <Button Content="Ok" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="Button_Click_Ok" Grid.Column="1" Height="19.96"/>
     </Grid>
 </Window>
