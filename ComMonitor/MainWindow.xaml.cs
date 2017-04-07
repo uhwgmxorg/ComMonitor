@@ -672,7 +672,9 @@ namespace ComMonitor
 #else
             StrVersion = "Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + LocalTools.Globals._revision;
 #endif
-            MessageBox.Show("About ComMonitor " + StrVersion, "ComMonitor", MessageBoxButton.OK, MessageBoxImage.Information);
+            Dialogs.AboutBox AboutBox = new AboutBox(StrVersion);
+            AboutBox.Owner = Window.GetWindow(this);
+            var res = AboutBox.ShowDialog();
         }
 
         /// <summary>
