@@ -18,26 +18,14 @@
                 <GradientStop Color="DarkGray" Offset="0.552"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="343.956" Margin="10,55.657,0,0" Grid.ColumnSpan="2" Height="150.68" VerticalAlignment="Top">
+        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="376.5" Margin="10,55.657,0,0" Grid.ColumnSpan="2" Height="150.68" VerticalAlignment="Top">
             <Grid>
                 <Rectangle Stroke="Black"/>
-                <Label Content="This Software uses third party Libraries and User Controls:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                <TextBlock Margin="17,82.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
-                    <Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate">
-                        MVVM Light Toolkit
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Margin="17,61.92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
-                    <Hyperlink NavigateUri="https://github.com/abbaye/WPFHexEditorControl" RequestNavigate="Hyperlink_RequestNavigate">
-                        WPFHexEditorControl from abbaye
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Margin="17,103.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
-                    <Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate">
-                        NLog
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Margin="17,40.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
+                <Label Content="This Software uses third party Libraries and User Controls:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,12,0,0"/>
+                <TextBlock Margin="34,84.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="MVVM Light Toolkit"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,63.92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="https://github.com/abbaye/WPFHexEditorControl" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WPFHexEditorControl from abbaye"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,105.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="NLog"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,42.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">           
                     <Hyperlink NavigateUri="https://github.com/longshine/Mina.NET" RequestNavigate="Hyperlink_RequestNavigate">
                         Mina.NET from longshine
                     </Hyperlink>
@@ -45,7 +33,7 @@
             </Grid>
         </Border>
         <Label Content="ComMonitor" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand"/>
-        <Label Name="SVersion" Content="Version" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Margin="5.5,19,0,0" HorizontalAlignment="Left" Width="395" Grid.Column="1" Height="26.723"/>
+        <Label Name="SVersion" Content="Version" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Margin="5.5,19,0,0" HorizontalAlignment="Left" Width="228" Grid.Column="1" Height="26.723"/>
         <Button Content="Ok" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="Button_Click_Ok" Grid.Column="1" Height="19.96"/>
     </Grid>
 </Window>
