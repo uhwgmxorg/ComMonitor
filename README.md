@@ -7,7 +7,7 @@ You can send, receive, edit, rename, save and relode TCP-Messages. A connection 
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/2.png)
 
- New message can add pressing the Add New Message button:
+ New message can add pressing the Add New Message button. This will open a DialobBox with the cool WPFHexEditorControl from [abbaye](https://github.com/abbaye/WPFHexEditorControl):
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
 
