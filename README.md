@@ -11,3 +11,20 @@ You can send, receive, edit, rename, save and relode TCP-Messages. A connection 
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
 
+To create a new message, enter the size then press Ok
+
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/4.png)
+
+Each MDI window has its own message list with a Focus message. It is the message with the top item of the tab control:
+
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/7.png)
+
+Message names can be changed by double clicking on the tab control:
+
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/6.png)
+
+With the Edit Message ToolBar command you can recall and edit the associated messages of an MDI window:
+
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/5.png)
+
+
