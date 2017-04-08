@@ -7,6 +7,7 @@ You can send, receive, edit, rename, save and relode TCP-Messages. A connection 
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/2.png)
 
-Push the Add New Message button to add a new message:
+ New message can add pressing the Add New Message button:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
+
