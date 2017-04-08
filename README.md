@@ -1,5 +1,5 @@
 # ComMonitor
-ComMonitor is a tiny but complied utility to make TCP connections written in C# and WPF using .Net 4.5
+ComMonitor is a tiny but complied utility to make TCP connections written in C# and WPF using .Net 4.5. It can be useful for PLC developers to test connections and communication with the PLC or other devices.
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/1.png)
 
@@ -27,4 +27,10 @@ With the Edit Message ToolBar command you can recall and edit the associated mes
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/5.png)
 
+Storage of messages and connection configurations is possible using ToolBars commands:
 
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/8.png)
+
+Pleasant refer the Change Log and List Of Known Bugs for further information:
+
+![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/9.png)
