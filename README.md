@@ -1,17 +1,17 @@
 # ComMonitor
-ComMonitor is a tiny but complied utility to make TCP connections written in C# and WPF using .Net 4.5. It can be useful for PLC developers to test connections and communication with the PLC or other devices.
+ComMonitor is a tiny but complied utility to make TCP connections written. It is written in C# using WPF and .Net 4.5. It can be useful for PLC developers, for example, to test connections and communication with the PLC or other devices.
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/1.png)
 
-You can send, receive, edit, rename, save and relode TCP-Messages. A connection is represented in a MDI-Window. If a MDI-Window is connected a exclamation mark indicates the connection state:
+ComMonitor make it possible to send, receive, edit, rename, save and relode TCP-Messages. A connection is represented in a MDI-Window. If a MDI-Window is connected, an exclamation mark indicates the connection state:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/2.png)
 
- New message can add pressing the Add New Message button. This will open a DialobBox with the cool WPFHexEditorControl from [abbaye](https://github.com/abbaye/WPFHexEditorControl):
+ New message can be add by pressing the Add New Message button. This will open a DialogBox with the cool WPFHexEditorControl from [abbaye](https://github.com/abbaye/WPFHexEditorControl):
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
 
-To create a new message, enter the size then press Ok
+To create a new message, enter the size of the new message then press Ok
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/4.png)
 
