@@ -7,7 +7,7 @@ ComMonitor make it possible to send, receive, edit, rename, save and relode TCP-
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/2.png)
 
- New message can be add by pressing the Add New Message button. This will open a DialogBox with the cool WPFHexEditorControl from [abbaye](https://github.com/abbaye/WPFHexEditorControl):
+ New message can be add by pressing the *Add New Message* button. This will open a DialogBox with the cool WPFHexEditorControl from [abbaye](https://github.com/abbaye/WPFHexEditorControl):
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
 
@@ -15,11 +15,11 @@ To create a new message, enter the size of the new message then press Ok
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/4.png)
 
-Each MDI window has its own message list with a Focus message. It is the message with the top item of the tab control:
+Each MDI window has its own message list with a Focus Message. The Focus Message is the message of the top item of the tab control, it is sent when pressing the Focus Message Sent ToolBar button.:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/7.png)
 
-Message names can be changed by double clicking on the tab control:
+Message names can be changed by double clicking on the tab control item:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/6.png)
 
