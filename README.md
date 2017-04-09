@@ -1,5 +1,5 @@
 # ComMonitor
-ComMonitor is a tiny but complied utility to make TCP connections written. It is written in C# using WPF and .Net 4.5. It can be useful for PLC developers, for example, to test connections and communication with the PLC or other devices.
+Com Monitor is a small but complete utility for playing and testing with TCP connections and sending messages over socket connections. It is written in C# using WPF and the .Net 4.5 framework. For example it can be useful for PLC developers, to test connections and communication with the PLC or other devices.
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/1.png)
 
