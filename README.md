@@ -34,3 +34,5 @@ Storage of messages and connection configurations is possible using ToolBars com
 Pleasant refer the Change Log and List Of Known Bugs for further information:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/9.png)
+
+A **Setup** is also available [here](https://www.dropbox.com/s/9wl3f8jhce5r6dv/Setup_ComMonitor_x32_1_1_0_35410.zip?dl=0).
