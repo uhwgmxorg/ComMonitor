@@ -1,6 +1,12 @@
 Program ComMonitor ChangeLog
 
 
+   08.04.2016 1.0.0.* Rev 1
+
+   - Resolving binding errors
+   - Fix compiler warnings
+
+
    08.04.2016 1.0.0.* Rev 0
 
    - Add new AboutBox

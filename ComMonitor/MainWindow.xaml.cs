@@ -63,8 +63,10 @@ namespace ComMonitor
             set { SetValue(FilepathProperty, value); }
         }
 
+        #pragma warning disable CS0414
         bool _IsFileNamed = false;
         bool _IsFileLoaded = false;
+        #pragma warning restore
         MemoryStream _MemoryStream = new MemoryStream();
         #endregion
 
