@@ -1,5 +1,5 @@
 # ComMonitor
-Com Monitor is a small but complete utility for playing and testing with TCP connections and sending messages over socket connections. It is written in C# using WPF and the .Net 4.5 framework. For example it can be useful for PLC developers, to test connections and communication with the PLC or other devices.
+Com Monitor is a small but complete utility for playing and testing with TCP connections. It is possible sending messages over socket connections. The software is written in C# using WPF and the .Net 4.5 framework. For example it can be useful for PLC developers, to test connections and communication with the PLC or other devices.
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/1.png)
 
@@ -11,11 +11,11 @@ ComMonitor make it possible to send, receive, edit, rename, save and relode TCP-
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/3.png)
 
-To create a new message, enter the size of the new message then press Ok
+To create a new message, enter the size of the new message then press *Ok*
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/4.png)
 
-Each MDI window has its own message list with a Focus Message. The Focus Message is the message of the top item of the tab control, it is sent when pressing the Focus Message Sent ToolBar button.:
+Each MDI window has its own message list with a Focus Message. The Focus Message is the message of the top item of the tab control, it is sent when pressing the *Focus Message Sent* ToolBar button.:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/7.png)
 
@@ -23,7 +23,7 @@ Message names can be changed by double clicking on the tab control item:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/6.png)
 
-With the Edit Message ToolBar command you can recall and edit the associated messages of an MDI window:
+With the *Edit Message* ToolBar command you can recall and edit the associated messages of a MDI window:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/5.png)
 
