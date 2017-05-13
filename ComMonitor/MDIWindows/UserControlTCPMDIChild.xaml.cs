@@ -19,6 +19,8 @@ namespace ComMonitor.MDIWindows
         private NLog.Logger _logger;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public delegate void DSendMessage(byte[] message);
+
         private MainWindow _mainWindow;
 
         private MinaTCPServer _minaTCPServer;

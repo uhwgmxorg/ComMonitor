@@ -3,10 +3,11 @@ Program ComMonitor ChangeLog
 
    13.05.2016 1.2.0.0 Rev 0
 
-   - Software made more stable
+   - Made the software more stable
    - Add the cool update mechanism 
-     Don Ho (Notepad++)
-   - 
+     from Don Ho (Notepad++)
+   - Add send button in the 
+     EditMessageDlg for more convenience
 
 
    08.04.2016 1.0.0.* Rev 1

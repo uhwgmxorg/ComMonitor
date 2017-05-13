@@ -538,7 +538,7 @@ namespace ComMonitor
             if (tw == null) return;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
 
-            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessages EditMessagesDlg = new EditMessages(((UserControlTCPMDIChild)tw.Content).SendMessage);
             EditMessagesDlg.SelectedTabItemsIndex = uctmc.FocusMessageIndex;
             EditMessagesDlg.MessagesToEdit = ((UserControlTCPMDIChild)tw.Content).MessageList;
             EditMessagesDlg.Owner = Window.GetWindow(this);
@@ -577,7 +577,7 @@ namespace ComMonitor
             foreach (var b in allSelectetMessages)
                 allSelectetMessagesWithDefaultName.Add(new Message { MessageName = String.Format("New Seleced Message {0}", ++count), Content = b });
 
-            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessages EditMessagesDlg = new EditMessages(((UserControlTCPMDIChild)tw.Content).SendMessage);
             EditMessagesDlg.MessagesToEdit = allSelectetMessagesWithDefaultName;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();
@@ -616,7 +616,7 @@ namespace ComMonitor
             foreach (var b in allSelectetMessages)
                 allSelectetMessagesWithDefaultName.Add(new Message { MessageName = String.Format("New Seleced Message {0}", ++count), Content = b });
 
-            EditMessages EditMessagesDlg = new EditMessages();
+            EditMessages EditMessagesDlg = new EditMessages(((UserControlTCPMDIChild)tw.Content).SendMessage);
             EditMessagesDlg.MessagesToEdit = allSelectetMessagesWithDefaultName;
             EditMessagesDlg.Owner = Window.GetWindow(this);
             var res = EditMessagesDlg.ShowDialog();

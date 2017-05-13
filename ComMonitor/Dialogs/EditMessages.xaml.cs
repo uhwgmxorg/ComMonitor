@@ -50,12 +50,13 @@ namespace ComMonitor.Dialogs
             }
         }
 
+        MDIWindows.UserControlTCPMDIChild.DSendMessage SendMessage;
         public byte[] FocusMessage { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public EditMessages()
+        public EditMessages(MDIWindows.UserControlTCPMDIChild.DSendMessage sendMessage)
         {
             _logger = LogManager.GetCurrentClassLogger();
 
@@ -65,6 +66,7 @@ namespace ComMonitor.Dialogs
             SelectedTabItemsIndex = 0;
 
             DataContext = this;
+            SendMessage = sendMessage;
         }
 
         /******************************/
@@ -79,7 +81,9 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Button_Click_Send(object sender, RoutedEventArgs e)
         {
-
+            ApplyMessagesFromTabsContent();
+            if (SendMessage != null)
+                SendMessage(FocusMessage);
         }
 
         /// <summary>
@@ -100,24 +104,9 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
         {
-            int i = 0;
             DialogResult = true;
 
-            try
-            {
-                foreach (var t in TabItems)
-                {
-                    t.HexEditor.SubmitChanges();
-                    MessagesToEdit[i].MessageName = t.Header;
-                    MessagesToEdit[i].Content = t.HexEditor.Stream.ToArray();
-                    i++;
-                }
-                FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex].Content;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
-            }
+            ApplyMessagesFromTabsContent();
 
             Close();
         }
@@ -139,6 +128,31 @@ namespace ComMonitor.Dialogs
         /*      Other Functions       */
         /******************************/
         #region Other Functions
+
+        /// <summary>
+        /// ApplyMessageTabsContent
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private void ApplyMessagesFromTabsContent()
+        {
+            int i = 0;
+            try
+            {
+                foreach (var t in TabItems)
+                {
+                    t.HexEditor.SubmitChanges();
+                    MessagesToEdit[i].MessageName = t.Header;
+                    MessagesToEdit[i].Content = t.HexEditor.Stream.ToArray();
+                    i++;
+                }
+                FocusMessage = MessagesToEdit[tabHexaEditors.SelectedIndex].Content;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
+        }
 
         /// <summary>
         /// AddTabItem
