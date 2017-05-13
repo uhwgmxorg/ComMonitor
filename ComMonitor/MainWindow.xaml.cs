@@ -488,7 +488,7 @@ namespace ComMonitor
             CreateNewMessage CreateNewMessageDlg = new CreateNewMessage();
             CreateNewMessageDlg.Owner = Window.GetWindow(this);
             var res = CreateNewMessageDlg.ShowDialog();
-            if (!res.Value)
+            if (!res.Value || CreateNewMessageDlg.FocusMessage == null)
                 return;
 
             uctmc.FocusMessage = new Message { Content = CreateNewMessageDlg.FocusMessage };
