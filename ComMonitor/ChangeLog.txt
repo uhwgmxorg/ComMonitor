@@ -8,6 +8,7 @@ Program ComMonitor ChangeLog
      from Don Ho (Notepad++)
    - Add send button in the 
      EditMessageDlg for more convenience
+   - Removing the build number in version
 
 
    08.04.2016 1.0.0.* Rev 1
