@@ -82,6 +82,7 @@ namespace ComMonitor.Dialogs
         private void Button_Click_Send(object sender, RoutedEventArgs e)
         {
             ApplyMessagesFromTabsContent();
+            TabItems[SelectedTabItemsIndex].HexEditor.Stream = new System.IO.MemoryStream(FocusMessage);
             if (SendMessage != null)
                 SendMessage(FocusMessage);
         }
