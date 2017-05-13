@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComMonitor.Dialogs"
         mc:Ignorable="d"
-        Title="About ComMonitor" Height="288" Width="590" MinHeight="288" MinWidth="590" Loaded="Window_Loaded">
+        Title="About ComMonitor" Height="300" Width="590" MinHeight="300" MinWidth="590" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="394"/>
@@ -18,7 +18,7 @@
                 <GradientStop Color="DarkGray" Offset="0.552"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="376.5" Margin="10,55.657,0,0" Height="150.68" VerticalAlignment="Top">
+        <Border BorderBrush="#FF7EA9D8" BorderThickness="4" HorizontalAlignment="Left" Width="376" Margin="10,56,0,0" Height="191" VerticalAlignment="Top">
             <Grid>
                 <Rectangle Stroke="Black"/>
                 <Label Content="This Software uses third party Libraries and User Controls:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,12,0,0"/>
@@ -30,9 +30,13 @@
                 <TextBlock Margin="34,63.92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="https://github.com/abbaye/WPFHexEditorControl" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WPFHexEditorControl from abbaye"/></Hyperlink></TextBlock>
                 <TextBlock Margin="34,84.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="MVVM Light Toolkit"/></Hyperlink></TextBlock>
                 <TextBlock Margin="34,105.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="NLog"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,127,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://wingup.org//" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WinGUp the cool updater from Notepad++"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,148,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.codeproject.com/Articles/23731/RecentFileList-a-WPF-MRU//" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="RecentFileList"/></Hyperlink></TextBlock>
             </Grid>
         </Border>
-        <Label Content="ComMonitor" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand"/>
+        <Label VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand" Foreground="#FF327FCB">
+            <TextBlock Text="ComMonitor" TextDecorations="Underline" />
+        </Label>
         <Label Name="SVersion" Content="Version" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Comic Sans MS" Margin="149,19,0,0" HorizontalAlignment="Left" Width="228" Height="26.723"/>
 
         <Grid Margin="11,59,15,46" Grid.Column="1" Background="Black">

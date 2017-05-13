@@ -36,7 +36,6 @@
 	The tag "Version" value will be the parameter that your web application can use $_GET["version"] to get the current version of the program to be updated.
 	With the current version value, your web application should return a set of information in xml form to tell WinGup update version and the location of update package to download.
 	-->
-	<!--InfoUrl>http://notepad-plus.sourceforge.net/commun/update/getDownLoadUrl.php</InfoUrl-->
 	<InfoUrl>https://uhwgmxorg.com/getDownLoadUrl.php</InfoUrl>
 
 	<!-- Optional. 

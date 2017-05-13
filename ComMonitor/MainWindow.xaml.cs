@@ -769,7 +769,13 @@ namespace ComMonitor
         /// </summary>
         private void UpdateTheApplication()
         {
+            string mypath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string filename = Path.Combine(mypath,"GUP.exe");
+            var proc = System.Diagnostics.Process.Start(filename, "gup.xml");
+
             _logger.Info("UpdateTheApplication");
+
+            Environment.Exit(0);
         }
 
         /// <summary>
