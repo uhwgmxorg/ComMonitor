@@ -31,7 +31,7 @@
                 <TextBlock Margin="34,84.88,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.mvvmlight.net/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="MVVM Light Toolkit"/></Hyperlink></TextBlock>
                 <TextBlock Margin="34,105.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://nlog-project.org/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="NLog"/></Hyperlink></TextBlock>
                 <TextBlock Margin="34,127,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://wingup.org//" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="WinGUp the cool updater from Notepad++"/></Hyperlink></TextBlock>
-                <TextBlock Margin="34,148,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.codeproject.com/Articles/23731/RecentFileList-a-WPF-MRU//" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="RecentFileList"/></Hyperlink></TextBlock>
+                <TextBlock Margin="34,148,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"><Hyperlink NavigateUri="http://www.codeproject.com/Articles/23731/RecentFileList-a-WPF-MRU//" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="RecentFileList from Nicholas Butler "/></Hyperlink></TextBlock>
             </Grid>
         </Border>
         <Label VerticalAlignment="Top" Margin="10,10,0,0" FontSize="22" FontWeight="Bold" FontFamily="Comic Sans MS" Height="40.657" MouseDown="Label_MouseDown" Cursor="Hand" Foreground="#FF327FCB">
