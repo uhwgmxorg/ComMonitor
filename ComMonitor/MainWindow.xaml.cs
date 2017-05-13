@@ -29,6 +29,7 @@ namespace ComMonitor
         public RelayCommand CloseAllCommand { get; private set; }
         public RelayCommand ChangeLogCommand { get; private set; }
         public RelayCommand ListOfKnownBugsCommand { get; private set; }
+        public RelayCommand UpdateCommand { get; private set; }
 
 
         public RelayCommand ExitCommand { get; private set; }
@@ -86,6 +87,9 @@ namespace ComMonitor
             CloseAllCommand = new RelayCommand(CloseAllCommandCF, CanCloseAllCommand);
             ChangeLogCommand = new RelayCommand(ChangeLogCommandCF, CanChangeLogCommand);
             ListOfKnownBugsCommand = new RelayCommand(ListOfKnownBugsCommandCF, CanListOfKnownBugsCommand);
+            UpdateCommand = new RelayCommand(UpdateCommandCF, CanUpdateCommand);
+
+
             NewConnectionsWindowCommand = new RelayCommand(NewConnectionsWindowCommandCF, CanNewConnectionsWindowCommand);
             LoadConnectionsCommand = new RelayCommand(LoadConnectionsCommandCF, CanLoadConnectionsCommand);
             SaveConnectionsCommand = new RelayCommand(SaveConnectionsCommandCF, CanSaveConnectionsCommand);
@@ -202,7 +206,7 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// 
+        /// ListOfKnownBugsCommandCF
         /// </summary>
         private void ListOfKnownBugsCommandCF()
         {
@@ -213,10 +217,27 @@ namespace ComMonitor
         }
 
         /// <summary>
-        /// 
+        /// CanListOfKnownBugsCommand
         /// </summary>
         /// <returns></returns>
         private bool CanListOfKnownBugsCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// UpdateCommandCF
+        /// </summary>
+        private void UpdateCommandCF()
+        {
+            UpdateTheApplication();
+        }
+
+        /// <summary>
+        /// CanUpdateCommandCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanUpdateCommand()
         {
             return true;
         }
@@ -724,9 +745,9 @@ namespace ComMonitor
         /*      Other Functions       */
         /******************************/
         #region Other Functions
-        
+               
         /// <summary>
-        /// CallCanFuncions
+        /// UpdateWindow
         /// No better idea to update the ToolBar and Window-State yet
         /// </summary>
         public void UpdateWindow()
@@ -741,6 +762,14 @@ namespace ComMonitor
         public void StatusPannelOut(string text)
         {
             XTBStatus.Text = text;
+        }
+
+        /// <summary>
+        /// UpdateTheApplication
+        /// </summary>
+        private void UpdateTheApplication()
+        {
+            _logger.Info("UpdateTheApplication");
         }
 
         /// <summary>

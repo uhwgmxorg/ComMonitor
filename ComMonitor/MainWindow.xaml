@@ -127,6 +127,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
+                <MenuItem Command="{Binding UpdateCommand}" Header="Look For Updates" >
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/Download.png" Stretch="Fill" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
                 <MenuItem Command="{Binding AboutCommand}" Header="About" >
                     <MenuItem.Icon>
                         <Image Source="/ComMonitor;component/Resources/ToolBar01/About.png" Stretch="Fill">
