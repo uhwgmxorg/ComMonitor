@@ -73,6 +73,16 @@ namespace ComMonitor.Dialogs
         #region Button Events
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_Send(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// Button_Click_Cancel
         /// </summary>
         /// <param name="sender"></param>
