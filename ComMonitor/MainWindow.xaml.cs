@@ -774,8 +774,6 @@ namespace ComMonitor
             var proc = System.Diagnostics.Process.Start(filename, "gup.xml");
 
             _logger.Info("UpdateTheApplication");
-
-            Environment.Exit(0);
         }
 
         /// <summary>
