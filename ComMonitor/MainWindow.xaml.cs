@@ -230,7 +230,8 @@ namespace ComMonitor
         /// </summary>
         private void UpdateCommandCF()
         {
-            UpdateTheApplication();
+            if(CheckTheApplicationForUpdates())
+                UpdateTheApplication();
         }
 
         /// <summary>
@@ -762,6 +763,72 @@ namespace ComMonitor
         public void StatusPannelOut(string text)
         {
             XTBStatus.Text = text;
+        }
+
+        /// <summary>
+        /// CheckTheApplicationForUpdates
+        /// </summary>
+        private bool CheckTheApplicationForUpdates()
+        {
+            bool rc = false;
+            Version currentVersion = Version.Parse(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Version remoteVersion = new Version();
+            string strXmlDoc = "";
+
+            try
+            {
+                System.Net.HttpWebRequest wr = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(@"https://uhwgmxorg.com/getDownLoadUrl.php"); ;
+                using (System.Net.HttpWebResponse resp = (System.Net.HttpWebResponse)wr.GetResponse())
+                {
+                    try
+                    {
+                        StreamReader sr = new StreamReader(resp.GetResponseStream());
+                        strXmlDoc = sr.ReadToEnd();
+                        strXmlDoc = strXmlDoc.Replace("1.1", "1.0");
+                        Debug.WriteLine(strXmlDoc);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return false;
+                    }
+
+                    try
+                    {
+                        System.Xml.XmlDocument xdoc = new System.Xml.XmlDocument();
+                        xdoc.LoadXml(strXmlDoc);
+                        System.Xml.XmlElement xelRoot = xdoc.DocumentElement;
+                        System.Xml.XmlNodeList xnlNodes = xelRoot.SelectNodes("/GUP/Version");
+
+                        foreach (System.Xml.XmlNode xndNode in xnlNodes)
+                        {
+                            remoteVersion = Version.Parse(xndNode.InnerText);
+                            Debug.WriteLine(xndNode.Name + " : " + xndNode.InnerText);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return false;
+                    }
+
+                    if (remoteVersion > currentVersion)
+                        rc = true;
+                    else
+                        MessageBox.Show(String.Format("Current Version is {0}.{1} Remote Version is {2} no update is necessary!", currentVersion.Major, currentVersion.Minor, remoteVersion), "ComMonitor update", MessageBoxButton.OK);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("No connection to update source!"), "ComMonitor update", MessageBoxButton.OK);
+                Debug.WriteLine(ex);
+                return false;
+            }
+
+            _logger.Info(String.Format("CheckTheApplicationForUpdates rc={0}",rc));
+
+            return rc;
         }
 
         /// <summary>

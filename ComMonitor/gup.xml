@@ -36,6 +36,7 @@
 	The tag "Version" value will be the parameter that your web application can use $_GET["version"] to get the current version of the program to be updated.
 	With the current version value, your web application should return a set of information in xml form to tell WinGup update version and the location of update package to download.
 	-->
+	<!--InfoUrl>http://notepad-plus.sourceforge.net/commun/update/getDownLoadUrl.php</InfoUrl-->
 	<InfoUrl>https://uhwgmxorg.com/getDownLoadUrl.php</InfoUrl>
 
 	<!-- Optional. 
@@ -54,7 +55,7 @@
 	In win32 system, if a program is running, the binary file is locked. 
 	Use this parameter to close the program to make sure the old binary files can be erased by new one.
 	-->
-	<ClassName2Close>ComMonitor</ClassName2Close>
+	<ClassName2Close>ComMonitor_</ClassName2Close>
 	
 	<!-- Optional.
 	This is the title to display on the message box title bar.
