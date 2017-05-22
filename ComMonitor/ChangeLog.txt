@@ -1,6 +1,11 @@
 Program ComMonitor ChangeLog
 
 
+   22.05.2016 1.3.0.0 Rev 0
+
+   - Change the Setup Icon
+
+
    13.05.2016 1.2.0.0 Rev 0
 
    - Made the software more stable
