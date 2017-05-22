@@ -35,4 +35,4 @@ Pleasant refer the Change Log and List Of Known Bugs for further information:
 
 ![img](https://github.com/uhwgmxorg/ComMonitor/blob/master/Doc/9.png)
 
-A **Setup** is also available [here](http://uhwgmxorg.com/Setup_ComMonitor_x32_1_1_0_32431.zip?dl=0) NOTE: Both the ComMonitor.exe and the Setup*.exe is not signed.
+A **Setup** is also available [here](http://uhwgmxorg.com/Setup_ComMonitor_x32_1_3_0_0.zip?dl=0) NOTE: Both the ComMonitor.exe and the Setup*.exe is not signed.
