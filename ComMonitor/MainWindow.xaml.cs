@@ -784,7 +784,6 @@ namespace ComMonitor
                     {
                         StreamReader sr = new StreamReader(resp.GetResponseStream());
                         strXmlDoc = sr.ReadToEnd();
-                        strXmlDoc = strXmlDoc.Replace("1.1", "1.0");
                         Debug.WriteLine(strXmlDoc);
                     }
                     catch (Exception ex)
