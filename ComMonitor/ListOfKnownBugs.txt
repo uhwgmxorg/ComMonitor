@@ -1,14 +1,7 @@
 ﻿Program ComMonitor ListOfKnownBugs
 
 
-    22.05.2017 1.3.0.0 Rev 0
+    03.10.2017 1.4.0.0 Rev 0
 
-   - Multiple Connections CheckBox has no function 
-     yet in NewConnectionDlg
    - Still some crashes under certain connection 
      circumstances 
-   - The HexaEditor Control in the Tab Control has not 
-     the correct height, so the vertical scrollbar 
-     did not work as expected.
-   - Problems scrolling in HexMesageViewer under certain 
-     circumstances

@@ -1,7 +1,7 @@
 Program ComMonitor ChangeLog
 
 
-   XX.10.2017 1.4.0.0 Rev 0
+   03.10.2017 1.4.0.0 Rev 0
 
    - Fix bug in ChangeLog (wrong year)
    - Implement MultipleConnections for server 
