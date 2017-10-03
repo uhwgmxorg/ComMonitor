@@ -119,12 +119,65 @@ namespace ComMonitor.LocalTools
         {
             try
             {
-                Manager.Session.Close(true);
+                StopReconnectTimer();
+
+                if(Manager.Session != null)
+                    Manager.Session.Close(true);
+
+                Manager.Connector.ExceptionCaught -= HandleException;
+                Manager.Connector.SessionOpened -= HandeleSessionOpened;
+                Manager.Connector.SessionClosed -= HandeleSessionClosed;
+                Manager.Connector.SessionIdle -= HandleIdle;
+                Manager.Connector.MessageReceived -= HandleReceived;
+
                 Manager.Connector.Dispose();
+                Manager = null;
             }
             catch (Exception ex)
             {
                 _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// StartReconnectTimer
+        /// </summary>
+        private void StartReconnectTimer()
+        {
+            if (AutoConnections)
+            {
+                _timer = new Timer(500);
+                _timer.Elapsed += new ElapsedEventHandler(AutoReConnect);
+                _timer.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// StopReconnectTimer
+        /// </summary>
+        private void StopReconnectTimer()
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// AutoReConnect
+        /// </summary>
+        private void AutoReConnect(object sender, ElapsedEventArgs e)
+        {
+            lock (_lockObject2)
+            {
+                if (Connected) return;
+
+                if (AutoConnections)
+                {
+                    _logger.Info(String.Format("AutoConnections ON try to connect to {0}:{1}", _serverIpAddress, _port));
+                    Manager = new TCPClientProtocolManager();
+                    OpenMinaSocket();
+                }
             }
         }
 
@@ -238,48 +291,6 @@ namespace ComMonitor.LocalTools
             }
 
             return new String(carray);
-        }
-
-        /// <summary>
-        /// StartReconnectTimer
-        /// </summary>
-        private void StartReconnectTimer()
-        {
-            if (AutoConnections)
-            {
-                _timer = new Timer(500);
-                _timer.Elapsed += new ElapsedEventHandler(AutoReConnect);
-                _timer.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// StopReconnectTimer
-        /// </summary>
-        private void StopReconnectTimer()
-        {
-            if (_timer != null)
-            {
-                _timer.Stop();
-            }
-        }
-
-        /// <summary>
-        /// AutoReConnect
-        /// </summary>
-        private void AutoReConnect(object sender, ElapsedEventArgs e)
-        {
-            lock (_lockObject2)
-            {
-                if (Connected) return;
-
-                if (AutoConnections)
-                {
-                    _logger.Info(String.Format("AutoConnections ON try to connect to {0}:{1}", _serverIpAddress, _port));
-                    Manager = new TCPClientProtocolManager();
-                    OpenMinaSocket();
-                }
-            }
         }
 
         #endregion
