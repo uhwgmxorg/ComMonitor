@@ -1,12 +1,12 @@
 Program ComMonitor ChangeLog
 
 
-   03.10.2017 1.4.0.0 Rev 0
+   03.10.2017 1.4.1.0 Rev 0 
 
    - Fix bug in ChangeLog (wrong year)
    - Implement MultipleConnections for server 
      (server not send data to all connected clients 
-	 if Multiple Connections checkbox is set)
+     if Multiple Connections checkbox is set)
    - Implement Auto Reconnect for clients (if checkbox is set)
    - implement new HexEditor Control Version 1.2.1 from 
      abbaye
