@@ -85,23 +85,14 @@ namespace ComMonitor.LocalTools
                 lock (_lockObject)
                 {
                     if (MultipleConnections)
-                    {
                         _logger.Info(String.Format("MultipleConnections ON"));
-                        _logger.Info(String.Format("Send data {0} Bytes", message.Length));
-                        _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
-                        foreach (var s in Sessions)
-                        {
-                            s.Write(message);
-                            _logger.Info(String.Format("Send to {0}", s.RemoteEndPoint));
-                        }
-                    }
-                    else
-                    {
-                        Manager.Send(message);
 
-                        _logger.Info(String.Format("Send to {0}", Manager.Session.RemoteEndPoint));
-                        _logger.Info(String.Format("Send data {0} Bytes", message.Length));
-                        _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                    _logger.Info(String.Format("Send data {0} Bytes", message.Length));
+                    _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                    foreach (var s in Sessions)
+                    {
+                        s.Write(message);
+                        _logger.Info(String.Format("Send to {0}", s.RemoteEndPoint));
                     }
                 }
             }
@@ -121,26 +112,31 @@ namespace ComMonitor.LocalTools
                 lock (_lockObject)
                 {
                     if (MultipleConnections)
-                    {
                         _logger.Info(String.Format("MultipleConnections ON"));
-                        foreach (var s in Sessions)
-                        {
-                            s.Close(true);
-                            _logger.Info(String.Format("Close Session {0}", s.RemoteEndPoint));
-                        }
-                    }
-                    else
+
+                    for(int i = Sessions.Count-1; i >= 0;i--)
                     {
-                        if (Manager.Session != null)
-                        {
-                            Manager.Session.Close(true);
-                            _logger.Info(String.Format("Close Session {0}", Manager.Session.RemoteEndPoint));
-                            if (Manager.Connector != null)
-                                Manager.Connector.Dispose();
-                        }
-                        if (Manager != null)
-                            Manager.Acceptor.Dispose();
+                        _logger.Info(String.Format("Close Session {0}", Sessions[i].RemoteEndPoint));
+                        Sessions[i].Close(true);
                     }
+
+                    Manager.Acceptor.ExceptionCaught -= HandleException;
+                    Manager.Acceptor.SessionOpened -= HandeleSessionOpened;
+                    Manager.Acceptor.SessionClosed -= HandeleSessionClosed;
+                    Manager.Acceptor.SessionIdle -= HandleIdle;
+                    Manager.Acceptor.MessageReceived -= HandleReceived;
+
+                    if (Manager.Session != null)
+                    {
+                        Manager.Session.Close(true);
+                        _logger.Info(String.Format("Close Session {0}", Manager.Session.RemoteEndPoint));
+                        if (Manager.Connector != null)
+                            Manager.Connector.Dispose();
+                    }
+                    if (Manager != null)
+                        Manager.Acceptor.Dispose();
+
+                    Manager = null;
                 }
             }
             catch (Exception ex)
