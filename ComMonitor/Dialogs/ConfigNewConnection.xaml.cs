@@ -80,6 +80,19 @@ namespace ComMonitor.Dialogs
                 };
             }
         }
+        private bool autoConnections;
+        public bool AutoConnections
+        {
+            get { return autoConnections; }
+            set
+            {
+                if (value != AutoConnections)
+                {
+                    autoConnections = value;
+                    OnPropertyChanged("AutoConnections");
+                };
+            }
+        }
 
         public Connection ConnectionObj { get; set; }
 
@@ -150,6 +163,7 @@ namespace ComMonitor.Dialogs
             ConnectionObj.IPAdress = iP;
             ConnectionObj.Port = Port;
             ConnectionObj.MultipleConnections = MultipleConnections;
+            ConnectionObj.AutoConnections = AutoConnections;
         }
 
         /// <summary>
@@ -174,12 +188,14 @@ namespace ComMonitor.Dialogs
                     textBoxIp.IsEnabled = false;
                     textBoxPort.IsEnabled = true;
                     checkBoxMultipleConnections.IsEnabled = true;
+                    checkBoxAutoConnect.IsEnabled = false;
                     break;
                 case EConnectionType.TCPSocketCient:
                     textBoxIp.IsEnabled = true;
                     textBoxPort.IsEnabled = true;
                     MultipleConnections = false;
                     checkBoxMultipleConnections.IsEnabled = false;
+                    checkBoxAutoConnect.IsEnabled = true;
                     break;
             }
         }

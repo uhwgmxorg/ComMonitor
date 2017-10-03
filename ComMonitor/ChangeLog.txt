@@ -1,12 +1,23 @@
 Program ComMonitor ChangeLog
 
 
+   XX.10.2017 1.4.0.0 Rev 0
+
+   - Fix bug in ChangeLog (wrong year)
+   - Implement MultipleConnections for server 
+     (server not send data to all connected clients 
+	 if Multiple Connections checkbox is set)
+   - Implement Auto Reconnect for clients
+   - implement HexEditor Control Version 1.2.1 from 
+     abbaye
+
+
    22.05.2016 1.3.0.0 Rev 0
 
    - Change the Setup Icon
 
 
-   13.05.2016 1.2.0.0 Rev 0
+   13.05.2017 1.2.0.0 Rev 0
 
    - Made the software more stable
    - Add the cool update mechanism 
@@ -16,23 +27,23 @@ Program ComMonitor ChangeLog
    - Removing the build number in version
 
 
-   08.04.2016 1.0.0.* Rev 1
+   08.04.2017 1.0.0.* Rev 1
 
    - Resolving binding errors
    - Fix compiler warnings
 
 
-   08.04.2016 1.0.0.* Rev 0
+   08.04.2017 1.0.0.* Rev 0
 
    - Add new AboutBox
 
-   07.04.2016 0.1.1.* Rev 0
+   07.04.2017 0.1.1.* Rev 0
 
    - Return SelectedTabItemsIndex 
      correct from EditMessages
 
 
-   04.04.2016 0.1.0.* Rev 0
+   04.04.2017 0.1.0.* Rev 0
 
    - First usable version
    - Create connections as TCP server or client
@@ -42,7 +53,7 @@ Program ComMonitor ChangeLog
    - Save and load message files
 
 
-   25.03.2016 0.0.0.0 Rev 0
+   25.03.2017 0.0.0.0 Rev 0
 
    - Start Version 0.0.0.0  
 
