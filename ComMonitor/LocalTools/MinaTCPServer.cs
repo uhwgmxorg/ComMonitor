@@ -13,6 +13,7 @@ namespace ComMonitor.LocalTools
         public delegate void DEventHandlerConnectionStateChaneged(bool conState);
 
         private Logger _logger;
+        private object _lockObject = new Object();
 
         public event DEventHandlerConnectionStateChaneged ConnectionStateChaneged;
 
@@ -74,10 +75,13 @@ namespace ComMonitor.LocalTools
         {
             try
             {
-                Manager.Send(message);
+                foreach (var s in Sessions)
+                {
+                    s.Write(message);
 
-                _logger.Info(String.Format("Send data {0} Bytes", message.Length));
-                _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                    _logger.Info(String.Format("Send data {0} Bytes", message.Length));
+                    _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                }
             }
             catch (Exception ex)
             {
@@ -132,10 +136,14 @@ namespace ComMonitor.LocalTools
             Connected = true;
             _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
             _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
-            if (ConnectionStateChaneged != null)
-                ConnectionStateChaneged(Connected);
-            else
-                _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+            lock (_lockObject)
+            {
+                Sessions.Add(e.Session);
+                if (ConnectionStateChaneged != null)
+                    ConnectionStateChaneged(Connected);
+                else
+                    _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+            }
         }
 
         /// <summary>
@@ -148,6 +156,13 @@ namespace ComMonitor.LocalTools
             Connected = false;
             _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
             _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+            lock (_lockObject)
+            {
+                Sessions.Remove(e.Session);
+            }
+            foreach(var s in Sessions)
+                if(s.Connected)
+                    Connected = true;
             if (ConnectionStateChaneged != null)
                 ConnectionStateChaneged(Connected);
             else
