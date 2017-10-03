@@ -4,12 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComMonitor.Dialogs"
-        xmlns:Control="clr-namespace:WPFHexaEditor.Control;assembly=WPFHexaEditor"
+        xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         mc:Ignorable="d"
-        Title="Create New Messages" Width="850" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        Title="Create New Messages" Width="720" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
         <Grid Margin="10,10,10,35">
-            <Control:HexaEditor x:Name="HexEdit" Margin="10" Height="Auto" Width="Auto" StatusBarVisibility="Visible"/>
+            <control:HexEditor x:Name="HexEdit" 
+                               ByteSpacerPositioning="HexBytePanel"
+                               ByteGrouping="EightByte"
+                               ByteSpacerWidthTickness="Normal"
+                               AllowByteCount="False" 
+                               ByteSpacerVisualStyle="Dash"
+                               DataStringVisual="Hexadecimal"
+                               FontSize="14"
+                               FontFamily="Courier New"
+                               Width="Auto"
+                               Height="Auto" 
+                               Margin="2"/>
         </Grid>
         <Label Content="Size:" Margin="20,0,0,10" HorizontalAlignment="Left" Width="46" Height="25" VerticalAlignment="Bottom"/>
         <TextBox Name="textBox_MessageSize" Margin="71,0,0,10" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
