@@ -7,8 +7,8 @@ Program ComMonitor ChangeLog
    - Implement MultipleConnections for server 
      (server not send data to all connected clients 
 	 if Multiple Connections checkbox is set)
-   - Implement Auto Reconnect for clients
-   - implement HexEditor Control Version 1.2.1 from 
+   - Implement Auto Reconnect for clients (if checkbox is set)
+   - implement new HexEditor Control Version 1.2.1 from 
      abbaye
 
 
