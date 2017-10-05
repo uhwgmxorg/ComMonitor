@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComMonitor.Dialogs"
-        xmlns:Control="clr-namespace:WPFHexaEditor.Control;assembly=WPFHexaEditor" 
+        xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         x:Class="ComMonitor.Dialogs.EditMessages"
         mc:Ignorable="d"
-        Title="Edit Messages" Width="850" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        Title="Edit Messages" Width="720" Height="536" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Window.Resources>
         <Style x:Key="EditableTabHeaderControl" TargetType="{x:Type local:EditableTabHeaderControl}">
             <Setter Property="Template">

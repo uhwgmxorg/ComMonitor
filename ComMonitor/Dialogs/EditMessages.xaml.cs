@@ -8,7 +8,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using WPFHexaEditor.Control;
+using WpfHexaEditor;
+using WpfHexaEditor.Core;
+using WpfHexaEditor.Core.Bytes;
 
 namespace ComMonitor.Dialogs
 {
@@ -167,9 +169,11 @@ namespace ComMonitor.Dialogs
             if (String.IsNullOrEmpty(m.MessageName))
                 m.MessageName = String.Format("Message {0}", count + 1);
             tab.Header = m.MessageName;
-            tab.HexEditor = new HexaEditor();
+            tab.HexEditor = new HexEditor();
             tab.HexEditor.Width = Double.NaN;
             tab.HexEditor.Height = Double.NaN;
+            tab.HexEditor.FontSize = 14;
+            tab.HexEditor.FontFamily = new System.Windows.Media.FontFamily("Courier New");
             tab.HexEditor.Stream = new System.IO.MemoryStream(m.Content);
             TabItems.Add(tab);
 
@@ -184,7 +188,7 @@ namespace ComMonitor.Dialogs
     public sealed class TabItem
     {
         public string Header { get; set; }
-        public HexaEditor HexEditor { get; set; }
+        public HexEditor HexEditor { get; set; }
     }
 
     [TemplatePart(Name = "PART_TabHeader", Type = typeof(TextBox))]

@@ -13,9 +13,11 @@ namespace ComMonitor.LocalTools
         public delegate void DEventHandlerConnectionStateChaneged(bool conState);
 
         private Logger _logger;
+        private object _lockObject = new Object();
 
         public event DEventHandlerConnectionStateChaneged ConnectionStateChaneged;
 
+        private bool MultipleConnections { get; set; }
         private TCPServerProtocolManager Manager { get; set; }
         public Boolean Connected { get; set; }
         private List<IoSession> Sessions { get; set; }
@@ -26,7 +28,7 @@ namespace ComMonitor.LocalTools
         /// <summary>
         /// Constructor
         /// </summary>
-        public MinaTCPServer(Int32 port, DProcessMessage callProcessMessage)
+        public MinaTCPServer(Int32 port, DProcessMessage callProcessMessage,bool multipleConnections)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Connected = false;
@@ -35,6 +37,7 @@ namespace ComMonitor.LocalTools
             _port = port;
             CallProcessMessage = callProcessMessage;
 
+            MultipleConnections = multipleConnections;
             Manager = new TCPServerProtocolManager();
         }
 
@@ -50,6 +53,11 @@ namespace ComMonitor.LocalTools
 
                 if (Manager.Acceptor == null)
                     throw new Exception("This should not happen!");
+
+                if (MultipleConnections)
+                    _logger.Info(String.Format("Start Listener MultipleConnections ON"));
+                else
+                    _logger.Info(String.Format("Start Listener MultipleConnections OFF"));
 
                 Manager.Acceptor.ExceptionCaught += HandleException;
                 Manager.Acceptor.SessionOpened += HandeleSessionOpened;
@@ -74,10 +82,19 @@ namespace ComMonitor.LocalTools
         {
             try
             {
-                Manager.Send(message);
+                lock (_lockObject)
+                {
+                    if (MultipleConnections)
+                        _logger.Info(String.Format("MultipleConnections ON"));
 
-                _logger.Info(String.Format("Send data {0} Bytes", message.Length));
-                _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                    _logger.Info(String.Format("Send data {0} Bytes", message.Length));
+                    _logger.Trace(String.Format("Send data => {0} | {1} |", ByteArrayToHexString(message), ByteArrayToAsciiString(message)));
+                    foreach (var s in Sessions)
+                    {
+                        s.Write(message);
+                        _logger.Info(String.Format("Send to {0}", s.RemoteEndPoint));
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -92,14 +109,35 @@ namespace ComMonitor.LocalTools
         {
             try
             {
-                if (Manager.Session != null)
+                lock (_lockObject)
                 {
-                    Manager.Session.Close(true);
-                    if(Manager.Connector != null)
-                        Manager.Connector.Dispose();
+                    if (MultipleConnections)
+                        _logger.Info(String.Format("MultipleConnections ON"));
+
+                    for(int i = Sessions.Count-1; i >= 0;i--)
+                    {
+                        _logger.Info(String.Format("Close Session {0}", Sessions[i].RemoteEndPoint));
+                        Sessions[i].Close(true);
+                    }
+
+                    Manager.Acceptor.ExceptionCaught -= HandleException;
+                    Manager.Acceptor.SessionOpened -= HandeleSessionOpened;
+                    Manager.Acceptor.SessionClosed -= HandeleSessionClosed;
+                    Manager.Acceptor.SessionIdle -= HandleIdle;
+                    Manager.Acceptor.MessageReceived -= HandleReceived;
+
+                    if (Manager.Session != null)
+                    {
+                        Manager.Session.Close(true);
+                        _logger.Info(String.Format("Close Session {0}", Manager.Session.RemoteEndPoint));
+                        if (Manager.Connector != null)
+                            Manager.Connector.Dispose();
+                    }
+                    if (Manager != null)
+                        Manager.Acceptor.Dispose();
+
+                    Manager = null;
                 }
-                if(Manager != null)
-                    Manager.Acceptor.Dispose();
             }
             catch (Exception ex)
             {
@@ -130,12 +168,29 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionOpened(Object sender, IoSessionEventArgs e)
         {
             Connected = true;
-            _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
-            _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
-            if (ConnectionStateChaneged != null)
-                ConnectionStateChaneged(Connected);
-            else
-                _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+            lock (_lockObject)
+            {
+                if (MultipleConnections)
+                {
+                    Sessions.Add(e.Session);
+                    _logger.Info(String.Format("MultipleConnections ON"));
+                    _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
+                    _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                    if (ConnectionStateChaneged != null)
+                        ConnectionStateChaneged(Connected);
+                    else
+                        _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+                }
+                else
+                {
+                    _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
+                    _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                    if (ConnectionStateChaneged != null)
+                        ConnectionStateChaneged(Connected);
+                    else
+                        _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+                }
+            }
         }
 
         /// <summary>
@@ -146,12 +201,29 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionClosed(Object sender, IoSessionEventArgs e)
         {
             Connected = false;
-            _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
-            _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
-            if (ConnectionStateChaneged != null)
-                ConnectionStateChaneged(Connected);
-            else
-                _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+            lock (_lockObject)
+            {
+                if (MultipleConnections)
+                {
+                    _logger.Info(String.Format("MultipleConnections ON"));
+                    _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
+                    _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                    Sessions.Remove(e.Session);
+                    foreach (var s in Sessions)  // check all remaning Sessions
+                        if (s.Connected)
+                            Connected = true;
+                }
+                else
+                {
+                    _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
+                    _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                }
+
+                if (ConnectionStateChaneged != null)
+                    ConnectionStateChaneged(Connected);
+                else
+                    _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+            }
         }
 
         /// <summary>
@@ -176,6 +248,7 @@ namespace ComMonitor.LocalTools
             if (CallProcessMessage != null)
                 CallProcessMessage(bytes, HexMessageViewerControl.Direction.In);
 
+            _logger.Info(String.Format("Received from {0}", e.Session.RemoteEndPoint));
             _logger.Info(String.Format("Received data {0} Bytes", bytes.Length));
             _logger.Trace(String.Format("Received data <= {0} | {1} |", ByteArrayToHexString(bytes), ByteArrayToAsciiString(bytes)));
         }

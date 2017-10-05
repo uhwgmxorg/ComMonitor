@@ -2,6 +2,7 @@
 using NLog;
 using System;
 using System.Net;
+using System.Timers;
 
 namespace ComMonitor.LocalTools
 {
@@ -11,11 +12,33 @@ namespace ComMonitor.LocalTools
         public delegate void DEventHandlerConnectionStateChaneged(bool conState);
 
         private Logger _logger;
+        private object _lockObject = new Object();
+        private object _lockObject2 = new Object();
+        private Timer _timer;
 
         public event DEventHandlerConnectionStateChaneged ConnectionStateChaneged;
 
         private TCPClientProtocolManager Manager { get; set; }
-        public Boolean Connected { get; set; }
+        private bool connected;
+        public bool Connected
+        {
+            get
+            {
+                lock (_lockObject)
+                {
+                    return connected;
+                }
+            }
+            set
+            {
+                lock (_lockObject)
+                {
+                    if (value != Connected)
+                        connected = value;
+                }
+            }
+        }
+        private bool AutoConnections { get; set; }
 
         private IPAddress _serverIpAddress;
         private Int32 _port;
@@ -27,7 +50,7 @@ namespace ComMonitor.LocalTools
         /// <param name="serverIPAddress"></param>
         /// <param name="port"></param>
         /// <param name="autoConnect"></param>
-        public MinaTCPClient(IPAddress serverIPAddress, Int32 port, DProcessMessage callProcessMessage, bool autoConnect = true)
+        public MinaTCPClient(IPAddress serverIPAddress, Int32 port, DProcessMessage callProcessMessage, bool autoConnect = false)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Connected = false;
@@ -35,6 +58,7 @@ namespace ComMonitor.LocalTools
             _serverIpAddress = serverIPAddress;
             _port = port;
             CallProcessMessage = callProcessMessage;
+            AutoConnections = autoConnect;
 
             Manager = new TCPClientProtocolManager();
         }
@@ -95,12 +119,65 @@ namespace ComMonitor.LocalTools
         {
             try
             {
-                Manager.Session.Close(true);
+                StopReconnectTimer();
+
+                if(Manager.Session != null)
+                    Manager.Session.Close(true);
+
+                Manager.Connector.ExceptionCaught -= HandleException;
+                Manager.Connector.SessionOpened -= HandeleSessionOpened;
+                Manager.Connector.SessionClosed -= HandeleSessionClosed;
+                Manager.Connector.SessionIdle -= HandleIdle;
+                Manager.Connector.MessageReceived -= HandleReceived;
+
                 Manager.Connector.Dispose();
+                Manager = null;
             }
             catch (Exception ex)
             {
                 _logger.Error(String.Format("Exception in {0} {1}", LST.GetCurrentMethod(), ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// StartReconnectTimer
+        /// </summary>
+        private void StartReconnectTimer()
+        {
+            if (AutoConnections)
+            {
+                _timer = new Timer(500);
+                _timer.Elapsed += new ElapsedEventHandler(AutoReConnect);
+                _timer.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// StopReconnectTimer
+        /// </summary>
+        private void StopReconnectTimer()
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// AutoReConnect
+        /// </summary>
+        private void AutoReConnect(object sender, ElapsedEventArgs e)
+        {
+            lock (_lockObject2)
+            {
+                if (Connected) return;
+
+                if (AutoConnections)
+                {
+                    _logger.Info(String.Format("AutoConnections ON try to connect to {0}:{1}", _serverIpAddress, _port));
+                    Manager = new TCPClientProtocolManager();
+                    OpenMinaSocket();
+                }
             }
         }
 
@@ -127,12 +204,16 @@ namespace ComMonitor.LocalTools
         private void HandeleSessionOpened(Object sender, IoSessionEventArgs e)
         {
             Connected = true;
+
             _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
             _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
             if (ConnectionStateChaneged != null)
                 ConnectionStateChaneged(Connected);
             else
                 _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+
+            if (AutoConnections)
+                StopReconnectTimer();
         }
 
         /// <summary>
@@ -149,6 +230,18 @@ namespace ComMonitor.LocalTools
                 ConnectionStateChaneged(Connected);
             else
                 _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+
+            Manager.Connector.ExceptionCaught -= HandleException;
+            Manager.Connector.SessionOpened -= HandeleSessionOpened;
+            Manager.Connector.SessionClosed -= HandeleSessionClosed;
+            Manager.Connector.SessionIdle -= HandleIdle;
+            Manager.Connector.MessageReceived -= HandleReceived;
+
+            Manager.Connector.Dispose();
+            Manager = null;
+
+            if (AutoConnections)
+                StartReconnectTimer();
         }
 
         /// <summary>

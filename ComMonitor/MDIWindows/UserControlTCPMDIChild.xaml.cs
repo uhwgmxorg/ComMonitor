@@ -214,7 +214,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartServer(Connection myConnection)
         {
-            _minaTCPServer = new MinaTCPServer(MyConnection.Port, ProcessMessage);
+            _minaTCPServer = new MinaTCPServer(myConnection.Port, ProcessMessage,myConnection.MultipleConnections);
             _minaTCPServer.ConnectionStateChaneged += ConStateChaneged;
             _minaTCPServer.StartMinaListener();
             _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
@@ -235,7 +235,7 @@ namespace ComMonitor.MDIWindows
         /// <param name="myConnection"></param>
         private void StartClient(Connection myConnection)
         {
-            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(MyConnection.IPAdress), MyConnection.Port, ProcessMessage);        
+            _minaTCPClient = new MinaTCPClient(IPAddress.Parse(myConnection.IPAdress), myConnection.Port, ProcessMessage,myConnection.AutoConnections);        
             _minaTCPClient.ConnectionStateChaneged += ConStateChaneged;
             _minaTCPClient.OpenMinaSocket();
             _logger.Info(String.Format("StartClient Ip: {0} Port: {1}", myConnection.IPAdress, myConnection.Port));
