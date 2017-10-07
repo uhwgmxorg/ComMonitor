@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComMonitor", "ComMonitor\ComMonitor.csproj", "{B6CDE2F8-2A01-4A3F-A003-CABC43D84068}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMessageViewerControl", "HexMessageViewerControl\HexMessageViewerControl.csproj", "{3282D490-1F40-4AE6-8BDC-EED7F44E934E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFHexaEditor", "WPFHexaEditor.Control\WPFHexaEditor.csproj", "{CF6AC02D-02FA-4EE9-A507-BD94F489972E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3282D490-1F40-4AE6-8BDC-EED7F44E934E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EEC04E7-C686-4379-90F3-B2D61B3C275E}
 	EndGlobalSection
 EndGlobal

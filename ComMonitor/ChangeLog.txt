@@ -5,8 +5,8 @@ Program ComMonitor ChangeLog
 
    - Fix bug in ChangeLog (wrong year)
    - Implement MultipleConnections for server 
-     (server not send data to all connected clients 
-     if Multiple Connections checkbox is set)
+     (Server now sends data to all connected clients when the 
+     Multiple Connections check box is selected)
    - Implement Auto Reconnect for clients (if checkbox is set)
    - implement new HexEditor Control Version 1.2.1 from 
      abbaye
