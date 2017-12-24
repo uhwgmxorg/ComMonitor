@@ -243,4 +243,22 @@
   <data name="UndoString" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="AppendByteConfirmationString" xml:space="preserve">
+    <value>Vous avez atteint la fin du fichier. Voulez-vous ajouter un octet? Cette opération ne peut pas être annulée si vous continuez.</value>
+  </data>
+  <data name="FillSelectionAloneString" xml:space="preserve">
+    <value>Remplir la sélection avec un octet</value>
+  </data>
+  <data name="PasteFromClipboardString" xml:space="preserve">
+    <value>Coller du presse-papiers</value>
+  </data>
+  <data name="ReplaceWithByteString" xml:space="preserve">
+    <value>Remplacer un octet</value>
+  </data>
+  <data name="FileDroppingConfirmationString" xml:space="preserve">
+    <value>Voulez-vous fermer le fichier actuel et ouvrir : </value>
+  </data>
+  <data name="PasteExtendByteConfirmationString" xml:space="preserve">
+    <value>L'opération de collage a atteint la fin du fichier. Voulez-vous étendre le fichier pour une opération complète? Cette opération ne peut pas être annulée si vous continuez.</value>
+  </data>
 </root>

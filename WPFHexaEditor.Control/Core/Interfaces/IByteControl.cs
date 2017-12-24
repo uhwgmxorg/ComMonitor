@@ -16,7 +16,6 @@ namespace WpfHexaEditor.Core.Interfaces
     {
         //Properties
         long BytePositionInFile { get; set; }
-
         ByteAction Action { get; set; }
         byte? Byte { get; set; }
         bool IsHighLight { get; set; }
@@ -27,12 +26,10 @@ namespace WpfHexaEditor.Core.Interfaces
 
         //Methods
         void UpdateVisual();
-
         void Clear();
 
         //Events
         event EventHandler ByteModified;
-
         event EventHandler MouseSelection;
         event EventHandler Click;
         event EventHandler RightClick;

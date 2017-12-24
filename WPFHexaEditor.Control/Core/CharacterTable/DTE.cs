@@ -4,14 +4,13 @@
 //////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 
 namespace WpfHexaEditor.Core.CharacterTable
 {
     /// <summary>
     /// Objet représentant un DTE.
     /// </summary>
-    public sealed class Dte : IEquatable<Dte>
+    public sealed class Dte
     {
         /// <summary>Nom du DTE</summary>
         private string _entry;
@@ -153,28 +152,5 @@ namespace WpfHexaEditor.Core.CharacterTable
 
         #endregion Methodes Static
 
-        #region IEquatable implementation
-
-        public override bool Equals(object obj) => Equals(obj as Dte);
-
-        public bool Equals(Dte other) => other != null &&
-                                         Entry == other.Entry &&
-                                         Value == other.Value &&
-                                         Type == other.Type;
-
-        public override int GetHashCode()
-        {
-            var hashCode = -852816310;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Entry);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Value);
-            hashCode = hashCode * -1521134295 + Type.GetHashCode();
-            return hashCode;
-        }
-
-        public static bool operator ==(Dte dTe1, Dte dTe2) => EqualityComparer<Dte>.Default.Equals(dTe1, dTe2);
-
-        public static bool operator !=(Dte dTe1, Dte dTe2) => !(dTe1 == dTe2);
-
-        #endregion IEquatable implementation
     }
 }

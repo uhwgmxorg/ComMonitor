@@ -43,7 +43,8 @@ namespace WpfHexaEditor.Core
         VbNetCode,
         JavaCode,
         CCode,
-        FSharp
+        FSharpCode,
+        PascalCode
     }
 
     /// <summary>
@@ -55,7 +56,8 @@ namespace WpfHexaEditor.Core
         CSharp,
         Java,
         FSharp,
-        Vbnet
+        Vbnet,
+        Pascal
     }
 
     /// <summary>

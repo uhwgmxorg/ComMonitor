@@ -1,22 +1,27 @@
 ﻿<!--
-      Apache 2.0  - 2016-2017
-      Author : Derek Tremblay (derektremblay666@gmail.com)
- -->
+    Apache 2.0  - 2016-2017
+    Author : Derek Tremblay (derektremblay666@gmail.com)
+-->
 
-<UserControl x:Class="WpfHexaEditor.HexEditor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:p="clr-namespace:WpfHexaEditor.Properties"
-             xmlns:local="clr-namespace:WpfHexaEditor"
-             MouseWheel="UserControl_MouseWheel"
-             mc:Ignorable="d"
-             BorderBrush="#FF443E3E"
-             BorderThickness="1"
-             Focusable="True"
-             d:DesignHeight="350" FontSize="11" d:DesignWidth="804">
+<UserControl
+    x:Class="WpfHexaEditor.HexEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfHexaEditor"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="clr-namespace:WpfHexaEditor.Properties"
+    d:DesignHeight="350"
+    d:DesignWidth="804"
+    BorderBrush="#FF443E3E"
+    BorderThickness="1"
+    Drop="UserControl_Drop"
+    Focusable="True"
+    FontSize="11"
+    MouseWheel="UserControl_MouseWheel"
+    mc:Ignorable="d">
 
+    <!--#region Ressources-->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,120 +30,147 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <!--#endregion-->
 
+    <!--#region Build-in Context Menu-->
     <UserControl.ContextMenu>
-        <ContextMenu x:Name="CMenu"
-                     Visibility="Collapsed">
-            <MenuItem x:Name="UndoCMenu"
-                      Header="{x:Static p:Resources.UndoString}"
-                      Click="UndoCMenu_Click">
+        <ContextMenu x:Name="CMenu" Visibility="Collapsed">
+            <MenuItem
+                x:Name="UndoCMenu"
+                Click="UndoCMenu_Click"
+                Header="{x:Static p:Resources.UndoString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Undo-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
             <MenuItem Header="{x:Static p:Resources.BookmarksString}">
-                <MenuItem x:Name="BookMarkCMenu"
-                          Header="{x:Static p:Resources.SetBookMarkString}"
-                          Click="BookMarkCMenu_Click"
-                          Width="Auto">
+                <MenuItem
+                    x:Name="BookMarkCMenu"
+                    Width="Auto"
+                    Click="BookMarkCMenu_Click"
+                    Header="{x:Static p:Resources.SetBookMarkString}">
                     <MenuItem.Icon>
                         <Image Source="/WPFHexaEditor;component/Resources/Icon/Add-Bookmark-Icon.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem x:Name="ClearBookMarkCMenu"
-                          Header="{x:Static p:Resources.ClearBookMarkString}"
-                          Click="ClearBookMarkCMenu_Click"
-                          Width="Auto">
+                <MenuItem
+                    x:Name="ClearBookMarkCMenu"
+                    Width="Auto"
+                    Click="ClearBookMarkCMenu_Click"
+                    Header="{x:Static p:Resources.ClearBookMarkString}">
                     <MenuItem.Icon>
                         <Image Source="/WPFHexaEditor;component/Resources/Icon/Clear-Bookmark-Icon.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="CopyHexaCMenu"
-                      Header="{x:Static p:Resources.CopyAsHexadecimalString}"
-                      Click="CopyHexaCMenu_Click">
+            <MenuItem
+                x:Name="CopyHexaCMenu"
+                Click="CopyToClipBoardCMenu_Click"
+                Header="{x:Static p:Resources.CopyAsHexadecimalString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Copy-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem x:Name="CopyAsciicMenu"
-                      Header="{x:Static p:Resources.CopyAsASCIIString}"
-                      Click="CopyASCIICMenu_Click">
+            <MenuItem
+                x:Name="CopyAsciicMenu"
+                Click="CopyToClipBoardCMenu_Click"
+                Header="{x:Static p:Resources.CopyAsASCIIString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Copy-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem x:Name="CopyAsCMenu"
-                      Header="{x:Static p:Resources.CopySelectionAsString}">
-                <MenuItem x:Name="CopyCcMenu"
-                          Header="C"
-                          Click="CopyCCMenu_Click" />
-                <MenuItem x:Name="CopyCSharpCMenu"
-                          Header="C#"
-                          Click="CopyCSharpCMenu_Click" />
-                <MenuItem x:Name="CopyFSharpCMenu"
-                          Header="F#"
-                          Click="CopyFSharpCMenu_Click" />
-                <MenuItem x:Name="CopyJavaCMenu"
-                          Header="Java" Click="CopyJavaCMenu_Click" />
-                <MenuItem x:Name="CopyVbNetCMenu"
-                          Header="Visual Basic.Net"
-                          Click="CopyVBNetCMenu_Click" />
-                <MenuItem x:Name="CopyTblcMenu"
-                          Header="{x:Static p:Resources.CopyAsTBLString}"
-                          Click="CopyTBLCMenu_Click" />
+            <MenuItem x:Name="CopyAsCMenu" Header="{x:Static p:Resources.CopySelectionAsString}">
+                <MenuItem
+                    x:Name="CopyCcMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="C" />
+                <MenuItem
+                    x:Name="CopyCSharpCMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="C#" />
+                <MenuItem
+                    x:Name="CopyFSharpCMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="F#" />
+                <MenuItem
+                    x:Name="CopyJavaCMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="Java" />
+                <MenuItem
+                    x:Name="CopyVbNetCMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="Visual Basic.Net" />
+                <MenuItem
+                    x:Name="CopyPascalCMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="Pascal" />
+                <MenuItem
+                    x:Name="CopyTblcMenu"
+                    Click="CopyToClipBoardCMenu_Click"
+                    Header="{x:Static p:Resources.CopyAsTBLString}" />
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="PasteMenu"
-                      Header="{x:Static p:Resources.PasteNotInsertString}"
-                      Click="PasteMenu_Click">
+            <MenuItem
+                x:Name="PasteMenu"
+                Click="PasteMenu_Click"
+                Header="{x:Static p:Resources.PasteNotInsertString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Paste-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="FillByteCMenu"
-                      Header="{x:Static p:Resources.FillSelectionString}"
-                      Click="FillByteCMenu_Click">
+            <MenuItem
+                x:Name="FillByteCMenu"
+                Click="FillByteCMenu_Click"
+                Header="{x:Static p:Resources.FillSelectionString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/0x-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem x:Name="ReplaceByteCMenu"
-                      Header="{x:Static p:Resources.ReplaceSelectionString}"
-                      Click="ReplaceByteCMenu_Click">
+            <MenuItem
+                x:Name="ReplaceByteCMenu"
+                Click="ReplaceByteCMenu_Click"
+                Header="{x:Static p:Resources.ReplaceSelectionString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/0x-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="DeleteCMenu"
-                      Header="{x:Static p:Resources.DeleteString}"
-                      Click="DeleteCMenu_Click">
+            <MenuItem
+                x:Name="DeleteCMenu"
+                Click="DeleteCMenu_Click"
+                Header="{x:Static p:Resources.DeleteString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Delete-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="FindAllCMenu"
-                      Header="{x:Static p:Resources.FindSelectionString}"
-                      Click="FindAllCMenu_Click">
+            <MenuItem
+                x:Name="FindAllCMenu"
+                Click="FindAllCMenu_Click"
+                Header="{x:Static p:Resources.FindSelectionString}">
                 <MenuItem.Icon>
                     <Image Source="/WPFHexaEditor;component/Resources/Icon/Find-Icon.ico" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem x:Name="SelectAllCMenu"
-                      Header="{x:Static p:Resources.SelectAllString}"
-                      Click="SelectAllCMenu_Click" />
+            <MenuItem
+                x:Name="SelectAllCMenu"
+                Click="SelectAllCMenu_Click"
+                Header="{x:Static p:Resources.SelectAllString}" />
         </ContextMenu>
     </UserControl.ContextMenu>
+    <!--#endregion-->
 
-    <Grid x:Name="BaseGrid" SizeChanged="Grid_SizeChanged"
-          Background="White">
+    <Grid
+        x:Name="BaseGrid"
+        Background="White"
+        SizeChanged="Grid_SizeChanged">
+
+        <!--#region Grid/Column Definitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -152,63 +184,63 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <!--#endregion-->
 
-        <StackPanel x:Name="LinesInfoStackPanel"
-                    HorizontalAlignment="Left"
-                    Grid.Row="1"
-                    Margin="2,0,0,0" />
+        <!--#region Data/Infos StackPanel-->
+        <StackPanel
+            x:Name="LinesInfoStackPanel"
+            Grid.Row="1"
+            Margin="2,0,0,0"
+            HorizontalAlignment="Left" />
 
-        <StackPanel x:Name="HexDataStackPanel"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="5,0" />
+        <StackPanel
+            x:Name="HexDataStackPanel"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5,0" />
 
-        <ScrollBar x:Name="VerticalScrollBar"
-                   HorizontalAlignment="Right"
-                   Width="20"
-                   ValueChanged="VerticalScrollBar_ValueChanged"
-                   SmallChange="1"
-                   LargeChange="100"
-                   Grid.Column="4"
-                   Grid.Row="0"
-                   Grid.RowSpan="2" />
+        <StackPanel
+            x:Name="HexHeaderStackPanel"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="5,0"
+            Orientation="Horizontal" />
 
-        <StackPanel x:Name="HexHeaderStackPanel"
-                    Orientation="Horizontal"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Margin="5,0" />
+        <StackPanel
+            x:Name="StringDataStackPanel"
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="5,0,0,0" />
+        <!--#endregion-->
 
-        <StackPanel x:Name="StringDataStackPanel"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Margin="5,0,0,0" />
+        <!--#region Statusbar definition-->
+        <Grid
+            x:Name="StatusBarGrid"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="5"
+            VerticalAlignment="Top"
+            Background="WhiteSmoke"
+            Visibility="Visible">
 
-        <Grid x:Name="StatusBarGrid"
-              Background="WhiteSmoke"
-              Grid.Row="2"
-              Grid.ColumnSpan="5" Grid.Column="0"
-              Visibility="Visible"
-              VerticalAlignment="Top">
+            <Separator
+                Height="1"
+                Margin="0,0,0,27"
+                Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HexEditor}}, Path=BorderBrush}" />
 
-            <Separator Height="1"
-                       Margin="0,0,0,27"
-                       Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HexEditor}}, Path=BorderBrush}" />
-
-            <!--Statusbar definition-->
             <StatusBar Height="27">
                 <StatusBarItem Width="90" Padding="0">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.LineStatusBarTagString}" Padding="5,5,0,5"
-                               FontWeight="Bold" />
                         <Label
-                            Content="{Binding SelectionLine, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}">
+                            Padding="5,5,0,5"
+                            Content="{x:Static p:Resources.LineStatusBarTagString}"
+                            FontWeight="Bold" />
+                        <Label Content="{Binding (local:HexEditor.SelectionLine), UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}">
                             <Label.ToolTip>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label FontWeight="Bold" Content="Line :" />
-                                    <Label Content="{Binding SelectionLine, UpdateSourceTrigger=PropertyChanged}" />
-                                    <Label
-                                        Content="{Binding SelectionLine, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}" />
+                                    <Label Content="Line :" FontWeight="Bold" />
+                                    <Label Content="{Binding (local:HexEditor.SelectionLine), UpdateSourceTrigger=PropertyChanged}" />
+                                    <Label Content="{Binding (local:HexEditor.SelectionLine), UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}" />
                                 </StackPanel>
                             </Label.ToolTip>
                         </Label>
@@ -217,15 +249,16 @@
                 <Separator />
                 <StatusBarItem Width="125" Padding="0">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.PositionString}" Padding="5,5,0,5" FontWeight="Bold" />
                         <Label
-                            Content="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}">
+                            Padding="5,5,0,5"
+                            Content="{x:Static p:Resources.PositionString}"
+                            FontWeight="Bold" />
+                        <Label Content="{Binding (local:HexEditor.SelectionStart), UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}">
                             <Label.ToolTip>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label FontWeight="Bold" Content="{x:Static p:Resources.PositionString}" />
-                                    <Label Content="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}" />
-                                    <Label
-                                        Content="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}" />
+                                    <Label Content="{x:Static p:Resources.PositionString}" FontWeight="Bold" />
+                                    <Label Content="{Binding (local:HexEditor.SelectionStart), UpdateSourceTrigger=PropertyChanged}" />
+                                    <Label Content="{Binding (local:HexEditor.SelectionStart), UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LongHexConverter}}" />
                                 </StackPanel>
                             </Label.ToolTip>
                         </Label>
@@ -234,99 +267,138 @@
                 <Separator />
                 <StatusBarItem Width="125" Padding="0">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.LenghtString}" Padding="5,5,0,5" FontWeight="Bold" />
+                        <Label
+                            Padding="5,5,0,5"
+                            Content="{x:Static p:Resources.LenghtString}"
+                            FontWeight="Bold" />
                         <Label x:Name="FileLengthKbLabel" ContentStringFormat="N0" />
                     </StackPanel>
                 </StatusBarItem>
                 <Separator />
-                <StatusBarItem Padding="0" x:Name="ByteCountPanel" Visibility="Collapsed">
+                <StatusBarItem
+                    x:Name="ByteCountPanel"
+                    Padding="0"
+                    Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static p:Resources.CountOfString}" Padding="5,5,0,5" FontWeight="Bold" />
+                        <Label
+                            Padding="5,5,0,5"
+                            Content="{x:Static p:Resources.CountOfString}"
+                            FontWeight="Bold" />
                         <Label x:Name="CountOfByteLabel" ToolTip="Byte at position start" />
-                        <Label Content=":" Padding="0,5" />
-                        <Label x:Name="CountOfByteSumLabel" ToolTip="Count of Byte at position start"
-                               ContentStringFormat="N0" />
+                        <Label Padding="0,5" Content=":" />
+                        <Label
+                            x:Name="CountOfByteSumLabel"
+                            ContentStringFormat="N0"
+                            ToolTip="Count of Byte at position start" />
                     </StackPanel>
                 </StatusBarItem>
             </StatusBar>
         </Grid>
 
-        <ProgressBar Grid.Row="3"
-                     Grid.ColumnSpan="5" Grid.Column="0"
-                     Height="3"
-                     BorderThickness="0"
-                     x:Name="LongProgressProgressBar"
-                     Minimum="0"
-                     Maximum="1" />
+        <Label
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Width="64"
+            Margin="0,1,40,1"
+            HorizontalAlignment="Right"
+            Content="ReadOnly"
+            FontWeight="Bold"
+            Visibility="{Binding (local:HexEditor.ReadOnlyMode), Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+        <!--#endregion-->
 
-        <Rectangle x:Name="BottomRectangle"
-                   Fill="#FFF4F4F5"
-                   Opacity="0"
-                   MouseEnter="BottomRectangle_MouseEnter"
-                   MouseLeave="BottomRectangle_MouseLeave"
-                   Grid.ColumnSpan="4"
-                   Grid.Row="2"
-                   Grid.Column="1"
-                   Height="25"
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,18,0" />
+        <!--#region Scrollbar, marker, and move rectangle-->
+        <ScrollBar
+            x:Name="VerticalScrollBar"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="4"
+            Width="20"
+            HorizontalAlignment="Right"
+            LargeChange="100"
+            SmallChange="1"
+            ValueChanged="VerticalScrollBar_ValueChanged" />
 
-        <Rectangle x:Name="TopRectangle"
-                   Fill="#FFF4F4F5"
-                   Opacity="0"
-                   MouseEnter="TopRectangle_MouseEnter"
-                   MouseLeave="TopRectangle_MouseLeave"
-                   Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0"
-                   Height="30"
-                   VerticalAlignment="Top" />
+        <Grid
+            x:Name="MarkerGrid"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="4"
+            Margin="0,17" />
 
+        <Rectangle
+            x:Name="BottomRectangle"
+            Grid.Row="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Height="25"
+            Margin="0,0,18,0"
+            VerticalAlignment="Bottom"
+            Fill="#FFF4F4F5"
+            MouseEnter="BottomRectangle_MouseEnter"
+            MouseDown="BottomRectangle_MouseDown"
+            MouseLeave="BottomRectangle_MouseLeave"
+            Opacity="0" />
 
-        <!--TODO: ADD TEXTBLOCK FOR DETAIL-->
-        <Border x:Name="CancelLongProcessButton"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Width="120"
-                CornerRadius="4"
-                BorderBrush="Gray"
-                BorderThickness="2"
-                Height="50">
+        <Rectangle
+            x:Name="TopRectangle"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Height="30"
+            VerticalAlignment="Top"
+            Fill="#FFF4F4F5"
+            MouseEnter="TopRectangle_MouseEnter"
+            MouseDown="TopRectangle_MouseDown"
+            MouseLeave="TopRectangle_MouseLeave"
+            Opacity="0" />
+        <!--#endregion-->
+
+        <!--#region Long process-->
+        <ProgressBar
+            x:Name="LongProgressProgressBar"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="5"
+            Height="3"
+            BorderThickness="0"
+            Maximum="1"
+            Minimum="0" />
+
+        <!--  TODO: ADD TEXTBLOCK FOR DETAIL  -->
+        <Border
+            x:Name="CancelLongProcessButton"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Width="120"
+            Height="50"
+            BorderBrush="Gray"
+            BorderThickness="2"
+            CornerRadius="4">
             <Button
+                VerticalContentAlignment="Center"
+                BorderThickness="0"
+                Click="CancelLongProcessButton_Click"
                 Content="{x:Static p:Resources.CancelLongProcessString}"
                 FontWeight="Bold"
-                BorderThickness="0"
-                ToolTip="{x:Static p:Resources.CancelLongProcessToolTipString}"
-                VerticalContentAlignment="Center"
                 Opacity="0.9"
-                Click="CancelLongProcessButton_Click" />
+                ToolTip="{x:Static p:Resources.CancelLongProcessToolTipString}" />
         </Border>
+        <Label
+            x:Name="TblLabel"
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Margin="0,1,05,1"
+            HorizontalAlignment="Right"
+            Content="{x:Static p:Resources.TBLString}"
+            FontWeight="Bold"
+            Visibility="Collapsed" />
+        <!--#endregion-->
 
-        <Grid x:Name="MarkerGrid"
-              Grid.Column="4"
-              Grid.Row="0" Grid.RowSpan="2"
-              Margin="0,17" />
-
-        <Label Content="ReadOnly"
-               FontWeight="Bold"
-               Visibility="{Binding ReadOnlyMode, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-               Margin="0,1,40,1"
-               HorizontalAlignment="Right"
-               Width="64"
-               Grid.Row="2"
-               Grid.RowSpan="2"
-               Grid.ColumnSpan="2"
-               Grid.Column="2" />
-
-        <Label x:Name="TblLabel"
-               Content="{x:Static p:Resources.TBLString}"
-               Visibility="Collapsed"
-               Margin="0,1,05,1"
-               HorizontalAlignment="Right"
-               Grid.Row="2"
-               Grid.RowSpan="2"
-               Grid.ColumnSpan="2"
-               Grid.Column="2"
-               FontWeight="Bold" />
     </Grid>
 </UserControl>

@@ -5,9 +5,11 @@
 //////////////////////////////////////////////
 
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfHexaEditor.Core;
@@ -17,7 +19,7 @@ using WpfHexaEditor.Core.MethodExtention;
 
 namespace WpfHexaEditor
 {
-    internal class HexByte : TextBlock, IByteControl
+    internal class HexByte : FrameworkElement, IByteControl
     {
         #region Global class variables
 
@@ -63,8 +65,6 @@ namespace WpfHexaEditor
             //Default properties
             DataContext = this;
             Focusable = true;
-            TextAlignment = TextAlignment.Left;
-            Padding = new Thickness(2, 0, 0, 0);
 
             #region Binding tooltip
 
@@ -79,22 +79,13 @@ namespace WpfHexaEditor
             // Load ressources dictionnary
             void LoadDictionary(string url)
             {
-                var ttRes = new ResourceDictionary {Source = new Uri(url, UriKind.Relative)};
+                var ttRes = new ResourceDictionary { Source = new Uri(url, UriKind.Relative) };
                 Resources.MergedDictionaries.Add(ttRes);
             }
 
             SetBinding(ToolTipProperty, txtBinding);
 
             #endregion
-
-            //Event
-            KeyDown += UserControl_KeyDown;
-            MouseDown += HexChar_MouseDown;
-            MouseEnter += UserControl_MouseEnter;
-            MouseLeave += UserControl_MouseLeave;
-            ToolTipOpening += UserControl_ToolTipOpening;
-            GotFocus += UserControl_GotFocus;
-            LostFocus += UserControl_LostFocus;
 
             //Update width
             UpdateDataVisualWidth();
@@ -126,7 +117,7 @@ namespace WpfHexaEditor
         /// <summary>
         /// Used for selection coloring
         /// </summary>
-        public bool FirstSelected { get; set; } = false;
+        public bool FirstSelected { get; set; }
 
         /// <summary>
         /// Byte used for this instance
@@ -145,17 +136,15 @@ namespace WpfHexaEditor
             }
         }
 
-
         /// <summary>
         /// Used to prevent ByteModified event occurc when we dont want! 
         /// </summary>
         public bool InternalChange { get; set; }
 
-
         /// <summary>
         /// Get or set if control as in read only mode
         /// </summary>
-        public bool ReadOnlyMode { get; set; } = false;
+        public bool ReadOnlyMode { get; set; }
 
         /// <summary>
         /// Get or Set if control as selected
@@ -165,11 +154,10 @@ namespace WpfHexaEditor
             get => _isSelected;
             set
             {
-                if (value != _isSelected)
-                {
-                    _isSelected = value;
-                    UpdateVisual();
-                }
+                if (value == _isSelected) return;
+
+                _isSelected = value;
+                UpdateVisual();
             }
         }
 
@@ -181,16 +169,70 @@ namespace WpfHexaEditor
             get => _isHighLight;
             set
             {
-                if (value != _isHighLight)
-                {
-                    _isHighLight = value;
-                    _keyDownLabel = KeyDownLabel.FirstChar;
-                    UpdateVisual();
-                }
+                if (value == _isHighLight) return;
+
+                _isHighLight = value;
+                _keyDownLabel = KeyDownLabel.FirstChar;
+                UpdateVisual();
             }
         }
 
         #endregion properties
+
+        #region Private base properties
+
+        /// <summary>
+        /// Definie the foreground
+        /// </summary>
+        private static readonly DependencyProperty ForegroundProperty =
+            TextElement.ForegroundProperty.AddOwner(
+                typeof(HexByte));
+
+        private Brush Foreground
+        {
+            get => (Brush)GetValue(ForegroundProperty);
+            set => SetValue(ForegroundProperty, value);
+        }
+
+        private static readonly DependencyProperty BackgroundProperty =
+            TextElement.BackgroundProperty.AddOwner(typeof(HexByte),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Defines the background
+        /// </summary>
+        private Brush Background
+        {
+            get => (Brush)GetValue(BackgroundProperty);
+            set => SetValue(BackgroundProperty, value);
+        }
+
+        private static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(HexByte),
+                new FrameworkPropertyMetadata(string.Empty, 
+                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Text to be displayed representation of Byte
+        /// </summary>
+        private string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
+        private static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(HexByte));
+
+        /// <summary>
+        /// The FontWeight property specifies the weight of the font.
+        /// </summary>
+        private FontWeight FontWeight
+        {
+            get => (FontWeight)GetValue(FontWeightProperty);
+            set => SetValue(FontWeightProperty, value);
+        }
+
+        #endregion Base properties
 
         #region Methods
 
@@ -199,8 +241,6 @@ namespace WpfHexaEditor
         /// </summary>
         public void UpdateVisual()
         {
-            FontFamily = _parent.FontFamily;
-
             if (IsSelected)
             {
                 FontWeight = _parent.FontWeight;
@@ -233,10 +273,27 @@ namespace WpfHexaEditor
             {
                 FontWeight = _parent.FontWeight;
                 Background = Brushes.Transparent;
-                Foreground = _parent.Foreground;
+                Foreground = BytePositionInFile % 2 == 0 ? _parent.Foreground : _parent.ForegroundSecondColor;
             }
 
             UpdateAutoHighLiteSelectionByteVisual();
+        }
+
+        /// <summary>
+        /// Render the control
+        /// </summary>
+        protected override void OnRender(DrawingContext dc)
+        {
+            //Draw background
+            if (Background != null)
+                dc.DrawRectangle(Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+
+            //Draw text
+            var typeface = new Typeface(_parent.FontFamily, _parent.FontStyle, FontWeight, _parent.FontStretch);
+            var formatedText = new FormattedText(Text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight,
+                typeface, _parent.FontSize, Foreground, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            dc.DrawText(formatedText, new Point(2, 0));
         }
 
         private void UpdateAutoHighLiteSelectionByteVisual()
@@ -246,7 +303,6 @@ namespace WpfHexaEditor
                 Byte == _parent.SelectionByte && !IsSelected)
                 Background = _parent.AutoHighLiteSelectionByteBrush;
         }
-
 
         internal void UpdateLabelFromByte()
         {
@@ -279,6 +335,7 @@ namespace WpfHexaEditor
             IsHighLight = false;
             IsSelected = false;
             InternalChange = false;
+            _keyDownLabel = KeyDownLabel.FirstChar;
         }
 
         public void UpdateDataVisualWidth()
@@ -298,19 +355,29 @@ namespace WpfHexaEditor
 
         #region Events delegate
 
-        private void HexChar_MouseDown(object sender, MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Focus();
+                if (IsFocused)
+                {
+                    //Is focused set editing to second char.
+                    _keyDownLabel = KeyDownLabel.SecondChar;
+                    UpdateCaret();
+                }
+                else
+                    Focus();
+
                 Click?.Invoke(this, e);
             }
 
             if (e.RightButton == MouseButtonState.Pressed)
                 RightClick?.Invoke(this, e);
+
+            base.OnMouseDown(e);
         }
 
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
             if (Byte == null) return;
 
@@ -442,8 +509,20 @@ namespace WpfHexaEditor
                                 Byte = ByteConverters.HexToByte(
                                     byteValueCharArray[0] + byteValueCharArray[1].ToString())[0];
 
-                                //Move focus event
+                                //Insert byte at end of file
+                                if (_parent.Lenght != BytePositionInFile + 1)
+                                {
+                                    _keyDownLabel = KeyDownLabel.NextPosition;
+                                    MoveNext?.Invoke(this, new EventArgs());
+                                }
+                                break;
+                            case KeyDownLabel.NextPosition:
+
+                                //byte[] byteToAppend = { (byte)key.ToCharArray()[0] };
+                                _parent.AppendByte(new byte[] { 0 });
+
                                 MoveNext?.Invoke(this, new EventArgs());
+
                                 break;
                         }
 
@@ -458,9 +537,11 @@ namespace WpfHexaEditor
                 }
 
             UpdateCaret();
+
+            base.OnKeyDown(e);
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        protected override void OnMouseEnter(MouseEventArgs e)
         {
             if (Byte != null && Action != ByteAction.Modified && Action != ByteAction.Deleted &&
                 Action != ByteAction.Added && !IsSelected && !IsHighLight)
@@ -470,51 +551,77 @@ namespace WpfHexaEditor
 
             if (e.LeftButton == MouseButtonState.Pressed)
                 MouseSelection?.Invoke(this, e);
+
+            base.OnMouseEnter(e);
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        protected override void OnMouseLeave(MouseEventArgs e)
         {
+
             if (Byte != null && Action != ByteAction.Modified && Action != ByteAction.Deleted &&
                 Action != ByteAction.Added && !IsSelected && !IsHighLight)
                 Background = Brushes.Transparent;
 
             UpdateAutoHighLiteSelectionByteVisual();
+
+            base.OnMouseLeave(e);
         }
 
-        private void UserControl_ToolTipOpening(object sender, ToolTipEventArgs e)
+        protected override void OnToolTipOpening(ToolTipEventArgs e)
         {
             if (Byte == null)
                 e.Handled = true;
+
+            base.OnToolTipOpening(e);
         }
 
         #endregion Events delegate
 
         #region Caret events/methods
 
-        private void UserControl_LostFocus(object sender, RoutedEventArgs e) => _parent.HideCaret();
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            _parent.HideCaret();
+            base.OnLostFocus(e);
+        }
 
-        private void UserControl_GotFocus(object sender, RoutedEventArgs e) => UpdateCaret();
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            _keyDownLabel = KeyDownLabel.FirstChar;
+            UpdateCaret();
+
+            base.OnGotFocus(e);
+        }
+
+        //private void UserControl_GotFocus(object sender, RoutedEventArgs e) => UpdateCaret();
 
         private void UpdateCaret()
         {
             if (ReadOnlyMode || Byte == null)
                 _parent.HideCaret();
             else
+            {
+                var width = Text[1].ToString()
+                    .GetScreenSize(_parent.FontFamily, _parent.FontSize, _parent.FontStyle, FontWeight,
+                        _parent.FontStretch).Width.Round(0);
+                
                 switch (_keyDownLabel)
                 {
                     case KeyDownLabel.FirstChar:
                         _parent.MoveCaret(TransformToAncestor(_parent).Transform(new Point(0, 0)));
                         break;
                     case KeyDownLabel.SecondChar:
-                        var width = Text[1].ToString()
-                            .GetScreenSize(FontFamily, FontSize, FontStyle, FontWeight, FontStretch).Width.Round(0);
                         _parent.MoveCaret(TransformToAncestor(_parent).Transform(new Point(width, 0)));
                         break;
                     case KeyDownLabel.NextPosition:
+                        if (_parent.Lenght == BytePositionInFile + 1)
+                            _parent.MoveCaret(TransformToAncestor(_parent).Transform(new Point(width * 2, 0)));
                         break;
                 }
+            }
         }
 
         #endregion
+
     }
 }

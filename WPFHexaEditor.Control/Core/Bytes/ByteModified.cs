@@ -3,13 +3,11 @@
 // Author : Derek Tremblay (derektremblay666@gmail.com)
 //////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
 using WpfHexaEditor.Core.Interfaces;
 
 namespace WpfHexaEditor.Core.Bytes
 {
-    public class ByteModified : IByteModified, IEquatable<ByteModified>
+    public class ByteModified : IByteModified
     {
         #region Constructor
 
@@ -99,33 +97,6 @@ namespace WpfHexaEditor.Core.Bytes
         public static bool CheckIsValid(ByteModified byteModified) => byteModified != null && byteModified.IsValid;
 
         #endregion Methods
-
-        #region IEquatable implementation
-
-        public override bool Equals(object obj) => Equals(obj as ByteModified);
-
-        public bool Equals(ByteModified other)
-        {
-            return other != null &&
-                   EqualityComparer<byte?>.Default.Equals(Byte, other.Byte) &&
-                   Action == other.Action &&
-                   BytePositionInFile == other.BytePositionInFile;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = 576086707;
-            hashCode = hashCode * -1521134295 + EqualityComparer<byte?>.Default.GetHashCode(Byte);
-            hashCode = hashCode * -1521134295 + Action.GetHashCode();
-            hashCode = hashCode * -1521134295 + BytePositionInFile.GetHashCode();
-            return hashCode;
-        }
-
-        public static bool operator ==(ByteModified modified1, ByteModified modified2) =>
-            EqualityComparer<ByteModified>.Default.Equals(modified1, modified2);
-
-        public static bool operator !=(ByteModified modified1, ByteModified modified2) => !(modified1 == modified2);
-
-        #endregion IEquatable implementation
+        
     }
 }

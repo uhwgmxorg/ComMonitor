@@ -13,6 +13,10 @@ namespace ComMonitor.Dialogs
     /// </summary>
     public partial class AboutBox : Window
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="version"></param>
         public AboutBox(string version)
         {
             InitializeComponent();
@@ -28,6 +32,7 @@ namespace ComMonitor.Dialogs
                 ScrollText.Text = "The\n MIT License-File\n is missing";
             }
         }
+
         /******************************/
         /*       Button Events        */
         /******************************/

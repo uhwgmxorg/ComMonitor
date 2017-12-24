@@ -3,7 +3,7 @@ using System.Text;
 
 namespace WpfHexaEditor.Core.Native
 {
-    internal class NativeMethods
+    internal static class NativeMethods
     {
         /// <summary>
         /// Used for key detection

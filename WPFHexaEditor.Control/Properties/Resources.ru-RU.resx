@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppendByteConfirmationString" xml:space="preserve">
+    <value>Вы дошли до конца файла. Вы хотите добавить один байт? Эта операция не может быть отменена, если вы продолжите.</value>
+  </data>
   <data name="BookmarksString" xml:space="preserve">
     <value>закладки</value>
   </data>
@@ -174,6 +177,12 @@
   <data name="EnterHexValueMsgString" xml:space="preserve">
     <value>Введите шестнадцатеричное значение ...</value>
   </data>
+  <data name="FileDroppingConfirmationString" xml:space="preserve">
+    <value>Вы хотите закрыть текущий файл и открыть:</value>
+  </data>
+  <data name="FillSelectionAloneString" xml:space="preserve">
+    <value>Заполните выбор байтом</value>
+  </data>
   <data name="FillSelectionString" xml:space="preserve">
     <value>Заполните выбор байтом ...</value>
   </data>
@@ -210,6 +219,12 @@
   <data name="OkString" xml:space="preserve">
     <value>ОК</value>
   </data>
+  <data name="PasteExtendByteConfirmationString" xml:space="preserve">
+    <value>Операция вставки достигла конца файла. Вы хотите расширить файл для полной работы? Эта операция не может быть отменена, если вы продолжите.</value>
+  </data>
+  <data name="PasteFromClipboardString" xml:space="preserve">
+    <value>Вставить из буфера обмена</value>
+  </data>
   <data name="PasteNotInsertString" xml:space="preserve">
     <value>Вставить без вставки</value>
   </data>
@@ -221,6 +236,9 @@
   </data>
   <data name="ReplaceSelectionString" xml:space="preserve">
     <value>Заменить байт в выборе ...</value>
+  </data>
+  <data name="ReplaceWithByteString" xml:space="preserve">
+    <value>Заменить байт</value>
   </data>
   <data name="SelectAllString" xml:space="preserve">
     <value>Выбор всех</value>
