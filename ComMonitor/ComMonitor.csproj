@@ -213,9 +213,9 @@
       <Project>{3282d490-1f40-4ae6-8bdc-eed7f44e934e}</Project>
       <Name>HexMessageViewerControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WPFHexaEditor.Control\WPFHexaEditor.csproj">
+    <ProjectReference Include="..\WpfHexEditorControl\WPFHexaEditor\WpfHexaEditor.NET47.csproj">
       <Project>{cf6ac02d-02fa-4ee9-a507-bd94f489972e}</Project>
-      <Name>WPFHexaEditor</Name>
+      <Name>WpfHexaEditor.NET47</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

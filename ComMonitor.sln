@@ -7,9 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComMonitor", "ComMonitor\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMessageViewerControl", "HexMessageViewerControl\HexMessageViewerControl.csproj", "{3282D490-1F40-4AE6-8BDC-EED7F44E934E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFHexaEditor", "WPFHexaEditor.Control\WPFHexaEditor.csproj", "{CF6AC02D-02FA-4EE9-A507-BD94F489972E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfHexaEditor.NET47", "WpfHexEditorControl\WPFHexaEditor\WpfHexaEditor.NET47.csproj", "{CF6AC02D-02FA-4EE9-A507-BD94F489972E}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		WpfHexEditorControl\WpfHexaEditor.Shared\WpfHexaEditor.Shared.projitems*{cf6ac02d-02fa-4ee9-a507-bd94f489972e}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
