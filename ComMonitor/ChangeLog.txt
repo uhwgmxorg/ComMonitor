@@ -1,6 +1,12 @@
 Program ComMonitor ChangeLog
 
 
+   12.05.2018 1.5.0.0 Rev 0 
+
+   - New WpfHexaEditor.NET47 version 1.4
+   - Fix some bugs in case of MultipleConnections==false
+
+
    03.10.2017 1.4.1.0 Rev 0 
 
    - Fix bug in ChangeLog (wrong year)

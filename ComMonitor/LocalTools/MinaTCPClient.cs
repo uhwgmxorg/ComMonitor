@@ -121,17 +121,20 @@ namespace ComMonitor.LocalTools
             {
                 StopReconnectTimer();
 
-                if(Manager.Session != null)
-                    Manager.Session.Close(true);
+                if (Manager != null)
+                {
+                    Manager.Connector.ExceptionCaught -= HandleException;
+                    Manager.Connector.SessionOpened -= HandeleSessionOpened;
+                    Manager.Connector.SessionClosed -= HandeleSessionClosed;
+                    Manager.Connector.SessionIdle -= HandleIdle;
+                    Manager.Connector.MessageReceived -= HandleReceived;
 
-                Manager.Connector.ExceptionCaught -= HandleException;
-                Manager.Connector.SessionOpened -= HandeleSessionOpened;
-                Manager.Connector.SessionClosed -= HandeleSessionClosed;
-                Manager.Connector.SessionIdle -= HandleIdle;
-                Manager.Connector.MessageReceived -= HandleReceived;
+                    if (Manager.Session != null)
+                        Manager.Session.Close(true);
 
-                Manager.Connector.Dispose();
-                Manager = null;
+                    Manager.Connector.Dispose();
+                    Manager = null;
+                }
             }
             catch (Exception ex)
             {

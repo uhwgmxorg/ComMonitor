@@ -128,8 +128,8 @@ namespace ComMonitor.LocalTools
 
                     if (Manager.Session != null)
                     {
-                        Manager.Session.Close(true);
                         _logger.Info(String.Format("Close Session {0}", Manager.Session.RemoteEndPoint));
+                        Manager.Session.Close(true);
                         if (Manager.Connector != null)
                             Manager.Connector.Dispose();
                     }
@@ -183,12 +183,21 @@ namespace ComMonitor.LocalTools
                 }
                 else
                 {
-                    _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
-                    _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
-                    if (ConnectionStateChaneged != null)
-                        ConnectionStateChaneged(Connected);
+                    if (Sessions.Count < 1)
+                    {
+                        Sessions.Add(e.Session);
+                        _logger.Info(String.Format("SessionOpened {0}", e.Session.RemoteEndPoint));
+                        _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
+                        if (ConnectionStateChaneged != null)
+                            ConnectionStateChaneged(Connected);
+                        else
+                            _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+                    }
                     else
-                        _logger.Error(String.Format("Call HandeleSessionOpened but ConnectionStateChaneged Event is null"));
+                    {
+                        _logger.Error(String.Format("We allow only one connection in this case"));
+                        e.Session.Close(true);
+                    }
                 }
             }
         }
