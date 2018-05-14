@@ -1,7 +1,7 @@
 ﻿Program ComMonitor ListOfKnownBugs
 
 
-    12.05.2017 1.5.0.0 Rev 0
+    14.05.2018 1.6.0.0 Rev 0
 
    - Still some crashes under certain connection 
      circumstances 

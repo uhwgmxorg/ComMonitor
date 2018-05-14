@@ -9,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfHexaEditor;
-using WpfHexaEditor.Core;
-using WpfHexaEditor.Core.Bytes;
 
 namespace ComMonitor.Dialogs
 {

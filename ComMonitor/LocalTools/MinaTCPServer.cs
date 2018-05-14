@@ -1,6 +1,4 @@
-﻿using Mina.Core.Service;
-using Mina.Core.Session;
-using Mina.Transport.Socket;
+﻿using Mina.Core.Session;
 using NLog;
 using System;
 using System.Collections.Generic;
