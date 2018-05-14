@@ -224,6 +224,7 @@ namespace ComMonitor.LocalTools
                 }
                 else
                 {
+                    Sessions.Remove(e.Session);
                     _logger.Info(String.Format("SessionClosed {0}", e.Session.RemoteEndPoint));
                     _logger.Debug(String.Format("#1 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), Connected, System.Threading.Thread.CurrentThread.ManagedThreadId, GetHashCode()));
                 }
