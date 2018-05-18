@@ -5,5 +5,11 @@
     <Setting Name="DefaultMessageSize" Type="System.Single" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
+    <Setting Name="UpdateURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://uhwgmxorg.com/getDownLoadUrl.php</Value>
+    </Setting>
+    <Setting Name="EnableAutoUpdate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

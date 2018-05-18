@@ -5,6 +5,7 @@
         xmlns:mdi="clr-namespace:WPF.MDI;assembly=WPF.MDI"
         xmlns:localtools="clr-namespace:ComMonitor.LocalTools"
         xmlns:common="clr-namespace:Common;assembly=RecentFileListLib"
+        xmlns:p="clr-namespace:ComMonitor.Properties"
         localtools:WindowsSettings.Save="True"  
         Title="ComMonitor" Height="640" Width="1120" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Background="DarkGray" >
@@ -127,6 +128,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
+                <MenuItem IsChecked="{Binding EnableAutoUpdate, Mode=TwoWay, Source={x:Static p:Settings.Default}}" ToolTip="Mark the CheckBox to search for a new version of the program when starting it" IsCheckable="True" Header="Enable Auto Update" >
+                </MenuItem>
                 <MenuItem Command="{Binding UpdateCommand}" Header="Look For Updates" >
                     <MenuItem.Icon>
                         <Image Source="/ComMonitor;component/Resources/ToolBar01/Download.png" Stretch="Fill" />

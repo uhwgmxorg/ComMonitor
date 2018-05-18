@@ -729,6 +729,9 @@ namespace ComMonitor
 #else
             this.Title += "    Release Version " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " Revision " + Globals._revision.ToString();
 #endif
+            if(Properties.Settings.Default.EnableAutoUpdate && CheckIfUpdateIsAvailable())
+                if (CheckTheApplicationForUpdates())
+                    UpdateTheApplication();
         }
 
         /// <summary>
@@ -738,6 +741,7 @@ namespace ComMonitor
         /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
+            Properties.Settings.Default.Save();
             _logger.Info("Closing ComMonitor");
         }
 
@@ -746,7 +750,49 @@ namespace ComMonitor
         /*      Other Functions       */
         /******************************/
         #region Other Functions
-               
+
+        /// <summary>
+        /// CheckIfUpdateIsAvailable
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckIfUpdateIsAvailable()
+        {
+            try
+            {
+                string URL = Properties.Settings.Default.UpdateURL;
+                System.Net.HttpWebRequest myRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(URL);
+                myRequest.Method = "GET";
+                System.Net.WebResponse myResponse = myRequest.GetResponse();
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                string result = sr.ReadToEnd();
+                Debug.WriteLine(result);
+                result = result.Replace('\n', ' ');
+                sr.Close();
+                myResponse.Close();
+
+                System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
+                xmlDoc.LoadXml(result);
+                System.Xml.XmlNodeList parentNode = xmlDoc.GetElementsByTagName("Version");
+                Version sVersionToDownload = new Version(parentNode[0].InnerXml.ToString() + ".0.0");
+                Version sCurrentVersion = new Version(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                var vResult = sVersionToDownload.CompareTo(sCurrentVersion);
+                if (vResult > 0)
+                    return true;
+                else
+                    if (vResult < 0)
+                    return false;
+                else
+                        if (vResult == 0)
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// UpdateWindow
         /// No better idea to update the ToolBar and Window-State yet

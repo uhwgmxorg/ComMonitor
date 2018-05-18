@@ -74,7 +74,7 @@ namespace ComMonitor.Dialogs
         /// <param name="e"></param>
         private void Label_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://github.com/uhwgmxorg/ComMonitor"));
+            Process.Start(new ProcessStartInfo("http://uhwgmxorg.com/ComMonitor/default.html"));
         }
 
         /// <summary>

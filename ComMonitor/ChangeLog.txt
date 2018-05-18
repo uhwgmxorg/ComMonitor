@@ -5,6 +5,8 @@ Program ComMonitor ChangeLog
 
    - Solve some problems in handling single and 
      MultipleConnections
+   - Add the EnableAutoUpdate CheckBox in the menu
+     and the CheckIfUpdateIsAvailable() function
 
 
    12.05.2018 1.5.0.0 Rev 0 
