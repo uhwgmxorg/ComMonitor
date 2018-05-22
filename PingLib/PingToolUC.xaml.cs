@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Configurations;
+using PingLib.Models;
+using System.Windows.Media;
+using PingLib.LocalTools;
 
 namespace PingLib
 {
@@ -15,6 +19,9 @@ namespace PingLib
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private DispatcherTimer _dispatcherTimer = null;
+        int _counter = 0;
 
         #region INotifyPropertyChanged Properties
         private ColumnSeries measurements;
@@ -47,6 +54,22 @@ namespace PingLib
         public PingToolUC()
         {
             InitializeComponent();
+            DataContext = this;
+
+            // Init timer
+            _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            _dispatcherTimer.Start();
+
+            // Init chart
+            var config = Mappers.Xy<ChartDataModel>()
+                .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
+                .Y(dayModel => dayModel.Value);
+            Series = new SeriesCollection(config) { new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } } };
+            Series[0].Values.Clear();
+            ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
+            Formatter = value => DateTime.Now.ToString("d/M/yyyy HH:mm:ss");
         }
 
         /******************************/
@@ -65,6 +88,18 @@ namespace PingLib
         /*      Other Events          */
         /******************************/
         #region Other Events
+
+        /// <summary>
+        /// DispatcherTimer_Tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(++_counter), Value = LocalPing.Ping("google.com") });
+            if (Series[0].Values.Count > 30)
+                Series[0].Values.RemoveAt(0);
+        }
 
         #endregion
         /******************************/
