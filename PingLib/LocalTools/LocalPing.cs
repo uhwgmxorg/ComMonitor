@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -18,6 +19,10 @@ namespace PingLib.LocalTools
         {
             string roundtripTime = "0";
 
+            roundtripTime = "1.0E-309";
+            double d = Convert.ToDouble(roundtripTime, CultureInfo.InvariantCulture);
+            System.Diagnostics.Debug.WriteLine(d);
+
             PingTarget = pingTarget;
             try
             {
@@ -26,7 +31,7 @@ namespace PingLib.LocalTools
                 if (reply.Status == IPStatus.Success)
                 {
                     if (reply.RoundtripTime == 0)
-                        roundtripTime = "0.0001";
+                        roundtripTime = "0.000000000000001";
                     else
                         roundtripTime = reply.RoundtripTime.ToString();
                 }
