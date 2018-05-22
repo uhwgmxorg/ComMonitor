@@ -19,10 +19,6 @@ namespace PingLib.LocalTools
         {
             string roundtripTime = "0";
 
-            roundtripTime = "1.0E-309";
-            double d = Convert.ToDouble(roundtripTime, CultureInfo.InvariantCulture);
-            System.Diagnostics.Debug.WriteLine(d);
-
             PingTarget = pingTarget;
             try
             {
@@ -31,11 +27,11 @@ namespace PingLib.LocalTools
                 if (reply.Status == IPStatus.Success)
                 {
                     if (reply.RoundtripTime == 0)
-                        roundtripTime = "0.000000000000001";
+                        roundtripTime = "0.9";
                     else
                         roundtripTime = reply.RoundtripTime.ToString();
                 }
-                return Convert.ToDouble(roundtripTime);
+                return Convert.ToDouble(roundtripTime, CultureInfo.InvariantCulture);
             }
             catch (Exception)
             {
