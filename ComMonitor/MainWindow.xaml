@@ -68,6 +68,38 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Command="{Binding PingCommand}" Header="Ping" >
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/Ping.png" Stretch="Fill">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="{Binding PingHistoryCommand}" Header="Ping History" >
+                    <MenuItem.Icon>
+                        <Image Source="/ComMonitor;component/Resources/ToolBar01/PingHistory.png" Stretch="Fill">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Command="{Binding TideledCommand}" Header="Tideled" >
                     <MenuItem.Icon>

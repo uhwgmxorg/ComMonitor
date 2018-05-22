@@ -46,6 +46,8 @@ namespace ComMonitor
         public RelayCommand EditAndReplaceMessageCommand { get; private set; }
         public RelayCommand SendCommand { get; private set; }
         public RelayCommand DeleteAllCommand { get; private set; }
+        public RelayCommand PingCommand { get; private set; }
+        public RelayCommand PingHistoryCommand { get; private set; }
         public RelayCommand AboutCommand { get; private set; }
 
         #region RecentFileList Properties and Vars
@@ -102,6 +104,8 @@ namespace ComMonitor
             EditAndReplaceMessageCommand = new RelayCommand(EditAndReplaceMessageCommandCF, CanEditAndReplaceMessageCommand);
             SendCommand = new RelayCommand(SendCommandCF, CanSendCommand);
             DeleteAllCommand = new RelayCommand(DeleteAllCommandCF, CanDeleteAllCommand);
+            PingCommand = new RelayCommand(PingCommandCommandCF, CanPingCommand);
+            PingHistoryCommand = new RelayCommand(PingHistoryCommandCF, CanPingHistoryCommand);
             AboutCommand = new RelayCommand(AboutCommandCF, CanAboutCommand);
 
             RecentFileList.MenuClick += (s, e) => LoadRecentFile(e.Filepath);
@@ -428,7 +432,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected;
         }
 
         /// <summary>
@@ -462,7 +469,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -495,7 +505,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -526,8 +539,13 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            _logger.Debug(String.Format("#3 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), uctmc.IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, uctmc.GetHashCode()));
-            return uctmc.IsConnected;
+            if (uctmc == null)
+                return false;
+            else
+            {
+                _logger.Debug(String.Format("#3 {0} IsConnected={1} ThreadId={2} hashcode={3}", LST.GetCurrentMethod(), uctmc.IsConnected, System.Threading.Thread.CurrentThread.ManagedThreadId, uctmc.GetHashCode()));
+                return uctmc.IsConnected;
+            }
         }
 
         /// <summary>
@@ -560,8 +578,13 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            if (uctmc.MessageList == null) return false;
-            return uctmc.MessageList.Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+            {
+                if (uctmc.MessageList == null) return false;
+                return uctmc.MessageList.Count > 0;
+            }
         }
 
         /// <summary>
@@ -599,7 +622,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
         }
 
         /// <summary>
@@ -638,7 +664,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0 && uctmc.GetAllSelectetMessages().Count > 0;
         }
 
         /// <summary>
@@ -660,7 +689,10 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.MessageList.Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.MessageList.Count > 0;
         }
 
         /// <summary>
@@ -682,7 +714,66 @@ namespace ComMonitor
             MdiChild tw = GetTopMDIWindow();
             if (tw == null) return false;
             UserControlTCPMDIChild uctmc = GetTopMDIWindow().Content as UserControlTCPMDIChild;
-            return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0;
+            if (uctmc == null)
+                return false;
+            else
+                return uctmc.IsConnected && uctmc.GetAllMessages().Count > 0;
+        }
+
+        /// <summary>
+        /// PingCommandCommandCF
+        /// </summary>
+        private void PingCommandCommandCF()
+        {
+            double AcParentWindoHeight = ActualHeight;
+            double AcParentWindoWidth = ActualWidth;
+
+            MdiChild MdiChild = new MdiChild()
+            {
+                Title = String.Format("Ping"),
+                Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
+                Width = AcParentWindoWidth * 0.6,
+                Content = new UserControlPingMDIChild()
+            };
+            ((UserControlPingMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
+            MainMdiContainer.Children.Add(MdiChild);
+        }
+
+        /// <summary>
+        /// CanPingCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanPingCommand()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// PingHistoryCommandCF
+        /// </summary>
+        private void PingHistoryCommandCF()
+        {
+            double AcParentWindoHeight = ActualHeight;
+            double AcParentWindoWidth = ActualWidth;
+
+            MdiChild MdiChild = new MdiChild()
+            {
+                Title = String.Format("Ping History"),
+                Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
+                Width = AcParentWindoWidth * 0.6,
+                Content = new UserControlPingHistoryMDIChild()
+            };
+            ((UserControlPingHistoryMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
+            MainMdiContainer.Children.Add(MdiChild);
+        }
+
+        /// <summary>
+        /// CanPingHistoryCommand
+        /// </summary>
+        /// <returns></returns>
+        private bool CanPingHistoryCommand()
+        {
+            return true;
         }
 
         /// <summary>

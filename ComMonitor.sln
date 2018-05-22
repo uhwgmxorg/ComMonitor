@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMessageViewerControl", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfHexaEditor.NET47", "WpfHexEditorControl\WPFHexaEditor\WpfHexaEditor.NET47.csproj", "{CF6AC02D-02FA-4EE9-A507-BD94F489972E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingLib", "PingLib\PingLib.csproj", "{BD228B2C-F5F0-44F3-B5C4-4C926D019D9A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		WpfHexEditorControl\WpfHexaEditor.Shared\WpfHexaEditor.Shared.projitems*{cf6ac02d-02fa-4ee9-a507-bd94f489972e}*SharedItemsImports = 4
@@ -30,6 +32,10 @@ Global
 		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF6AC02D-02FA-4EE9-A507-BD94F489972E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD228B2C-F5F0-44F3-B5C4-4C926D019D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD228B2C-F5F0-44F3-B5C4-4C926D019D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD228B2C-F5F0-44F3-B5C4-4C926D019D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD228B2C-F5F0-44F3-B5C4-4C926D019D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

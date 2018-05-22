@@ -206,6 +206,15 @@ namespace ComMonitor.MDIWindows
         {
             hexUC.ClearAllMessage();
         }
+
+        /// <summary>
+        /// SetNewConnectionName
+        /// </summary>
+        /// <param name="newName"></param>
+        public void SetNewConnectionName(string newName)
+        {
+            MyConnection.ConnectionName = newName;
+        }
         #endregion
 
         /// <summary>
@@ -218,15 +227,6 @@ namespace ComMonitor.MDIWindows
             _minaTCPServer.ConnectionStateChaneged += ConStateChaneged;
             _minaTCPServer.StartMinaListener();
             _logger.Info(String.Format("StartServer Port: {0} MultipleConnections: {1}",myConnection.Port,myConnection.MultipleConnections));
-        }
-
-        /// <summary>
-        /// SetNewConnectionName
-        /// </summary>
-        /// <param name="newName"></param>
-        public void SetNewConnectionName(string newName)
-        {
-            MyConnection.ConnectionName = newName;
         }
 
         /// <summary>

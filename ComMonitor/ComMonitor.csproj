@@ -85,6 +85,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -154,12 +156,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MDIWindows\UserControlPingHistoryMDIChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MDIWindows\UserControlPingMDIChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MDIWindows\UserControlTCPMDIChild.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MDIWindows\UserControlPingHistoryMDIChild.xaml.cs">
+      <DependentUpon>UserControlPingHistoryMDIChild.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MDIWindows\UserControlPingMDIChild.xaml.cs">
+      <DependentUpon>UserControlPingMDIChild.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MDIWindows\UserControlTCPMDIChild.xaml.cs">
       <DependentUpon>UserControlTCPMDIChild.xaml</DependentUpon>
     </Compile>
@@ -212,6 +228,10 @@
     <ProjectReference Include="..\HexMessageViewerControl\HexMessageViewerControl.csproj">
       <Project>{3282d490-1f40-4ae6-8bdc-eed7f44e934e}</Project>
       <Name>HexMessageViewerControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PingLib\PingLib.csproj">
+      <Project>{bd228b2c-f5f0-44f3-b5c4-4c926d019d9a}</Project>
+      <Name>PingLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfHexEditorControl\WPFHexaEditor\WpfHexaEditor.NET47.csproj">
       <Project>{cf6ac02d-02fa-4ee9-a507-bd94f489972e}</Project>
@@ -276,6 +296,10 @@
     <None Include="gup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToolBar01\Ping.png" />
+    <Resource Include="Resources\ToolBar01\PingHistory.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
