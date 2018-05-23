@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Configurations;
 using PingLib.Models;
 using System.Windows.Media;
 using PingLib.LocalTools;
 using System.Diagnostics;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Configurations;
 
 namespace PingLib
 {
@@ -45,7 +45,6 @@ namespace PingLib
             set { SetField(ref this.series, value, nameof(Series)); }
         }
         #endregion
-
 
         public Func<double, string> Formatter { get; set; }
 

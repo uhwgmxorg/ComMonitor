@@ -38,7 +38,6 @@ namespace PingLib
         }
         #endregion
 
-
         public Func<double, string> Formatter { get; set; }
 
         /// <summary>
