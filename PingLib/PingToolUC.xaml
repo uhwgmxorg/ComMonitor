@@ -7,19 +7,33 @@
              xmlns:local="clr-namespace:PingLib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded">
-    <Grid>
-    <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="43"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="177*"/>
+            <ColumnDefinition Width="223*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Ping Tool" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-30,10,0,0" Grid.Column="1"/>
-        <Grid Grid.ColumnSpan="2" Margin="0,41,0,0">
+        <Grid Grid.ColumnSpan="2">
             <lvc:CartesianChart Series="{Binding Series}">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Grid>
-
+        <Grid Grid.ColumnSpan="2" Grid.Row="1">
+            <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75"/>
+            <ComboBox HorizontalAlignment="Left" Margin="170,9,0,0" VerticalAlignment="Top" Width="156">
+                <ComboBoxItem Tag="L" IsSelected="True">182.168.130.10</ComboBoxItem>
+                <ComboBoxItem Tag="H">1.1.1.1</ComboBoxItem>
+                <ComboBoxItem Tag="M">google.com</ComboBoxItem>
+                <ComboBoxItem Tag="M">superuser.com</ComboBoxItem>
+            </ComboBox>
+            <Label Content="Time Inretval in s" Margin="331,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="107"></Label>
+            <TextBox Text="1" Margin="434,11,0,0" HorizontalAlignment="Left" Width="34" Height="18" VerticalAlignment="Top"></TextBox>
+        </Grid>
     </Grid>
 </UserControl>

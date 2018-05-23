@@ -96,7 +96,6 @@ namespace PingLib
         /// <param name="e"></param>
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(++_counter), Value = LocalPing.Ping("google.com") });
             Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(++_counter), Value = LocalPing.Ping("superuser.com") });
             Debug.WriteLine(String.Format("{0} {1}",((ChartDataModel)Series[0].Values[Series[0].Values.Count-1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
             if (Series[0].Values.Count > 30)
