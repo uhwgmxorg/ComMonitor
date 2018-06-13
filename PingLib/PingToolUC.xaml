@@ -24,13 +24,9 @@
             </lvc:CartesianChart>
         </Grid>
         <Grid Grid.ColumnSpan="2" Grid.Row="1">
-            <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75"/>
-            <ComboBox HorizontalAlignment="Left" Margin="170,9,0,0" VerticalAlignment="Top" Width="156">
-                <ComboBoxItem Tag="L" IsSelected="True">182.168.130.10</ComboBoxItem>
-                <ComboBoxItem Tag="H">1.1.1.1</ComboBoxItem>
-                <ComboBoxItem Tag="M">google.com</ComboBoxItem>
-                <ComboBoxItem Tag="M">superuser.com</ComboBoxItem>
+            <Button Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start_Click"/>
+            <Button Name="Button_Stop" Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop_Click"/>
+            <ComboBox SelectedItem="{Binding SelectedIp}" ItemsSource="{Binding IpList}" IsEditable="True" HorizontalAlignment="Left" Margin="170,9,0,0" VerticalAlignment="Top" Width="156" Text="{Binding NewItem, UpdateSourceTrigger=LostFocus}" >
             </ComboBox>
             <Label Content="Time Inretval in s" Margin="331,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="107"></Label>
             <TextBox Text="1" Margin="434,11,0,0" HorizontalAlignment="Left" Width="34" Height="18" VerticalAlignment="Top"></TextBox>
