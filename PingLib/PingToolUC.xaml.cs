@@ -11,6 +11,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PingLib
 {
@@ -46,34 +47,47 @@ namespace PingLib
             set { SetField(ref this.series, value, nameof(Series)); }
         }
 
-        private string selectedIp;
-        public string SelectedIp
-        {
-            get { return selectedIp; }
-            set { SetField(ref this.selectedIp, value, nameof(SelectedIp)); }
-        }
         private ObservableCollection<string> ipList;
         public ObservableCollection<string> IpList
         {
             get { return ipList; }
             set { SetField(ref this.ipList, value, nameof(IpList)); }
         }
-        public string NewItem
+        private string newIp;
+        public string NewIp
         {
+            get
+            {
+                return newIp;
+            }
             set
             {
-                if (SelectedIp != null)
+                if (newIp != value)
                 {
-                    return;
-                }
-                if (!string.IsNullOrEmpty(value))
-                {
-                    ipList.Add(value);
-                    SelectedIp = value;
+                    newIp = value;
+                    var ip = IpList.SingleOrDefault(x => x == newIp);
+                    if(ip == null)
+                        IpList.Add(newIp);
+                    SelectedIp = newIp;
                 }
             }
         }
-
+        private string selectedIp;
+        public string SelectedIp
+        {
+            get
+            {
+                return selectedIp;
+            }
+            set
+            {
+                if (selectedIp != value)
+                {
+                    selectedIp = value;
+                    SetField(ref this.selectedIp, value, nameof(SelectedIp));                    
+                }
+            }
+        }
         #endregion
 
         public Func<double, string> Formatter { get; set; }
@@ -169,6 +183,24 @@ namespace PingLib
         }
 
         /// <summary>
+        /// ComboBox_KeyDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                string newValue = ((TextBox)e.OriginalSource).Text;
+                System.Windows.Window parentWindow = System.Windows.Window.GetWindow(this);
+                parentWindow.Title = "Ping " + newValue;
+                var ip = IpList.SingleOrDefault(x => x == newValue);
+                if (ip == null)
+                    IpList.Add(newValue);
+            }
+        }
+
+        /// <summary>
         /// UserControl_Unloaded
         /// </summary>
         /// <param name="sender"></param>
@@ -185,6 +217,29 @@ namespace PingLib
         /*      Other Functions       */
         /******************************/
         #region Other Functions
+
+        /// <summary>
+        /// GetParent
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="child"></param>
+        /// <returns></returns>
+        public static T GetParent<T>(System.Windows.DependencyObject child) where T : System.Windows.DependencyObject
+        {
+
+            System.Windows.DependencyObject dependencyObject = VisualTreeHelper.GetParent(child);
+
+            if (dependencyObject != null)
+            {
+                T parent = dependencyObject as T;
+                if (parent != null)
+                    return parent;
+                else
+                    return GetParent<T>(dependencyObject);
+            }
+            else
+                return null;
+        }
 
         /// <summary>
         /// SetField
