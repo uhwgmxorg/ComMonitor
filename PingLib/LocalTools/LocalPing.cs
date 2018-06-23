@@ -31,7 +31,7 @@ namespace PingLib.LocalTools
             }
             catch (Exception)
             {
-                return 0.0;
+                return -1.0;
             }
         }
     }

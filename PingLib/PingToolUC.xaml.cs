@@ -24,7 +24,8 @@ namespace PingLib
         public event PropertyChangedEventHandler PropertyChanged;
 
         private DispatcherTimer _dispatcherTimer = null;
-        int _counter = 0;
+        private int _counter = 0;
+        private double _lastValue = 0;
 
         #region INotifyPropertyChanged Properties
         private ColumnSeries measurements;
@@ -112,9 +113,16 @@ namespace PingLib
             var config = Mappers.Xy<ChartDataModel>()
                 .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
                 .Y(dayModel => dayModel.Value);
-            Series = new SeriesCollection(config) { new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } } };
-            Series[0].Values.Clear();
+            Series = new SeriesCollection(config);
+
+            Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
             ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
+            Series[0].Values.Clear();
+
+            Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
+            ((Series)Series[1]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)245, (byte)22, (byte)22));
+            Series[1].Values.Clear();
+
             Formatter = value => DateTime.Now.ToString("d/M/yyyy HH:mm:ss");
 
             Button_Stop.IsEnabled = false;
@@ -192,10 +200,20 @@ namespace PingLib
         /// <param name="e"></param>
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(++_counter), Value = LocalPing.Ping(SelectedIp) });
-            Debug.WriteLine(String.Format("{0} {1}",((ChartDataModel)Series[0].Values[Series[0].Values.Count-1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
+            double pingResult;
+
+            _lastValue = pingResult = LocalPing.Ping(SelectedIp);
+            ++_counter;
+
+            Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = pingResult });
+            Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
             if (Series[0].Values.Count > 30)
                 Series[0].Values.RemoveAt(0);
+
+            Series[1].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = _lastValue });
+            Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).DateTime, ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).Value));
+            if (Series[1].Values.Count > 30)
+                Series[1].Values.RemoveAt(0);
         }
 
         /// <summary>
