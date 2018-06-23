@@ -25,7 +25,7 @@ namespace PingLib.Models
         public IpListToXml()
         {
             ItemValues = new List<string>();
-            FileName = "ItemList.xml";
+            FileName = "IpComboBoxList.xml";
         }
 
         /// <summary>
