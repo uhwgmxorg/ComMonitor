@@ -65,9 +65,9 @@ namespace PingLib
                 if (newIp != value)
                 {
                     newIp = value;
-                    var ip = IpList.SingleOrDefault(x => x == newIp);
-                    if(ip == null)
-                        IpList.Add(newIp);
+                    var item = IpList.SingleOrDefault(x => x == newIp);
+                    if (item == null)
+                        IpList.Insert(0, newIp);
                     SelectedIp = newIp;
                 }
             }
@@ -84,11 +84,19 @@ namespace PingLib
                 if (selectedIp != value)
                 {
                     selectedIp = value;
-                    SetField(ref this.selectedIp, value, nameof(SelectedIp));                    
+                    if (selectedIp == IpListToXml.DELETE_COMMAND)
+                    {
+                        IpList.Clear();
+                        IpList.Add(IpListToXml.DELETE_COMMAND);
+                    }
+                    SetField(ref this.selectedIp, value, nameof(SelectedIp));
                 }
             }
         }
         #endregion
+
+        public IpListToXml ItemListToXml { get; set; }
+
 
         public Func<double, string> Formatter { get; set; }
 
@@ -112,9 +120,17 @@ namespace PingLib
             Button_Stop.IsEnabled = false;
             Button_Start.IsEnabled = true;
 
-            IpList = new ObservableCollection<string>();
-            IpList.Add("127.0.0.1");
-            SelectedIp = IpList[0];
+            ItemListToXml = new IpListToXml();
+            IpList = ItemListToXml.Load(ref selectedIp);
+            SelectedIp = selectedIp;
+        }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~PingToolUC()
+        {
+            ItemListToXml.Save(SelectedIp, IpList);
         }
 
         /******************************/
@@ -191,12 +207,10 @@ namespace PingLib
         {
             if (e.Key == System.Windows.Input.Key.Return)
             {
-                string newValue = ((TextBox)e.OriginalSource).Text;
-                System.Windows.Window parentWindow = System.Windows.Window.GetWindow(this);
-                parentWindow.Title = "Ping " + newValue;
-                var ip = IpList.SingleOrDefault(x => x == newValue);
-                if (ip == null)
-                    IpList.Add(newValue);
+                string newItemValue = ((System.Windows.Controls.TextBox)e.OriginalSource).Text;
+                var item = IpList.SingleOrDefault(x => x == newItemValue);
+                if (item == null)
+                    IpList.Insert(0, newItemValue);
             }
         }
 
@@ -207,6 +221,8 @@ namespace PingLib
         /// <param name="e"></param>
         private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            ItemListToXml.Save(SelectedIp, IpList);
+
             if (_dispatcherTimer == null) return;
             _dispatcherTimer.Tick -= new EventHandler(DispatcherTimer_Tick);
             _dispatcherTimer.Stop();

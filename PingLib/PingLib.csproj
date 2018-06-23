@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="LocalTools\LocalPing.cs" />
     <Compile Include="Models\ChartDataModel.cs" />
+    <Compile Include="Models\IpListToXml.cs" />
     <Compile Include="PingHistoryToolUC.xaml.cs">
       <DependentUpon>PingHistoryToolUC.xaml</DependentUpon>
     </Compile>
