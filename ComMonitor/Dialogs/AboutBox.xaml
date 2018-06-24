@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComMonitor.Dialogs"
         mc:Ignorable="d"
-        Title="About ComMonitor" Height="323.517" Width="621.144" MinHeight="300" MinWidth="590" Loaded="Window_Loaded">
+        Title="About ComMonitor" Height="323" Width="620" MinHeight="323" MinWidth="620" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="394"/>
