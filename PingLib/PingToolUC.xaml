@@ -6,7 +6,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:local="clr-namespace:PingLib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded">
+             d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 using WPF.MDI;
 
@@ -12,15 +13,27 @@ namespace ComMonitor.MDIWindows
         private NLog.Logger _logger;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private MainWindow _mainWindow;
+
         public MdiChild TheMdiChild { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public UserControlPingMDIChild()
+        public UserControlPingMDIChild(MainWindow mainWindow)
         {
             _logger = NLog.LogManager.GetCurrentClassLogger();
             InitializeComponent();
+            _mainWindow = mainWindow;
+            phtUC.IpChange += IPTargetChange;
+        }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~UserControlPingMDIChild()
+        {
+            phtUC.IpChange -= IPTargetChange;
         }
 
         /******************************/
@@ -40,6 +53,26 @@ namespace ComMonitor.MDIWindows
         /******************************/
         #region Other Events
 
+        /// <summary>
+        /// UserControl_MouseMove
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IPTargetChange(object sender, EventArgs e)
+        {
+            TheMdiChild.Title = phtUC.PingTarget;
+        }
+
+        /// <summary>
+        /// mDIWindow_MouseMove
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mDIWindow_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (_mainWindow != null)
+                _mainWindow.StatusPannelOut(String.Format(phtUC.PingTarget));
+        }
 
         #endregion
         /******************************/

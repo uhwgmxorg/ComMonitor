@@ -6,7 +6,7 @@
              xmlns:pht="clr-namespace:PingLib;assembly=PingLib" 
              xmlns:local="clr-namespace:ComMonitor.MDIWindows"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" MouseMove="mDIWindow_MouseMove">
     <Grid>
         <pht:PingToolUC Name="phtUC"/>
     </Grid>

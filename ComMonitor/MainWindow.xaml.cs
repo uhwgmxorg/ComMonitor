@@ -733,7 +733,7 @@ namespace ComMonitor
                 Title = String.Format("Ping"),
                 Height = (AcParentWindoHeight - MainMenu.ActualHeight - MainToolBar.ActualHeight) * 0.6,
                 Width = AcParentWindoWidth * 0.6,
-                Content = new UserControlPingMDIChild()
+                Content = new UserControlPingMDIChild(this)
             };
             ((UserControlPingMDIChild)MdiChild.Content).TheMdiChild = MdiChild;
             MainMdiContainer.Children.Add(MdiChild);

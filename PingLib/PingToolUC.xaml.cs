@@ -12,6 +12,7 @@ using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace PingLib
 {
@@ -22,6 +23,7 @@ namespace PingLib
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler IpChange;
 
         private DispatcherTimer _dispatcherTimer = null;
         private int _counter = 0;
@@ -91,6 +93,7 @@ namespace PingLib
                         IpList.Add(IpListToXml.DELETE_COMMAND);
                     }
                     SetField(ref this.selectedIp, value, nameof(SelectedIp));
+                    NewPingTarget(SelectedIp);
                 }
             }
         }
@@ -124,8 +127,15 @@ namespace PingLib
 
         public IpListToXml ItemListToXml { get; set; }
 
-
         public Func<double, string> Formatter { get; set; }
+
+        public String PingTarget
+        {
+            get { return (String)GetValue(PingTargetProperty); }
+            set { SetValue(PingTargetProperty, value); }
+        }
+        public static readonly DependencyProperty PingTargetProperty =
+            DependencyProperty.Register("StringDPForUserControlToSetFromOutside", typeof(string), typeof(PingToolUC), new PropertyMetadata(""));
 
         /// <summary>
         /// Constuctor
@@ -157,6 +167,7 @@ namespace PingLib
             ItemListToXml = new IpListToXml();
             IpList = ItemListToXml.Load(ref selectedIp);
             SelectedIp = selectedIp;
+            NewPingTarget(SelectedIp);
 
             NumberOfPings = 30;
         }
@@ -232,6 +243,16 @@ namespace PingLib
         /*      Other Events          */
         /******************************/
         #region Other Events
+
+        /// <summary>
+        /// UserControl_Loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            NewPingTarget(SelectedIp);
+        }
 
         /// <summary>
         /// DispatcherTimer_Tick
@@ -311,12 +332,22 @@ namespace PingLib
         #region Other Functions
 
         /// <summary>
+        /// NewPingTarget
+        /// </summary>
+        /// <param name="conState"></param>
+        private void NewPingTarget(string selectedIp)
+        {
+            PingTarget = String.Format("Ping to {0}", selectedIp);
+            IpChange?.Invoke(this, new EventArgs());
+        }
+
+        /// <summary>
         /// GetParent
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="child"></param>
         /// <returns></returns>
-        public static T GetParent<T>(System.Windows.DependencyObject child) where T : System.Windows.DependencyObject
+        public T GetParent<T>(System.Windows.DependencyObject child) where T : System.Windows.DependencyObject
         {
 
             System.Windows.DependencyObject dependencyObject = VisualTreeHelper.GetParent(child);
