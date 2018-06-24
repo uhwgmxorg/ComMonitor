@@ -25,7 +25,7 @@ namespace PingLib
 
         private DispatcherTimer _dispatcherTimer = null;
         private int _counter = 0;
-        private double _lastValue = 0;
+        private double _lastValue = 1;
 
         #region INotifyPropertyChanged Properties
         private ColumnSeries measurements;
@@ -94,6 +94,32 @@ namespace PingLib
                 }
             }
         }
+
+        private int numberOfPings;
+        public int NumberOfPings
+        {
+            get { return numberOfPings; }
+            set
+            {
+                SetField(ref numberOfPings, value, nameof(NumberOfPings));
+                int toDelete = Series[0].Values.Count - numberOfPings;
+                if (numberOfPings > 0)
+                {
+                    for(int i=1; i<=toDelete; i++)
+                    {
+                        Series[0].Values.RemoveAt(0);
+                        Series[1].Values.RemoveAt(0);
+                        Counts = Series[0].Values.Count;
+                    }
+                }
+            }
+        }
+        private int counts;
+        public int Counts
+        {
+            get { return counts; }
+            set { SetField(ref counts, value, nameof(Counts)); }
+        }
         #endregion
 
         public IpListToXml ItemListToXml { get; set; }
@@ -131,6 +157,8 @@ namespace PingLib
             ItemListToXml = new IpListToXml();
             IpList = ItemListToXml.Load(ref selectedIp);
             SelectedIp = selectedIp;
+
+            NumberOfPings = 30;
         }
 
         /// <summary>
@@ -181,6 +209,18 @@ namespace PingLib
             Button_Start.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Button_Clear_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Clear_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Counts = 0;
+            Series[0].Values.Clear();
+            Series[1].Values.Clear();
+        }
+
         #endregion
         /******************************/
         /*      Menu Events          */
@@ -201,19 +241,37 @@ namespace PingLib
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             double pingResult;
+            double blueValue;
+            double redValue;
 
-            _lastValue = pingResult = LocalPing.Ping(SelectedIp);
+            pingResult = LocalPing.Ping(SelectedIp);
             ++_counter;
 
-            Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = pingResult });
-            Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
-            if (Series[0].Values.Count > 30)
+            if (pingResult > 0)
+            {
+                _lastValue = pingResult;
+                blueValue = pingResult;
+                redValue = 0;
+            }
+            else
+            {
+                blueValue = 0;
+                redValue = _lastValue;
+            }
+
+            Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = blueValue });
+            //Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
+            if (Series[0].Values.Count > NumberOfPings && numberOfPings > 0)
                 Series[0].Values.RemoveAt(0);
 
-            Series[1].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = _lastValue });
-            Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).DateTime, ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).Value));
-            if (Series[1].Values.Count > 30)
+            Series[1].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = redValue });
+            //Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).DateTime, ((ChartDataModel)Series[1].Values[Series[1].Values.Count - 1]).Value));
+            if (Series[1].Values.Count > NumberOfPings && numberOfPings > 0)
                 Series[1].Values.RemoveAt(0);
+
+            //Debug.WriteLine(String.Format("Interval = {0}", Interval));
+
+            Counts = Series[0].Values.Count;
         }
 
         /// <summary>
