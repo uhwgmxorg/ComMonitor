@@ -13,6 +13,8 @@ using LiveCharts.Configurations;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace PingLib
 {
@@ -30,12 +32,6 @@ namespace PingLib
         private double _lastValue = 1;
 
         #region INotifyPropertyChanged Properties
-        private ColumnSeries measurements;
-        public ColumnSeries Measurements
-        {
-            get { return measurements; }
-            set { SetField(ref measurements, value, nameof(Measurements)); }
-        }
         private string message;
         public string Message
         {
@@ -43,6 +39,12 @@ namespace PingLib
             set { SetField(ref message, value, nameof(Message)); }
         }
 
+        private ZoomingOptions zoomingMode;
+        public ZoomingOptions ZoomingMode
+        {
+            get { return zoomingMode; }
+            set { SetField(ref this.zoomingMode, value, nameof(ZoomingMode)); }
+        }
         private SeriesCollection series;
         public SeriesCollection Series
         {
@@ -135,7 +137,7 @@ namespace PingLib
             set { SetValue(PingTargetProperty, value); }
         }
         public static readonly DependencyProperty PingTargetProperty =
-            DependencyProperty.Register("StringDPForUserControlToSetFromOutside", typeof(string), typeof(PingToolUC), new PropertyMetadata(""));
+            DependencyProperty.Register("PingTarget", typeof(string), typeof(PingToolUC), new PropertyMetadata(""));
 
         /// <summary>
         /// Constuctor
@@ -151,6 +153,7 @@ namespace PingLib
                 .Y(dayModel => dayModel.Value);
             Series = new SeriesCollection(config);
 
+            /*****/
             Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
             ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
             Series[0].Values.Clear();
@@ -158,8 +161,19 @@ namespace PingLib
             Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
             ((Series)Series[1]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)245, (byte)22, (byte)22));
             Series[1].Values.Clear();
+            /*****
+            Series.Add(new LineSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
+            ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
+            Series[0].Values.Clear();
+
+            Series.Add(new LineSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
+            ((Series)Series[1]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)245, (byte)22, (byte)22));
+            Series[1].Values.Clear();
+            *****/
 
             Formatter = value => DateTime.Now.ToString("d/M/yyyy HH:mm:ss");
+
+            ZoomingMode = ZoomingOptions.X;
 
             Button_Stop.IsEnabled = false;
             Button_Start.IsEnabled = true;
@@ -252,6 +266,20 @@ namespace PingLib
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             NewPingTarget(SelectedIp);
+        }
+
+        /// <summary>
+        /// Chart_MouseDoubleClick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chart_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+            chart.AxisX[0].MinValue = double.NaN;
+            chart.AxisX[0].MaxValue = double.NaN;
+            chart.AxisY[0].MinValue = double.NaN;
+            chart.AxisY[0].MaxValue = double.NaN;
         }
 
         /// <summary>
@@ -385,5 +413,30 @@ namespace PingLib
         }
 
         #endregion
+    }
+
+    public class ZoomingModeCoverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch ((ZoomingOptions)value)
+            {
+                case ZoomingOptions.None:
+                    return "None";
+                case ZoomingOptions.X:
+                    return "X";
+                case ZoomingOptions.Y:
+                    return "Y";
+                case ZoomingOptions.Xy:
+                    return "XY";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

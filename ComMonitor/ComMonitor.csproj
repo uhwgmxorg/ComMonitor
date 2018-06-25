@@ -71,6 +71,9 @@
     <Reference Include="GalaSoft.MvvmLight.WPF4">
       <HintPath>..\lib\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts">
+      <HintPath>..\lib\LiveCharts.dll</HintPath>
+    </Reference>
     <Reference Include="Mina.NET">
       <HintPath>..\lib\Mina.NET.dll</HintPath>
     </Reference>

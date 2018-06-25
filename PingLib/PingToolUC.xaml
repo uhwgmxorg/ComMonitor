@@ -7,6 +7,9 @@
              xmlns:local="clr-namespace:PingLib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <local:ZoomingModeCoverter x:Key="ZoomingModeCoverter"></local:ZoomingModeCoverter>
+    </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,7 +20,7 @@
             <ColumnDefinition Width="223*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.ColumnSpan="2">
-            <lvc:CartesianChart Series="{Binding Series}" >
+            <lvc:CartesianChart Name="chart" Series="{Binding Series}" Zoom="{Binding ZoomingMode}" MouseDoubleClick="Chart_MouseDoubleClick">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
