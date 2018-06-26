@@ -275,7 +275,7 @@ namespace PingLib
         /// <param name="e"></param>
         private void Chart_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            // Reset zoom and pan
             chart.AxisX[0].MinValue = double.NaN;
             chart.AxisX[0].MaxValue = double.NaN;
             chart.AxisY[0].MinValue = double.NaN;
