@@ -15,6 +15,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace PingLib
 {
@@ -287,13 +288,13 @@ namespace PingLib
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private async void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            double pingResult;
+            double pingResult = 0;
             double blueValue;
             double redValue;
 
-            pingResult = LocalPing.Ping(SelectedIp);
+            pingResult = await LocalPing.PingAsync(SelectedIp);
             ++_counter;
 
             if (pingResult > 0)
