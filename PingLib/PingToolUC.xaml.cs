@@ -126,6 +126,18 @@ namespace PingLib
             get { return counts; }
             set { SetField(ref counts, value, nameof(Counts)); }
         }
+        private int fail;
+        public int Fail
+        {
+            get { return fail; }
+            set { SetField(ref fail, value, nameof(Fail)); }
+        }
+        private int total;
+        public int Total
+        {
+            get { return total; }
+            set { SetField(ref total, value, nameof(Total)); }
+        }
         #endregion
 
         public IpListToXml ItemListToXml { get; set; }
@@ -154,7 +166,6 @@ namespace PingLib
                 .Y(dayModel => dayModel.Value);
             Series = new SeriesCollection(config);
 
-            /*****/
             Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
             ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
             Series[0].Values.Clear();
@@ -162,15 +173,6 @@ namespace PingLib
             Series.Add(new ColumnSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
             ((Series)Series[1]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)245, (byte)22, (byte)22));
             Series[1].Values.Clear();
-            /*****
-            Series.Add(new LineSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
-            ((Series)Series[0]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)153, (byte)180, (byte)211));
-            Series[0].Values.Clear();
-
-            Series.Add(new LineSeries { Values = new ChartValues<ChartDataModel> { new ChartDataModel() } });
-            ((Series)Series[1]).Fill = new SolidColorBrush(Color.FromArgb(255, (byte)245, (byte)22, (byte)22));
-            Series[1].Values.Clear();
-            *****/
 
             Formatter = value => DateTime.Now.ToString("d/M/yyyy HH:mm:ss");
 
@@ -216,6 +218,8 @@ namespace PingLib
             _dispatcherTimer.Start();
             Button_Stop.IsEnabled = true;
             Button_Start.IsEnabled = false;
+            Fail = 0;
+            Total = 0;
         }
 
         /// <summary>
@@ -296,6 +300,7 @@ namespace PingLib
 
             pingResult = await LocalPing.PingAsync(SelectedIp);
             ++_counter;
+            Total++;
 
             if (pingResult > 0)
             {
@@ -307,6 +312,7 @@ namespace PingLib
             {
                 blueValue = 0;
                 redValue = _lastValue;
+                Fail++;
             }
 
             Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = blueValue });
@@ -416,6 +422,8 @@ namespace PingLib
         #endregion
     }
 
+    #region Converter Helper Class
+
     public class ZoomingModeCoverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -440,4 +448,6 @@ namespace PingLib
             throw new NotImplementedException();
         }
     }
+
+    #endregion
 }
