@@ -22,6 +22,8 @@
         <Label Content="{Binding Total}" Height="29" Width="112" Margin="51,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ></Label>
         <Label Content="Fail" Height="29" Width="29" Margin="174,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <Label Content="{Binding Fail}" Height="29" Width="167" Margin="208,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
+        <Label Content="Max" Height="29" Width="34" Margin="380,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="{Binding MaxTime}" Height="29" Width="167" Margin="419,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
         <Grid Margin="0,44,0,0">
             <lvc:CartesianChart Name="chart" Series="{Binding Series}" Zoom="{Binding ZoomingMode}" MouseDoubleClick="Chart_MouseDoubleClick">
                 <lvc:CartesianChart.AxisX>

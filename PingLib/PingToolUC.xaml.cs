@@ -138,6 +138,12 @@ namespace PingLib
             get { return total; }
             set { SetField(ref total, value, nameof(Total)); }
         }
+        private double maxTime;
+        public double MaxTime
+        {
+            get { return maxTime; }
+            set { SetField(ref maxTime, value, nameof(MaxTime)); }
+        }
         #endregion
 
         public IpListToXml ItemListToXml { get; set; }
@@ -187,6 +193,8 @@ namespace PingLib
             NewPingTarget(SelectedIp);
 
             NumberOfPings = 30;
+
+            MaxTime = 0;
         }
 
         /// <summary>
@@ -220,6 +228,7 @@ namespace PingLib
             Button_Start.IsEnabled = false;
             Fail = 0;
             Total = 0;
+            MaxTime = 0;
         }
 
         /// <summary>
@@ -314,6 +323,9 @@ namespace PingLib
                 redValue = _lastValue;
                 Fail++;
             }
+
+            if (pingResult > MaxTime)
+                MaxTime = pingResult;
 
             Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = blueValue });
             //Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
