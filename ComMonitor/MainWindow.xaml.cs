@@ -773,7 +773,7 @@ namespace ComMonitor
         /// <returns></returns>
         private bool CanPingHistoryCommand()
         {
-            return true;
+            return false;
         }
 
         /// <summary>

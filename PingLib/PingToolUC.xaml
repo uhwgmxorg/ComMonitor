@@ -32,7 +32,6 @@
             </lvc:CartesianChart>
         </Grid>
         <Grid Grid.Row="1">
-            <Button Name="Button_Clear" Content="Clear" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75" Click="Button_Clear_Click" TabIndex="2147483643"/>
             <Button Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start_Click" TabIndex="2147483644"/>
             <Button Name="Button_Stop" Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop_Click" TabIndex="2147483645"/>
             <ComboBox Text="{Binding NewIp, UpdateSourceTrigger=LostFocus}" SelectedItem="{Binding SelectedIp}" ItemsSource="{Binding IpList}" IsEditable="True" HorizontalAlignment="Left" Margin="170,9,0,0" VerticalAlignment="Top" Width="156"  KeyDown="ComboBox_KeyDown" IsTabStop="True" TabIndex="2147483646" />
@@ -40,6 +39,7 @@
             <TextBox Text="{Binding NumberOfPings}" ToolTip="If less than or equal to 0 then infinity" Margin="437,11,0,0" HorizontalAlignment="Left" Width="54" Height="18" VerticalAlignment="Top"></TextBox>
             <Label Content="Counts" Margin="499,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"></Label>
             <Label Content="{Binding Counts}" Margin="551,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="auto"></Label>
+            <Button Name="Button_Clear" Content="Clear" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75" Click="Button_Clear_Click" TabIndex="2147483643"/>
         </Grid>
     </Grid>
 </UserControl>

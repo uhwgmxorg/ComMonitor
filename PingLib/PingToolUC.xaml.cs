@@ -226,9 +226,6 @@ namespace PingLib
             _dispatcherTimer.Start();
             Button_Stop.IsEnabled = true;
             Button_Start.IsEnabled = false;
-            Fail = 0;
-            Total = 0;
-            MaxTime = 0;
         }
 
         /// <summary>
@@ -258,6 +255,9 @@ namespace PingLib
             Counts = 0;
             Series[0].Values.Clear();
             Series[1].Values.Clear();
+            Fail = 0;
+            Total = 0;
+            MaxTime = 0;
         }
 
         #endregion
