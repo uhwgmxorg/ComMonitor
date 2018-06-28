@@ -1,6 +1,11 @@
 Program ComMonitor ChangeLog
 
 
+   28.06.2018 1.7.0.0 Rev 0 
+
+   - Add Tools -> Ping a graphical ping tool
+
+
    16.05.2018 1.6.0.0 Rev 0 
 
    - Solve some problems in handling single and 
