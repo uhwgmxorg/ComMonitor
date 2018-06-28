@@ -834,6 +834,7 @@ namespace ComMonitor
         {
             Properties.Settings.Default.Save();
             _logger.Info("Closing ComMonitor");
+            Environment.Exit(0);
         }
 
         #endregion
