@@ -160,7 +160,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem IsChecked="{Binding EnableAutoUpdate, Mode=TwoWay, Source={x:Static p:Settings.Default}}" ToolTip="Mark the CheckBox to search for a new version of the program when starting it" IsCheckable="True" Header="Enable Auto Update" >
+                <MenuItem IsChecked="{Binding EnableAutoUpdate, Mode=TwoWay, Source={x:Static p:Settings.Default}}" ToolTip="Mark the CheckBox to search for a new version of the program when starting it" ToolTipService.ShowDuration="2147483647" IsCheckable="True" Header="Enable Auto Update" >
                 </MenuItem>
                 <MenuItem Command="{Binding UpdateCommand}" Header="Look For Updates" >
                     <MenuItem.Icon>
@@ -186,7 +186,7 @@
             </MenuItem>
         </Menu>
         <ToolBar Name="MainToolBar" Margin="0,28,0,0" Height="31" VerticalAlignment="Top" Background="#FF99B4D3">
-            <Button Command="{Binding ExitCommand}" ToolTip="Exit">
+            <Button Command="{Binding ExitCommand}" ToolTip="Exit" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Exit.png" Stretch="Fill" >
                         <Image.Style>
@@ -204,7 +204,7 @@
             <StackPanel Orientation="Horizontal">
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
             </StackPanel>
-            <Button  Command="{Binding NewConnectionsWindowCommand}" ToolTip="New Connections Window">
+            <Button  Command="{Binding NewConnectionsWindowCommand}" ToolTip="New Connections Window" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/New.png" Stretch="Fill" >
                         <Image.Style>
@@ -219,7 +219,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding LoadConnectionsCommand}" ToolTip="Load Connections">
+            <Button Command="{Binding LoadConnectionsCommand}" ToolTip="Load Connections" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Open.png" Stretch="Fill" >
                         <Image.Style>
@@ -234,7 +234,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding SaveConnectionsCommand}" ToolTip="Save Connections">
+            <Button Command="{Binding SaveConnectionsCommand}" ToolTip="Save Connections" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Save.png" Stretch="Fill" >
                         <Image.Style>
@@ -252,7 +252,7 @@
             <StackPanel Orientation="Horizontal">
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
             </StackPanel>
-            <Button Command="{Binding OpenMessageFileCommand}" ToolTip="Open Message File">
+            <Button Command="{Binding OpenMessageFileCommand}" ToolTip="Open Message File" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/OpenMessage.png" Stretch="Fill" >
                         <Image.Style>
@@ -267,7 +267,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding SaveMessageFileCommand}" ToolTip="Save Message File">
+            <Button Command="{Binding SaveMessageFileCommand}" ToolTip="Save Message File" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/SaveMessage.png" Stretch="Fill" >
                         <Image.Style>
@@ -282,7 +282,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding SaveMessageFileAsCommand}" ToolTip="Save Message File as">
+            <Button Command="{Binding SaveMessageFileAsCommand}" ToolTip="Save Message File as" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/SaveAsMessage.png" Stretch="Fill" >
                         <Image.Style>
@@ -302,7 +302,7 @@
             </StackPanel>
             <Button Command="{Binding AddNewMessageCommand}" ToolTip="Add New Message">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/ComMonitor;component/Resources/ToolBar01/AddNewMessage.png" Stretch="Fill" >
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/AddNewMessage.png" Stretch="Fill" ToolTipService.ShowDuration="2147483647" >
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -317,7 +317,7 @@
             </Button>
             <Button Command="{Binding EditMessageCommand}" ToolTip="Edit Message">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/ComMonitor;component/Resources/ToolBar01/EditMessage.png" Stretch="Fill" >
+                    <Image Source="/ComMonitor;component/Resources/ToolBar01/EditMessage.png" Stretch="Fill" ToolTipService.ShowDuration="2147483647" >
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -330,7 +330,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding AddMessageCommand}" ToolTip="Add Selected Message and Edit">
+            <Button Command="{Binding AddMessageCommand}" ToolTip="Add Selected Message and Edit" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/AddMessage.png" Stretch="Fill" >
                         <Image.Style>
@@ -345,7 +345,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding EditAndReplaceMessageCommand}" ToolTip="Edit And Replace Message">
+            <Button Command="{Binding EditAndReplaceMessageCommand}" ToolTip="Edit And Replace Message" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/EditAndReplace.png" Stretch="Fill" >
                         <Image.Style>
@@ -363,7 +363,7 @@
             <StackPanel Orientation="Horizontal">
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
             </StackPanel>
-            <Button Command="{Binding SendCommand}" ToolTip="Send Focus Message">
+            <Button Command="{Binding SendCommand}" ToolTip="Send Focus Message" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/Send.png" Stretch="Fill" >
                         <Image.Style>
@@ -378,7 +378,7 @@
                     </Image>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding DeleteAllCommand}" ToolTip="Delete All Messages">
+            <Button Command="{Binding DeleteAllCommand}" ToolTip="Delete All Messages" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/DelteAll.png" Stretch="Fill" >
                         <Image.Style>
@@ -396,7 +396,7 @@
             <StackPanel Orientation="Horizontal">
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF7689FF" />
             </StackPanel>
-            <Button Command="{Binding AboutCommand}" ToolTip="About">
+            <Button Command="{Binding AboutCommand}" ToolTip="About" ToolTipService.ShowDuration="2147483647">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ComMonitor;component/Resources/ToolBar01/About.png" Stretch="Fill" >
                         <Image.Style>

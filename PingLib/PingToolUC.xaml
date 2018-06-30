@@ -18,12 +18,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Content="Total" Height="29" Width="36" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
-        <Label Content="{Binding Total}" Height="29" Width="112" Margin="51,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ></Label>
-        <Label Content="Fail" Height="29" Width="29" Margin="174,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <Label Content="{Binding Fail}" Height="29" Width="167" Margin="208,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
-        <Label Content="Max" Height="29" Width="34" Margin="380,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <Label Content="{Binding MaxTime}" Height="29" Width="167" Margin="419,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
+        <Label Content="Total:" Height="29" Width="38" ToolTip="The total of pings" ToolTipService.ShowDuration="2147483647" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+        <Label Content="{Binding Total}" Height="29" Width="auto" ToolTip="The total of pings" ToolTipService.ShowDuration="2147483647" Margin="48,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ></Label>
+        <Label Content="Fail:" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647" Margin="174,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="{Binding Fail}" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647" Margin="204,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
+        <Label Content="Max:" Height="29" Width="35" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647" Margin="380,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="{Binding MaxTime}" Height="29" Width="auto" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647" Margin="415,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ></Label>
         <Grid Margin="0,44,0,0">
             <lvc:CartesianChart Name="chart" Series="{Binding Series}" Zoom="{Binding ZoomingMode}" MouseDoubleClick="Chart_MouseDoubleClick">
                 <lvc:CartesianChart.AxisX>
@@ -35,10 +35,10 @@
             <Button Name="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Start_Click" TabIndex="2147483644"/>
             <Button Name="Button_Stop" Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Stop_Click" TabIndex="2147483645"/>
             <ComboBox Text="{Binding NewIp, UpdateSourceTrigger=LostFocus}" SelectedItem="{Binding SelectedIp}" ItemsSource="{Binding IpList}" IsEditable="True" HorizontalAlignment="Left" Margin="170,9,0,0" VerticalAlignment="Top" Width="156"  KeyDown="ComboBox_KeyDown" IsTabStop="True" TabIndex="2147483646" />
-            <Label Content="Number of pings" Margin="331,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"></Label>
-            <TextBox Text="{Binding NumberOfPings}" ToolTip="If less than or equal to 0 then infinity" Margin="437,11,0,0" HorizontalAlignment="Left" Width="54" Height="18" VerticalAlignment="Top"></TextBox>
-            <Label Content="Counts" Margin="499,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"></Label>
-            <Label Content="{Binding Counts}" Margin="551,7,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="auto"></Label>
+            <Label Content="Number of pings" Margin="331,7,0,0" Height="26" ToolTip="If less than or equal to 0 then infinity" ToolTipService.ShowDuration="2147483647" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"></Label>
+            <TextBox Text="{Binding NumberOfPings}" ToolTip="If less than or equal to 0 then infinity" ToolTipService.ShowDuration="2147483647" Margin="437,11,0,0" HorizontalAlignment="Left" Width="54" Height="18" VerticalAlignment="Top"></TextBox>
+            <Label Content="Counts:" Margin="499,7,0,0" Height="26" ToolTip="The total of pings shown in the chart" ToolTipService.ShowDuration="2147483647" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50"></Label>
+            <Label Content="{Binding Counts}" Margin="549,7,0,0" Height="26" ToolTip="The total of pings shown in the chart" ToolTipService.ShowDuration="2147483647" VerticalAlignment="Top" HorizontalAlignment="Left" Width="auto"></Label>
             <Button Name="Button_Clear" Content="Clear" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75" Click="Button_Clear_Click" TabIndex="2147483643"/>
         </Grid>
     </Grid>
