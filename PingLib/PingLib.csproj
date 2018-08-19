@@ -81,5 +81,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\question20X20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\question24X24.png" />
+    <Resource Include="Resources\question32X32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -30,7 +30,10 @@ namespace PingLib
 
         private DispatcherTimer _dispatcherTimer = null;
         private int _counter = 0;
-        private double _lastValue = 1;
+        private double _lastValue = 1.0;
+        private double _minTime = Double.MaxValue;
+        private double _totalOfTime = 0.0;
+        private double _sumVar = 0.0;
 
         #region INotifyPropertyChanged Properties
         private string message;
@@ -126,6 +129,12 @@ namespace PingLib
             get { return counts; }
             set { SetField(ref counts, value, nameof(Counts)); }
         }
+        private double success;
+        public double Success
+        {
+            get { return success; }
+            set { SetField(ref success, value, nameof(Success)); }
+        }
         private int fail;
         public int Fail
         {
@@ -143,6 +152,90 @@ namespace PingLib
         {
             get { return maxTime; }
             set { SetField(ref maxTime, value, nameof(MaxTime)); }
+        }
+        private double minTime;
+        public double MinTime
+        {
+            get { return minTime; }
+            set { SetField(ref minTime, value, nameof(MinTime)); }
+        }
+        private double currentTime;
+        public double CurrentTime
+        {
+            get { return currentTime; }
+            set { SetField(ref currentTime, value, nameof(CurrentTime)); }
+        }
+        private DateTime startTime;
+        public DateTime StartTime
+        {
+            get { return startTime; }
+            set { SetField(ref startTime, value, nameof(StartTime)); }
+        }
+        private DateTime stopTime;
+        public DateTime StopTime
+        {
+            get { return stopTime; }
+            set { SetField(ref stopTime, value, nameof(StopTime)); }
+        }
+        private TimeSpan duration;
+        public TimeSpan Duration
+        {
+            get { return duration; }
+            set { SetField(ref duration, value, nameof(Duration)); }
+        }
+        private string startTimeStr;
+        public string StartTimeStr
+        {
+            get { return startTimeStr; }
+            set { SetField(ref startTimeStr, value, nameof(StartTimeStr)); }
+        }
+        private string stopTimeStr;
+        public string StopTimeStr
+        {
+            get { return stopTimeStr; }
+            set { SetField(ref stopTimeStr, value, nameof(StopTimeStr)); }
+        }
+        private string durationStr;
+        public string DurationStr
+        {
+            get { return durationStr; }
+            set { SetField(ref durationStr, value, nameof(DurationStr)); }
+        }
+        private double average;
+        public double Average
+        {
+            get { return average; }
+            set { SetField(ref average, value, nameof(Average)); }
+        }
+        private double variance;
+        public double Variance
+        {
+            get { return variance; }
+            set { SetField(ref variance, value, nameof(Variance)); }
+        }
+        private double standardDeviation;
+        public double StandardDeviation
+        {
+            get { return standardDeviation; }
+            set { SetField(ref standardDeviation, value, nameof(StandardDeviation)); }
+        }
+        private string averageStr;
+        public string AverageStr
+        {
+            get { return averageStr; }
+            set { SetField(ref averageStr, value, nameof(AverageStr)); }
+        }
+        private string varianceStr;
+        public string VarianceStr
+        {
+            get { return varianceStr; }
+            set { SetField(ref varianceStr, value, nameof(VarianceStr)); }
+        }
+        private string standardDeviationStr;
+        public string StandardDeviationStr
+        {
+            get { return standardDeviationStr; }
+            set { SetField(ref standardDeviationStr, value, nameof(StandardDeviationStr)); }
         }
         #endregion
 
@@ -194,7 +287,7 @@ namespace PingLib
 
             NumberOfPings = 30;
 
-            MaxTime = 0;
+            Button_Clear_Click(null,null);
         }
 
         /// <summary>
@@ -226,6 +319,8 @@ namespace PingLib
             _dispatcherTimer.Start();
             Button_Stop.IsEnabled = true;
             Button_Start.IsEnabled = false;
+
+            SetStartTime();
         }
 
         /// <summary>
@@ -243,6 +338,8 @@ namespace PingLib
             _dispatcherTimer = null;
             Button_Stop.IsEnabled = false;
             Button_Start.IsEnabled = true;
+
+            SetStopTime();
         }
 
         /// <summary>
@@ -255,9 +352,24 @@ namespace PingLib
             Counts = 0;
             Series[0].Values.Clear();
             Series[1].Values.Clear();
+            Success = 0;
             Fail = 0;
             Total = 0;
             MaxTime = 0;
+            _minTime = Double.MaxValue;
+            MinTime = 0;
+
+            _totalOfTime = 0.0;
+            _sumVar = 0.0;
+
+            Variance = 0.0;
+            Average = 0.0;
+            StandardDeviation = 0.0;
+            VarianceStr = String.Format("Variance: -");
+            AverageStr = String.Format("Average: -");
+            StandardDeviationStr = String.Format("Standard Deviation: -");
+
+            SetStartTime();
         }
 
         #endregion
@@ -303,29 +415,50 @@ namespace PingLib
         /// <param name="e"></param>
         private async void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            double pingResult = 0;
+            double pingResult = 0.0;
             double blueValue;
             double redValue;
 
             pingResult = await LocalPing.PingAsync(SelectedIp);
             ++_counter;
-            Total++;
+            if(pingResult > 0)
+                Total++;
+            Success = Total - Fail;
 
             if (pingResult > 0)
             {
                 _lastValue = pingResult;
                 blueValue = pingResult;
-                redValue = 0;
+                redValue = 0.0;
             }
             else
             {
-                blueValue = 0;
+                blueValue = 0.0;
                 redValue = _lastValue;
                 Fail++;
+                Success = Total - Fail;
             }
 
-            if (pingResult > MaxTime)
-                MaxTime = pingResult;
+            CurrentTime = pingResult;
+            if (pingResult > MaxTime) MaxTime = pingResult;
+            if (pingResult > 0)
+            {
+                if (pingResult < _minTime) _minTime = pingResult;
+                if (_minTime != Double.MaxValue) MinTime = _minTime;
+            }
+            Duration = DateTime.Now - StopTime;
+            DurationStr = String.Format("Duration: {0:dd\\.hh\\:mm\\:ss}", Duration);
+            if (pingResult > 0)
+            {
+                _totalOfTime = _totalOfTime + pingResult;
+                Average = _totalOfTime / Total;
+                _sumVar += Math.Pow(pingResult - Average, 2);
+                Variance = (1.0 / (double)Total) * _sumVar;
+                StandardDeviation = Math.Sqrt(Variance);
+            }
+            AverageStr = String.Format("Average: {0:0.00} ms", Average);
+            VarianceStr = String.Format("Variance: {0:0.00}", Variance);
+            StandardDeviationStr = String.Format("Standard Deviation: {0:0.00}", StandardDeviation);
 
             Series[0].Values.Add(new ChartDataModel { DateTime = System.DateTime.Now.AddHours(_counter), Value = blueValue });
             //Debug.WriteLine(String.Format("{0} {1}", ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).DateTime, ((ChartDataModel)Series[0].Values[Series[0].Values.Count - 1]).Value));
@@ -377,6 +510,44 @@ namespace PingLib
         /*      Other Functions       */
         /******************************/
         #region Other Functions
+        
+        /// <summary>
+        /// SetStartTime
+        /// </summary>
+        private void SetStartTime()
+        {
+            StartTime = DateTime.Now;
+            StopTime = DateTime.Now;
+            Duration = StopTime - StartTime;
+            StartTimeStr = String.Format("Start Time: {0}", StartTime);
+            if (StartTime == StopTime)
+                StopTimeStr = String.Format("Stop Time: -");
+            else
+                StopTimeStr = String.Format("Stop Time: {0}", StopTime);
+            DurationStr = String.Format("Duration: {0}", Duration);
+
+            Variance = 0.0;
+            Average = 0.0;
+            StandardDeviation = 0.0;
+            VarianceStr = String.Format("Variance: -");
+            AverageStr = String.Format("Average: -");
+            StandardDeviationStr = String.Format("Standard Deviation: -");
+        }
+
+        /// <summary>
+        /// SetStartStopTime
+        /// </summary>
+        private void SetStopTime()
+        {
+            StopTime = DateTime.Now;
+            Duration = StopTime - StartTime;
+            StartTimeStr = String.Format("Start Time: {0}", StartTime);
+            if(StartTime == StopTime)
+                StopTimeStr = String.Format("Stop Time: -");
+            else
+                StopTimeStr = String.Format("Stop Time: {0}", StopTime);
+            DurationStr = String.Format("Duration: {0}", Duration);
+        }
 
         /// <summary>
         /// NewPingTarget
