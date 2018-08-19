@@ -35,15 +35,6 @@
                     </StackPanel>
                 </Image.ToolTip>
             </Image>
-            <Label Content="Current:" Height="29" FontWeight="Bold" Width="54" ToolTip="Currently ping runtime" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="{Binding CurrentTime}" FontWeight="Bold" Height="29" Width="auto" ToolTip="Currently ping runtime" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="ms" FontWeight="Bold" Height="29" ToolTip="Currently ping runtime" Width="35"></Label>
-            <Label Content="Min:" Height="29" Width="35" ToolTip="The minimum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="{Binding MinTime}" Height="29" Width="auto" ToolTip="The minimum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="ms" Height="29" Width="35" ToolTip="The minimum latency of all pings"></Label>
-            <Label Content="Max:" Height="29" Width="35" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="{Binding MaxTime}" Height="29" Width="auto" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="ms" Height="29" Width="35" ToolTip="The maximum latency of all pings"></Label>
             <Label Content="Total:" Height="29" ToolTip="The total of pings" ToolTipService.ShowDuration="2147483647"/>
             <Label Content="{Binding Total}" Height="29" Width="auto" ToolTip="The total of pings" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="Success:" Height="29" ToolTip="The total of successful pings" ToolTipService.ShowDuration="2147483647"/>
@@ -51,8 +42,17 @@
             <Label Content="Fail:" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="{Binding Fail}" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="Fail:" Height="29" Width="auto" ToolTip="The total of fail pings in %" ToolTipService.ShowDuration="2147483647"></Label>
-            <Label Content="{Binding FailPercent}" Height="29" Width="auto" ToolTip="The total of fail pings in %" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="{Binding FailPercent}" ContentStringFormat="{}{0:0.##}" Height="29" Width="auto" ToolTip="The total of fail pings in %" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="%" Height="29" Width="35" ToolTip="The total of fail pings in %"></Label>
+            <Label Content="Min:" Height="29" Width="35" ToolTip="The minimum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="{Binding MinTime}" Height="29" Width="auto" ToolTip="The minimum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="ms" Height="29" Width="35" ToolTip="The minimum latency of all pings"></Label>
+            <Label Content="Max:" Height="29" Width="35" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="{Binding MaxTime}" Height="29" Width="auto" ToolTip="The maximum latency of all pings" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="ms" Height="29" Width="35" ToolTip="The maximum latency of all pings"></Label>
+            <Label Content="Current:" Height="29" FontWeight="Bold" Width="54" ToolTip="Currently ping runtime" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="{Binding CurrentTime}" FontWeight="Bold" Height="29" Width="auto" ToolTip="Currently ping runtime" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="ms" FontWeight="Bold" Height="29" ToolTip="Currently ping runtime" Width="35"></Label>
         </StackPanel>
         <Grid Margin="0,44,0,0">
             <lvc:CartesianChart Name="chart" Series="{Binding Series}" Zoom="{Binding ZoomingMode}" DataTooltip ="{x:Null}" MouseDoubleClick="Chart_MouseDoubleClick">

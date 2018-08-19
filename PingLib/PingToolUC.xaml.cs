@@ -129,14 +129,14 @@ namespace PingLib
             get { return counts; }
             set { SetField(ref counts, value, nameof(Counts)); }
         }
-        private double success;
-        public double Success
+        private long success;
+        public long Success
         {
             get { return success; }
             set { SetField(ref success, value, nameof(Success)); }
         }
-        private int fail;
-        public int Fail
+        private long fail;
+        public long Fail
         {
             get { return fail; }
             set { SetField(ref fail, value, nameof(Fail)); }
@@ -147,8 +147,8 @@ namespace PingLib
             get { return failPercent; }
             set { SetField(ref failPercent, value, nameof(FailPercent)); }
         }
-        private int total;
-        public int Total
+        private long total;
+        public long Total
         {
             get { return total; }
             set { SetField(ref total, value, nameof(Total)); }
@@ -428,9 +428,8 @@ namespace PingLib
 
             pingResult = await LocalPing.PingAsync(SelectedIp);
             ++_counter;
-            if(pingResult > 0)
-                Total++;
-            Success = Total - Fail;
+            Total++;
+            if(Total >= Fail) Success = Total - Fail;
 
             if (pingResult > 0)
             {
@@ -443,9 +442,9 @@ namespace PingLib
                 blueValue = 0.0;
                 redValue = _lastValue;
                 Fail++;
-                Success = Total - Fail;
-                FailPercent = (double)Fail / (double)Total * 100.0;
             }
+            if (Total >= Fail) Success = Total - Fail;
+            FailPercent = (double)Fail / (double)Total * 100.0;
 
             CurrentTime = pingResult;
             if (pingResult > MaxTime) MaxTime = pingResult;
