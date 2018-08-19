@@ -50,6 +50,9 @@
             <Label Content="{Binding Success}" Height="29" Width="auto" ToolTip="The total of successful pings" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="Fail:" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647"></Label>
             <Label Content="{Binding Fail}" Height="29" Width="auto" ToolTip="The total of fail pings" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="Fail:" Height="29" Width="auto" ToolTip="The total of fail pings in %" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="{Binding FailPercent}" Height="29" Width="auto" ToolTip="The total of fail pings in %" ToolTipService.ShowDuration="2147483647"></Label>
+            <Label Content="%" Height="29" Width="35" ToolTip="The total of fail pings in %"></Label>
         </StackPanel>
         <Grid Margin="0,44,0,0">
             <lvc:CartesianChart Name="chart" Series="{Binding Series}" Zoom="{Binding ZoomingMode}" DataTooltip ="{x:Null}" MouseDoubleClick="Chart_MouseDoubleClick">

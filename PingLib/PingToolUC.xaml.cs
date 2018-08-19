@@ -141,6 +141,12 @@ namespace PingLib
             get { return fail; }
             set { SetField(ref fail, value, nameof(Fail)); }
         }
+        private double failPercent;
+        public double FailPercent
+        {
+            get { return failPercent; }
+            set { SetField(ref failPercent, value, nameof(FailPercent)); }
+        }
         private int total;
         public int Total
         {
@@ -354,6 +360,7 @@ namespace PingLib
             Series[1].Values.Clear();
             Success = 0;
             Fail = 0;
+            FailPercent = 0.0;
             Total = 0;
             MaxTime = 0;
             _minTime = Double.MaxValue;
@@ -437,6 +444,7 @@ namespace PingLib
                 redValue = _lastValue;
                 Fail++;
                 Success = Total - Fail;
+                FailPercent = (double)Fail / (double)Total * 100.0;
             }
 
             CurrentTime = pingResult;
