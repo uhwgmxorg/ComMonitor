@@ -1,6 +1,11 @@
 Program ComMonitor ChangeLog
 
 
+   21.08.2018 1.8.0.0 Rev 0 
+
+   - Changes on PingLib, improved statistics
+
+
    28.06.2018 1.7.0.0 Rev 0 
 
    - Add Tools -> Ping a graphical ping tool
@@ -74,5 +79,4 @@ Program ComMonitor ChangeLog
 
    25.03.2017 0.0.0.0 Rev 0
 
-   - Start Version 0.0.0.0  
-
+   - Start Version 0.0.0.0

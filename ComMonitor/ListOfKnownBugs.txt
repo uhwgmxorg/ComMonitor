@@ -1,6 +1,10 @@
 ﻿Program ComMonitor ListOfKnownBugs
 
 
-    28.06.2018 1.7.0.0 Rev 0
+    21.08.2018 1.8.0.0 Rev 0
 
-   - No known issues 
+   - WpfHexEditorControl is very slow when too many 
+     tabs are open
+   - In some cases slightly unclear behavior of 
+     WpfHexEditorControl when editing in ASCII mode 
+   - Ping History is not yet implemented
