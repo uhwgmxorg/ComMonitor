@@ -1,6 +1,16 @@
 Program ComMonitor ChangeLog
 
 
+   01.09.2019 1.9.0.0 Rev 0 
+
+   - Sign the following binaries with the 
+     Open Source Certificate from centrum:
+       Setup_ComMonitor_x32_1_9_0_0.exe 
+       ComMonitor.exe 
+       HexMessageViewerControl.dll 
+       PingLib.dll
+
+
    21.08.2018 1.8.0.0 Rev 0 
 
    - Changes on PingLib, improved statistics
